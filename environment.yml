@@ -1,0 +1,18 @@
+name: santander-ada
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - pip
+  - numpy
+  - pandas
+  - scikit-learn
+  - scipy
+  - matplotlib
+  - jupyterlab
+  - pyyaml
+  - joblib
+  - pytest
+  - nbformat
+  - pip:
+      - openml

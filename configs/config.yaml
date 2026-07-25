@@ -1,0 +1,32 @@
+# Shared defaults: change these only through a reviewed team decision.
+project:
+  name: santander-customer-transaction-prediction
+  random_state: 42
+
+data:
+  openml_id: 45566
+  # Must be verified against the real dataset before being set.
+  target_column: null
+  test_size: 0.20
+  numeric_dtype: float32
+
+validation:
+  n_splits: 5
+  shuffle: true
+
+metrics:
+  primary: roc_auc
+  secondary:
+    - average_precision
+    - f1
+    - precision
+    - recall
+
+paths:
+  raw_data: data/raw
+  interim_data: data/interim
+  processed_data: data/processed
+  figures: reports/figures
+  tables: reports/tables
+  experiments: reports/experiments
+  models: models

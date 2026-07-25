@@ -39,7 +39,11 @@ Commit prefixes:
 
 - Notebooks must run from top to bottom from the repository root.
 - Scientific results must be reproducible with the shared configuration.
-- Add every scientific task to the Logbuch.
+- Every completed scientific or technical ticket requires a Logbook entry.
+- Commit Logbook entries with the related work or immediately afterwards.
+- Never fabricate or backdate entries; reported time spent must be truthful.
+- Each member edits only their own individual Logbook, except for formatting
+  corrections made through a reviewed pull request.
 - Document every relevant scientific or engineering decision.
 - Export figures as PDF, SVG, or high-resolution PNG.
 

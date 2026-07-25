@@ -93,6 +93,16 @@ Every experiment must add a row based on
 in the Logbuch. Code, parameters, preprocessing, timing, metrics, feature count,
 interpretation, branch, member, and shared random state must be traceable.
 
+## Individual Logbooks
+
+Each member maintains a chronological Logbook in
+`reports/logbook/member_01/` through `reports/logbook/member_04/`. Entries use
+the naming convention `YYYY-MM-DD_ticket-short-title.md` and should be written
+soon after the related work. Every entry must document relevant decisions,
+difficulties, adaptations, and code or report references. Each member is
+responsible for the accuracy and completeness of their own directory; see
+`reports/logbook/README.md` for the full convention.
+
 ## Reproducibility and leakage prevention
 
 All team members must use:

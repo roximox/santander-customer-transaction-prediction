@@ -125,3 +125,5 @@ templates in `reports/meetings/` and `reports/logbook/`.
 configuration, placeholder modules, notebooks, and offline tests are present.
 No dataset has been downloaded, no complete EDA has been performed, and no
 machine-learning model has been trained.
+
+//comment

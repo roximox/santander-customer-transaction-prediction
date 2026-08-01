@@ -1,0 +1,23 @@
+{
+  "original_dtype_counts": {
+    "float64": 200
+  },
+  "converted_dtype_counts": {
+    "float32": 200
+  },
+  "original_memory_mb": 305.17590713500977,
+  "converted_memory_mb": 152.58801651000977,
+  "memory_saved_mb": 152.587890625,
+  "memory_reduction_percentage": 49.99997937500851,
+  "maximum_absolute_error": 3.7963867214330094e-06,
+  "mean_absolute_error": 1.9811511402243887e-07,
+  "maximum_relative_error": 5.950797554674405e-08,
+  "mean_relative_error": 2.130516379585579e-08,
+  "changed_value_count": 39936663,
+  "changed_value_percentage": 99.8416575,
+  "missing_values_preserved": true,
+  "infinities_preserved": true,
+  "shape_preserved": true,
+  "index_preserved": true,
+  "columns_preserved": true
+}

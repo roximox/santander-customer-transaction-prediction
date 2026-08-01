@@ -1,0 +1,153 @@
+{
+  "experiment_id": "M01-DUMMY-001",
+  "model_name": "DummyClassifier (most_frequent)",
+  "member": "Member 01",
+  "branch": "feature/data_processing",
+  "date_utc": "2026-08-01T13:44:56+00:00",
+  "n_samples": 160000,
+  "n_features": 200,
+  "cv_strategy": "StratifiedKFold",
+  "n_splits": 5,
+  "shuffle": true,
+  "random_state": 42,
+  "primary_metric": "roc_auc",
+  "primary_score_mean": 0.5,
+  "primary_score_std": 0.0,
+  "metrics": {
+    "roc_auc": {
+      "validation_mean": 0.5,
+      "validation_std": 0.0,
+      "train_mean": 0.5,
+      "train_std": 0.0
+    },
+    "average_precision": {
+      "validation_mean": 0.10048750000000002,
+      "validation_std": 1.5309310892399974e-05,
+      "train_mean": 0.1004875,
+      "train_std": 3.8273277230965944e-06
+    },
+    "f1": {
+      "validation_mean": 0.0,
+      "validation_std": 0.0,
+      "train_mean": 0.0,
+      "train_std": 0.0
+    },
+    "precision": {
+      "validation_mean": 0.0,
+      "validation_std": 0.0,
+      "train_mean": 0.0,
+      "train_std": 0.0
+    },
+    "recall": {
+      "validation_mean": 0.0,
+      "validation_std": 0.0,
+      "train_mean": 0.0,
+      "train_std": 0.0
+    },
+    "accuracy": {
+      "validation_mean": 0.8995124999999999,
+      "validation_std": 1.530931089241357e-05,
+      "train_mean": 0.8995125000000002,
+      "train_std": 3.82732772311699e-06
+    },
+    "balanced_accuracy": {
+      "validation_mean": 0.5,
+      "validation_std": 0.0,
+      "train_mean": 0.5,
+      "train_std": 0.0
+    }
+  },
+  "fit_time_mean": 0.1724989891052246,
+  "fit_time_std": 0.019149789366943167,
+  "score_time_mean": 0.2454648494720459,
+  "score_time_std": 0.02855503985981078,
+  "estimator_class": "sklearn.dummy.DummyClassifier",
+  "estimator_parameters": {
+    "constant": null,
+    "random_state": null,
+    "strategy": "most_frequent"
+  },
+  "target_distribution": {
+    "False": 0.8995125,
+    "True": 0.1004875
+  },
+  "cv_fingerprints": [
+    {
+      "fold": 1,
+      "train_size": 128000,
+      "validation_size": 32000,
+      "train_indices_sha256": "fb2fcb462f054b9ad83705fe9dc3ab92d82737e3c5a3130d2c5f282e95304fff",
+      "validation_indices_sha256": "3cffb7d4d6194b1efac6a37a06229c97aa4209e7a2cd981a4b0653bab32119d7",
+      "train_target_distribution": {
+        "False": 0.8995078125,
+        "True": 0.1004921875
+      },
+      "validation_target_distribution": {
+        "False": 0.89953125,
+        "True": 0.10046875
+      }
+    },
+    {
+      "fold": 2,
+      "train_size": 128000,
+      "validation_size": 32000,
+      "train_indices_sha256": "47436f1b4ad0e17e82c10ca0b9672b649a581b23024a61124129688ad755cccb",
+      "validation_indices_sha256": "15facf5b3523b30b6fd306700494b13e5834b5cb7e379571cc93099e2d98bd8a",
+      "train_target_distribution": {
+        "False": 0.8995078125,
+        "True": 0.1004921875
+      },
+      "validation_target_distribution": {
+        "False": 0.89953125,
+        "True": 0.10046875
+      }
+    },
+    {
+      "fold": 3,
+      "train_size": 128000,
+      "validation_size": 32000,
+      "train_indices_sha256": "d52ea69439e5cecfb28f1190ae24294a461fa2cf1ccdfba9e1c13e6ced91e25a",
+      "validation_indices_sha256": "fd2ea858191a0c05b765589948e62f9024ad345e25de1f660f28b43f20562746",
+      "train_target_distribution": {
+        "False": 0.899515625,
+        "True": 0.100484375
+      },
+      "validation_target_distribution": {
+        "False": 0.8995,
+        "True": 0.1005
+      }
+    },
+    {
+      "fold": 4,
+      "train_size": 128000,
+      "validation_size": 32000,
+      "train_indices_sha256": "bc37a4c41445ae792fc045ef6eaceb15fdc62ba6d6465efce351d00d167081f2",
+      "validation_indices_sha256": "6ccd439f1fa41bae6fc2a20fcbddd9fe5cbfa4713b564e0b2e67f31a159d00ff",
+      "train_target_distribution": {
+        "False": 0.899515625,
+        "True": 0.100484375
+      },
+      "validation_target_distribution": {
+        "False": 0.8995,
+        "True": 0.1005
+      }
+    },
+    {
+      "fold": 5,
+      "train_size": 128000,
+      "validation_size": 32000,
+      "train_indices_sha256": "e3be9a4f0ffa937844bada7369fed9a00f7a5229f63624b0656bed0afe8cfc7f",
+      "validation_indices_sha256": "f02857ec18151fb4695bd7a5541af44d4b86a4f6a1b217e67cdb7fcd9ed6766d",
+      "train_target_distribution": {
+        "False": 0.899515625,
+        "True": 0.100484375
+      },
+      "validation_target_distribution": {
+        "False": 0.8995,
+        "True": 0.1005
+      }
+    }
+  ],
+  "return_train_score": true,
+  "status": "completed"
+}

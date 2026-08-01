@@ -10,6 +10,11 @@ def test_load_config_values() -> None:
     assert config["project"]["random_state"] == 42
     assert config["data"]["target_column"] is None
     assert config["metrics"]["primary"] == "roc_auc"
+    assert config["metrics"]["reporting"] == ["accuracy", "balanced_accuracy"]
+    assert config["validation"]["n_splits"] == 5
+    assert config["validation"]["shuffle"] is True
+    assert config["experiments"]["default_n_jobs"] == -1
+    assert config["experiments"]["return_train_score"] is True
     expected_paths = {
         "raw_data",
         "interim_data",

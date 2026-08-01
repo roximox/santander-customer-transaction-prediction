@@ -12,3 +12,6 @@ requires-python = ">=3.11"
 testpaths = ["tests"]
 addopts = "-ra"
 pythonpath = ["."]
+markers = [
+    "integration: tests that require network access or external services",
+]

@@ -1,0 +1,102 @@
+{
+  "search_id": "M01-LR-SEARCH-001",
+  "date_utc": "2026-08-01T20:25:50.191129+00:00",
+  "member": "Member 01",
+  "branch": "feature/data_processing",
+  "estimator_class": "Pipeline",
+  "pipeline_steps": [
+    "scaler",
+    "classifier"
+  ],
+  "n_candidates": 20,
+  "n_splits": 5,
+  "total_fits": 100,
+  "primary_metric": "roc_auc",
+  "best_index": 1,
+  "best_score": 0.8592005385126731,
+  "best_parameters": {
+    "classifier__C": 0.01,
+    "classifier__class_weight": null,
+    "classifier__penalty": "l2"
+  },
+  "best_candidate_id": "candidate_002",
+  "target_metric_summaries": {
+    "roc_auc": {
+      "validation_mean": 0.8592005385126731,
+      "validation_std": 0.003236506777060985,
+      "train_mean": 0.8615255382354043,
+      "generalization_gap": 0.002324999722731258
+    },
+    "average_precision": {
+      "validation_mean": 0.5075921187936969,
+      "validation_std": 0.008491364708204283,
+      "train_mean": 0.5131283638035401,
+      "generalization_gap": 0.005536245009843177
+    },
+    "f1": {
+      "validation_mean": 0.38588080220855975,
+      "validation_std": 0.0036704464874788623,
+      "train_mean": 0.3908522387952654,
+      "generalization_gap": 0.00497143658670568
+    },
+    "precision": {
+      "validation_mean": 0.6914274834758013,
+      "validation_std": 0.018358095137235648,
+      "train_mean": 0.698256768833579,
+      "generalization_gap": 0.006829285357777715
+    },
+    "recall": {
+      "validation_mean": 0.2677575961560781,
+      "validation_std": 0.005161247867716037,
+      "train_mean": 0.2713801268691033,
+      "generalization_gap": 0.003622530713025207
+    },
+    "accuracy": {
+      "validation_mean": 0.9143687500000001,
+      "validation_std": 0.0007928883118068822,
+      "train_mean": 0.9149984374999999,
+      "generalization_gap": 0.0006296874999998092
+    },
+    "balanced_accuracy": {
+      "validation_mean": 0.6271807288642834,
+      "validation_std": 0.002052021388675959,
+      "train_mean": 0.6291396404228347,
+      "generalization_gap": 0.001958911558551213
+    }
+  },
+  "search_space": {
+    "classifier__penalty": [
+      "l1",
+      "l2"
+    ],
+    "classifier__C": [
+      0.01,
+      0.1,
+      1.0,
+      10.0,
+      100.0
+    ],
+    "classifier__class_weight": [
+      null,
+      "balanced"
+    ]
+  },
+  "status": "completed",
+  "final_test_used": false,
+  "n_samples": 160000,
+  "n_features": 200,
+  "n_jobs": -1,
+  "duration_seconds": 974.6556677080225,
+  "mean_seconds_per_candidate": 48.73278338540113,
+  "mean_seconds_per_fit": 9.746556677080225,
+  "convergence_warning_count": 6,
+  "convergence_warning_messages": [
+    "The max_iter was reached which means the coef_ did not converge"
+  ],
+  "convergence_configurations": [],
+  "convergence_configuration_note": "Warnings are emitted per parallel fit and cannot be mapped reliably to a candidate by GridSearchCV.",
+  "max_iter": 2000,
+  "solver": "saga",
+  "train_fingerprint": "61c403ec521d15ab9d6316606eba5acdfc22381cb764b6da76a65041ec11f477",
+  "reserved_test_fingerprint_verified_only": "bf7d43e492967dad1358676e9bf8355a910823077b59118014db12af3e26f586"
+}

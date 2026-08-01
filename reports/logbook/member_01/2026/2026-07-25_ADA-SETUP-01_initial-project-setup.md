@@ -3,13 +3,13 @@
 ## Metadata
 
 - Date: 2026-07-25
-- Member: Member 01
+- Member: Yassine Elhari
 - Sprint: Sprint 0
 - Ticket ID: ADA-SETUP-01
 - Branch: main
-- Pull Request: Not applicable
-- Time spent: TO BE COMPLETED BY THE STUDENT
-- Related meeting: Initial project planning meeting or not yet assigned
+- Pull Request: To be updated after Pull Request creation
+- Time spent: TO BE COMPLETED BY YASSINE ELHARI
+- Related meeting: TO BE COMPLETED BY YASSINE ELHARI
 
 ## Title
 
@@ -126,7 +126,8 @@ None. No scientific output was produced during project setup.
 
 The shared `random_state` is centralised, configured paths are relative,
 dependencies are documented, and the tests require no Internet access. Dataset
-download will be implemented later, and no test data has been used.
+download will be implemented later. The final test set was not used and remained
+closed for model selection.
 
 ## Next step
 

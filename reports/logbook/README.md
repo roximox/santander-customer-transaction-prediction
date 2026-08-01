@@ -24,6 +24,6 @@ adaptation associated with the work. Document abandoned approaches as well as
 successful ones. Together, the entries should make the project workload
 plausible and auditable.
 
-The placeholder directories `member_01` through `member_04` can be renamed when
-the team members' real names are available. Until then, each member edits only
-their assigned directory.
+The directories `member_01` through `member_04` remain stable so references and
+automated checks do not depend on personal names. Each README identifies the
+responsible member, and each member edits only their assigned directory.

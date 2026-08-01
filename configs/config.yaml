@@ -21,6 +21,14 @@ metrics:
     - f1
     - precision
     - recall
+  reporting:
+    - accuracy
+    - balanced_accuracy
+
+experiments:
+  results_directory: reports/experiments
+  default_n_jobs: -1
+  return_train_score: true
 
 paths:
   raw_data: data/raw

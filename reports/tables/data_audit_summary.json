@@ -1,0 +1,41 @@
+{
+  "execution_date": "2026-08-01",
+  "openml_id": 45566,
+  "project_dataset_name": "Santander Customer Transaction Prediction",
+  "openml_dataset_name": "SantanderCustomerSatisfaction",
+  "target_name": "target",
+  "n_rows": 200000,
+  "n_features": 200,
+  "target_value_counts": {
+    "False": 179902,
+    "True": 20098
+  },
+  "target_proportions": {
+    "False": 0.89951,
+    "True": 0.10049
+  },
+  "missing_values_X": 0,
+  "missing_values_y": 0,
+  "duplicate_rows_X": 0,
+  "duplicate_column_name_count": 0,
+  "constant_feature_count": 0,
+  "quasi_constant_feature_count": 0,
+  "quasi_constant_threshold": 0.99,
+  "infinity_count": 0,
+  "non_numeric_feature_count": 0,
+  "index_is_unique": true,
+  "index_matches_target": true,
+  "raw_total_memory_mb": 305.3667917251587,
+  "raw_feature_memory_mb": 305.17590713500977,
+  "optimized_feature_memory_mb": 152.58801651000977,
+  "memory_saved_mb": 152.587890625,
+  "memory_reduction_percentage": 49.99997937500851,
+  "maximum_absolute_error": 3.7963867214330094e-06,
+  "mean_absolute_error": 1.9811511402243887e-07,
+  "maximum_relative_error": 5.950797554674405e-08,
+  "mean_relative_error": 2.130516379585579e-08,
+  "changed_value_count": 39936663,
+  "changed_value_percentage": 99.8416575,
+  "missing_values_preserved": true,
+  "infinities_preserved": true
+}

@@ -1,0 +1,45 @@
+{
+  "date": "2026-08-01",
+  "openml_id": 45566,
+  "project_dataset_name": "Santander Customer Transaction Prediction",
+  "openml_dataset_name": "SantanderCustomerSatisfaction",
+  "target_name": "target",
+  "total_dimensions": [
+    200000,
+    200
+  ],
+  "train_dimensions": [
+    160000,
+    200
+  ],
+  "test_dimensions": [
+    40000,
+    200
+  ],
+  "random_state": 42,
+  "test_size": 0.2,
+  "stratified": true,
+  "original_target_distribution": {
+    "False": 0.89951,
+    "True": 0.10049
+  },
+  "train_target_distribution": {
+    "False": 0.8995125,
+    "True": 0.1004875
+  },
+  "test_target_distribution": {
+    "False": 0.8995,
+    "True": 0.1005
+  },
+  "maximum_target_proportion_difference": 1.0000000000065512e-05,
+  "train_indices_sha256": "61c403ec521d15ab9d6316606eba5acdfc22381cb764b6da76a65041ec11f477",
+  "test_indices_sha256": "bf7d43e492967dad1358676e9bf8355a910823077b59118014db12af3e26f586",
+  "train_feature_memory_mb": 127.32230377197266,
+  "test_feature_memory_mb": 31.830604553222656,
+  "train_target_memory_mb": 1.3733148574829102,
+  "test_target_memory_mb": 0.34334659576416016,
+  "train_total_memory_mb": 128.69561862945557,
+  "test_total_memory_mb": 32.173951148986816,
+  "overlap_count": 0,
+  "no_index_overlap": true
+}

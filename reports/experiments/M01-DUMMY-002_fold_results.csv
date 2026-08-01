@@ -1,0 +1,6 @@
+experiment_id,model_name,fold,fit_time,score_time,train_size,validation_size,train_roc_auc,validation_roc_auc,train_average_precision,validation_average_precision,train_f1,validation_f1,train_precision,validation_precision,train_recall,validation_recall,train_accuracy,validation_accuracy,train_balanced_accuracy,validation_balanced_accuracy
+M01-DUMMY-002,DummyClassifier (prior),1,0.15250301361083984,0.21165704727172852,128000,32000,0.5,0.5,0.1004921875,0.10046875,0.0,0.0,0.0,0.0,0.0,0.0,0.8995078125,0.89953125,0.5,0.5
+M01-DUMMY-002,DummyClassifier (prior),2,0.23618292808532715,0.27497386932373047,128000,32000,0.5,0.5,0.1004921875,0.10046875,0.0,0.0,0.0,0.0,0.0,0.0,0.8995078125,0.89953125,0.5,0.5
+M01-DUMMY-002,DummyClassifier (prior),3,0.16417884826660156,0.2116999626159668,128000,32000,0.5,0.5,0.100484375,0.1005,0.0,0.0,0.0,0.0,0.0,0.0,0.899515625,0.8995,0.5,0.5
+M01-DUMMY-002,DummyClassifier (prior),4,0.15750813484191895,0.27770400047302246,128000,32000,0.5,0.5,0.100484375,0.1005,0.0,0.0,0.0,0.0,0.0,0.0,0.899515625,0.8995,0.5,0.5
+M01-DUMMY-002,DummyClassifier (prior),5,0.15757417678833008,0.21699285507202148,128000,32000,0.5,0.5,0.100484375,0.1005,0.0,0.0,0.0,0.0,0.0,0.0,0.899515625,0.8995,0.5,0.5

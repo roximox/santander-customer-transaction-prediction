@@ -127,7 +127,10 @@ def test_only_member_01_has_an_initial_entry() -> None:
     ]
     assert all(item in entry for item in required)
 
-    for number in range(2, 5):
+    for number in (2, 4):  # member_03 has logbook entries; only 02 and 04 are still empty.
         year = logbook / f"member_{number:02d}/2026"
         entries = [path for path in year.iterdir() if path.name != ".gitkeep"]
         assert entries == []
+    member_03_year = logbook / "member_03/2026"
+    member_03_entries = [p for p in member_03_year.iterdir() if p.name != ".gitkeep"]
+    assert len(member_03_entries) >= 1, "member_03 should have at least one logbook entry."

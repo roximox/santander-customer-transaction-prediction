@@ -7,6 +7,9 @@
 - Sprint: Sprint 1
 - Ticket ID: M03-FS-001
 - Branch: feature/feature-selection
+- Pull Request: To be updated after Pull Request creation
+- Time spent: TO BE COMPLETED BY ILIAS EL HAMRI
+- Related meeting: TO BE COMPLETED BY ILIAS EL HAMRI
 
 ## Title
 

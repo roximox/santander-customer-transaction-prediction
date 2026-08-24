@@ -9,3 +9,5 @@ joblib
 openml
 pytest
 nbformat
+streamlit
+plotly

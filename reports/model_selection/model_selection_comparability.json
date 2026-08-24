@@ -1,6 +1,6 @@
 {
   "comparability_status": "partially_comparable",
-  "candidate_count": 4,
+  "candidate_count": 8,
   "checks": {
     "n_samples": {
       "status": "consistent",

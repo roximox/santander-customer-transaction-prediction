@@ -2,11 +2,13 @@
 
 from __future__ import annotations
 
+import ast
 import inspect
 import json
 import warnings
 from pathlib import Path
 
+import nbformat
 import pandas as pd
 import pytest
 from sklearn.datasets import make_classification
@@ -38,6 +40,13 @@ from src.feature_selection import (
     save_pca_cv_figure,
 )
 from src.validation import create_stratified_cv
+
+
+ROOT = Path(__file__).resolve().parents[1]
+M03_NOTEBOOKS = {
+    "05_feature_selection.ipynb": "create_feature_selection_pipeline",
+    "06_pca.ipynb": "create_pca_pipeline",
+}
 
 
 def _summary(experiment_id: str, model_name: str, auc: float, ap: float, fit_time: float = 1.0) -> dict[str, object]:
@@ -153,6 +162,48 @@ def test_script_public_api_has_no_final_test_parameters() -> None:
     for function in (fs_main, fs_refuse, pca_main, pca_refuse):
         parameters = inspect.signature(function).parameters
         assert "X_test" not in parameters and "y_test" not in parameters
+
+
+@pytest.mark.parametrize(("notebook_name", "factory_name"), M03_NOTEBOOKS.items())
+def test_m03_notebooks_use_reserved_split_and_recorded_results_only(
+    notebook_name: str, factory_name: str
+) -> None:
+    notebook = nbformat.read(ROOT / "notebooks" / notebook_name, as_version=4)
+    nbformat.validate(notebook)
+    source = "\n".join(
+        cell.source for cell in notebook.cells if cell.cell_type == "code"
+    )
+    tree = ast.parse(source)
+
+    called_functions = {
+        node.func.id
+        for node in ast.walk(tree)
+        if isinstance(node, ast.Call) and isinstance(node.func, ast.Name)
+    }
+    assert {"load_dataset", "create_train_test_split", "split_fingerprint"} <= called_functions
+    assert factory_name in called_functions
+    assert "evaluate_model_cv" not in called_functions
+    assert not ({"X_test", "y_test"} & {node.id for node in ast.walk(tree) if isinstance(node, ast.Name)})
+
+    deleted_names = {
+        target.id
+        for node in ast.walk(tree)
+        if isinstance(node, ast.Delete)
+        for target in node.targets
+        if isinstance(target, ast.Name)
+    }
+    assert {"X_reserved", "y_reserved"} <= deleted_names
+
+    loaded_paths = {
+        node.value
+        for node in ast.walk(tree)
+        if isinstance(node, ast.Constant)
+        and isinstance(node.value, str)
+        and node.value.startswith("reports/experiments/")
+    }
+    expected_id = "M03-FS-001" if notebook_name.startswith("05_") else "M03-PCA-001"
+    assert any(expected_id in path and path.endswith("_fold_results.csv") for path in loaded_paths)
+    assert any(expected_id in path and path.endswith("_summary.json") for path in loaded_paths)
 
 
 def test_convergence_warning_is_detected_and_not_silently_masked() -> None:

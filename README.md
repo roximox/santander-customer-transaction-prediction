@@ -380,6 +380,23 @@ jupyter lab
 Run notebooks in numerical order and execute every notebook from top to bottom
 before review. Notebooks currently contain planning scaffolds only.
 
+## Interactive Dashboard
+
+Install the project dependencies and launch the professor-facing dashboard from
+the repository root:
+
+```bash
+pip install -r requirements.txt
+streamlit run app.py
+```
+
+The dashboard reads saved CSV and JSON artifacts from `reports/`; it does not
+retrain models, contact OpenML during normal startup, write to the experiment
+registry, or evaluate the reserved final test set. Registered experiments are
+discovered dynamically, so future Member 02 results become visible where their
+artifact schema is supported. Missing optional analyses are shown as concise
+warnings rather than application failures.
+
 ## Team workflow and Git strategy
 
 `main` is stable, while `develop` is the integration branch. Create one focused

@@ -4,6 +4,10 @@
 
 - M01-LR-001: Logistic Regression L2 Baseline (Member 01)
 - M01-LR-002: Logistic Regression L2 Balanced (Member 01)
+- M03-FS-001: L1 Feature Selection + Logistic Regression (Member 03)
+- M03-PCA-001: PCA + Logistic Regression (Member 03)
+- M04-HGB-001: HistGradientBoosting Baseline (Member 04)
+- M04-HGB-002: HistGradientBoosting Tuned (Member 04)
 - M01-LR-SEARCH-001::candidate_002: Logistic Regression L2 C=0.01 (unweighted) (Member 01)
 - M01-LR-SEARCH-001::candidate_004: Logistic Regression L2 C=0.01 (balanced) (Member 01)
 
@@ -11,9 +15,6 @@
 
 - Member 02: RANDOM_FOREST
 - Member 02: EXTRA_TREES
-- Member 03: PCA
-- Member 03: FEATURE_SELECTION
-- Member 04: HIST_GRADIENT_BOOSTING
 
 ## Comparison Protocol
 
@@ -23,21 +24,18 @@ No model is retrained and no arbitrary composite score is calculated.
 
 ## Best Candidates by Metric
 
-- best_roc_auc: M01-LR-SEARCH-001::candidate_002
-- best_average_precision: M01-LR-SEARCH-001::candidate_002
+- best_roc_auc: M04-HGB-002
+- best_average_precision: M04-HGB-002
 - best_f1: M01-LR-SEARCH-001::candidate_004
 - best_recall: M01-LR-SEARCH-001::candidate_004
-- best_precision: M01-LR-SEARCH-001::candidate_002
+- best_precision: M04-HGB-002
 - best_balanced_accuracy: M01-LR-SEARCH-001::candidate_004
 - fastest: M01-LR-001
 - lowest_generalization_gap: M01-LR-SEARCH-001::candidate_002
 
 ## Competitive Models
 
-- M01-LR-001
-- M01-LR-002
-- M01-LR-SEARCH-001::candidate_002
-- M01-LR-SEARCH-001::candidate_004
+- M04-HGB-002
 
 The competitive label uses one standard deviation of the best ROC-AUC as a CV
 variability heuristic. It is not a formal non-inferiority test.

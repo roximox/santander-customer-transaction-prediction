@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import inspect
 import time
 import warnings
 from collections.abc import Mapping
@@ -33,15 +34,23 @@ EPSILON = float(np.finfo(float).eps)
 def create_coefficient_audit_pipeline(
     *, l1_ratio: float, C: float, class_weight: str | None, max_iter: int = 2000
 ) -> Pipeline:
-    """Build a scaler/logistic Pipeline using the scikit-learn 1.8 API."""
+    """Build an equivalent scaler/logistic Pipeline across sklearn APIs."""
     if l1_ratio not in (0.0, 1.0):
         raise ValueError("This audit supports only l1_ratio=0 (L2) or 1 (L1).")
+    logistic_parameters: dict[str, Any] = {
+        "C": C, "class_weight": class_weight, "solver": "saga",
+        "max_iter": max_iter, "random_state": 42,
+    }
+    penalty_default = inspect.signature(LogisticRegression).parameters["penalty"].default
+    if penalty_default == "deprecated":
+        # scikit-learn 1.8+: l1_ratio replaces the removed penalty choice.
+        logistic_parameters["l1_ratio"] = l1_ratio
+    else:
+        # scikit-learn <=1.7 ignores l1_ratio unless penalty='elasticnet'.
+        logistic_parameters["penalty"] = "l1" if l1_ratio == 1.0 else "l2"
     return Pipeline([
         ("scaler", StandardScaler()),
-        ("classifier", LogisticRegression(
-            C=C, class_weight=class_weight, solver="saga", max_iter=max_iter,
-            random_state=42, l1_ratio=l1_ratio,
-        )),
+        ("classifier", LogisticRegression(**logistic_parameters)),
     ])
 
 

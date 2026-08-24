@@ -1,0 +1,109 @@
+{
+  "search_id": "M04-HGB-SEARCH-001",
+  "member": "Member 04",
+  "branch": "feature/model-optimization",
+  "date_utc": "2026-08-14T00:47:45.836463+00:00",
+  "n_candidates": 20,
+  "n_splits": 5,
+  "total_fits": 100,
+  "primary_metric": "roc_auc",
+  "best_index": 10,
+  "best_score": 0.8914490594718993,
+  "best_parameters": {
+    "min_samples_leaf": 100,
+    "max_leaf_nodes": 31,
+    "max_iter": 700,
+    "learning_rate": 0.05,
+    "l2_regularization": 10.0
+  },
+  "best_candidate_id": "candidate_011",
+  "target_metric_summaries": {
+    "roc_auc": {
+      "validation_mean": 0.8914490594718993,
+      "validation_std": 0.0028364521368533825,
+      "train_mean": 0.9735798564387821,
+      "train_std": 0.0001449851951248209,
+      "generalization_gap": 0.08213079696688275
+    },
+    "average_precision": {
+      "validation_mean": 0.5910892652910229,
+      "validation_std": 0.010028489459778139,
+      "train_mean": 0.8874846167620142,
+      "train_std": 0.001081552803242412,
+      "generalization_gap": 0.2963953514709913
+    },
+    "f1": {
+      "validation_mean": 0.41524813752426376,
+      "validation_std": 0.007033139489982255,
+      "train_mean": 0.7054875560264627,
+      "train_std": 0.003611752714098957,
+      "generalization_gap": 0.290239418502199
+    },
+    "precision": {
+      "validation_mean": 0.7957469720820509,
+      "validation_std": 0.01830811131373502,
+      "train_mean": 0.9660920413716563,
+      "train_std": 0.001842311571043297,
+      "generalization_gap": 0.17034506928960536
+    },
+    "recall": {
+      "validation_mean": 0.28094235277732643,
+      "validation_std": 0.004640089553081182,
+      "train_mean": 0.5556194532786236,
+      "train_std": 0.004103723662447666,
+      "generalization_gap": 0.2746771005012972
+    },
+    "accuracy": {
+      "validation_mean": 0.9204874999999999,
+      "validation_std": 0.001089832269204757,
+      "train_mean": 0.9533859375,
+      "train_std": 0.00046881770344398644,
+      "generalization_gap": 0.0328984375000001
+    },
+    "balanced_accuracy": {
+      "validation_mean": 0.6364377416827398,
+      "validation_std": 0.0025867944449508417,
+      "train_mean": 0.776720595008231,
+      "train_std": 0.0020789868931790044,
+      "generalization_gap": 0.14028285332549117
+    }
+  },
+  "search_space": {
+    "learning_rate": [
+      0.03,
+      0.05,
+      0.1,
+      0.15
+    ],
+    "max_iter": [
+      150,
+      300,
+      500,
+      700
+    ],
+    "max_leaf_nodes": [
+      15,
+      31,
+      63
+    ],
+    "min_samples_leaf": [
+      10,
+      20,
+      50,
+      100
+    ],
+    "l2_regularization": [
+      0.0,
+      0.1,
+      1.0,
+      10.0
+    ]
+  },
+  "final_test_used": false,
+  "status": "completed",
+  "n_samples": 160000,
+  "n_features": 200,
+  "n_jobs": 1,
+  "train_fingerprint": "61c403ec521d15ab9d6316606eba5acdfc22381cb764b6da76a65041ec11f477",
+  "reserved_test_fingerprint_verified_only": "bf7d43e492967dad1358676e9bf8355a910823077b59118014db12af3e26f586"
+}

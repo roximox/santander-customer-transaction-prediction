@@ -1,0 +1,209 @@
+{
+  "experiment_id": "M03-FS-001",
+  "model_name": "L1 Feature Selection + Logistic Regression",
+  "member": "Member 03",
+  "branch": "feature/feature-selection",
+  "date_utc": "2026-08-20T01:30:45+00:00",
+  "n_samples": 160000,
+  "n_features": 200,
+  "cv_strategy": "StratifiedKFold",
+  "n_splits": 5,
+  "shuffle": true,
+  "random_state": 42,
+  "primary_metric": "roc_auc",
+  "primary_score_mean": 0.8591867544428983,
+  "primary_score_std": 0.0032368413458844546,
+  "metrics": {
+    "roc_auc": {
+      "validation_mean": 0.8591867544428983,
+      "validation_std": 0.0032368413458844546,
+      "train_mean": 0.861524603416774,
+      "train_std": 0.0007598200939957281
+    },
+    "average_precision": {
+      "validation_mean": 0.5075662719100904,
+      "validation_std": 0.008486029925975375,
+      "train_mean": 0.5131319098648633,
+      "train_std": 0.002118773167176272
+    },
+    "f1": {
+      "validation_mean": 0.3905611621714344,
+      "validation_std": 0.0022537679504811693,
+      "train_mean": 0.39525262915079296,
+      "train_std": 0.002102808937352346
+    },
+    "precision": {
+      "validation_mean": 0.6888338508995964,
+      "validation_std": 0.018355874929418182,
+      "train_mean": 0.6938088084866498,
+      "train_std": 0.0028482936534104256
+    },
+    "recall": {
+      "validation_mean": 0.27267099572123826,
+      "validation_std": 0.004092937535871095,
+      "train_mean": 0.27634031440239326,
+      "train_std": 0.0016444882374341602
+    },
+    "accuracy": {
+      "validation_mean": 0.9144937499999999,
+      "validation_std": 0.0008409444095776981,
+      "train_mean": 0.9150265624999999,
+      "train_std": 0.00024806871212932117
+    },
+    "balanced_accuracy": {
+      "validation_mean": 0.6294324558332368,
+      "validation_std": 0.0014771976528306118,
+      "train_mean": 0.6313583078718856,
+      "train_std": 0.0008635716789514256
+    }
+  },
+  "fit_time_mean": 15.876452159881591,
+  "fit_time_std": 1.0430611128093885,
+  "score_time_mean": 1.7380927085876465,
+  "score_time_std": 0.12441470953677788,
+  "estimator_class": "sklearn.pipeline.Pipeline",
+  "estimator_parameters": {
+    "memory": null,
+    "steps": [
+      [
+        "scaler",
+        "StandardScaler()"
+      ],
+      [
+        "selector",
+        "SelectFromModel(estimator=LogisticRegression(C=0.1, max_iter=1000, penalty='l1',\n                                             random_state=42, solver='saga'))"
+      ],
+      [
+        "classifier",
+        "LogisticRegression(max_iter=1000, penalty='l2', random_state=42)"
+      ]
+    ],
+    "transform_input": null,
+    "verbose": false,
+    "scaler": "StandardScaler()",
+    "selector": "SelectFromModel(estimator=LogisticRegression(C=0.1, max_iter=1000, penalty='l1',\n                                             random_state=42, solver='saga'))",
+    "classifier": "LogisticRegression(max_iter=1000, penalty='l2', random_state=42)",
+    "scaler__copy": true,
+    "scaler__with_mean": true,
+    "scaler__with_std": true,
+    "selector__estimator__C": 0.1,
+    "selector__estimator__class_weight": null,
+    "selector__estimator__dual": false,
+    "selector__estimator__fit_intercept": true,
+    "selector__estimator__intercept_scaling": 1,
+    "selector__estimator__l1_ratio": 0.0,
+    "selector__estimator__max_iter": 1000,
+    "selector__estimator__n_jobs": null,
+    "selector__estimator__penalty": "l1",
+    "selector__estimator__random_state": 42,
+    "selector__estimator__solver": "saga",
+    "selector__estimator__tol": 0.0001,
+    "selector__estimator__verbose": 0,
+    "selector__estimator__warm_start": false,
+    "selector__estimator": "LogisticRegression(C=0.1, max_iter=1000, penalty='l1', random_state=42,\n                   solver='saga')",
+    "selector__importance_getter": "auto",
+    "selector__max_features": null,
+    "selector__norm_order": 1,
+    "selector__prefit": false,
+    "selector__threshold": null,
+    "classifier__C": 1.0,
+    "classifier__class_weight": null,
+    "classifier__dual": false,
+    "classifier__fit_intercept": true,
+    "classifier__intercept_scaling": 1,
+    "classifier__l1_ratio": 0.0,
+    "classifier__max_iter": 1000,
+    "classifier__n_jobs": null,
+    "classifier__penalty": "l2",
+    "classifier__random_state": 42,
+    "classifier__solver": "lbfgs",
+    "classifier__tol": 0.0001,
+    "classifier__verbose": 0,
+    "classifier__warm_start": false
+  },
+  "target_distribution": {
+    "False": 0.8995125,
+    "True": 0.1004875
+  },
+  "cv_fingerprints": [
+    {
+      "fold": 1,
+      "train_size": 128000,
+      "validation_size": 32000,
+      "train_indices_sha256": "fb2fcb462f054b9ad83705fe9dc3ab92d82737e3c5a3130d2c5f282e95304fff",
+      "validation_indices_sha256": "3cffb7d4d6194b1efac6a37a06229c97aa4209e7a2cd981a4b0653bab32119d7",
+      "train_target_distribution": {
+        "False": 0.8995078125,
+        "True": 0.1004921875
+      },
+      "validation_target_distribution": {
+        "False": 0.89953125,
+        "True": 0.10046875
+      }
+    },
+    {
+      "fold": 2,
+      "train_size": 128000,
+      "validation_size": 32000,
+      "train_indices_sha256": "47436f1b4ad0e17e82c10ca0b9672b649a581b23024a61124129688ad755cccb",
+      "validation_indices_sha256": "15facf5b3523b30b6fd306700494b13e5834b5cb7e379571cc93099e2d98bd8a",
+      "train_target_distribution": {
+        "False": 0.8995078125,
+        "True": 0.1004921875
+      },
+      "validation_target_distribution": {
+        "False": 0.89953125,
+        "True": 0.10046875
+      }
+    },
+    {
+      "fold": 3,
+      "train_size": 128000,
+      "validation_size": 32000,
+      "train_indices_sha256": "d52ea69439e5cecfb28f1190ae24294a461fa2cf1ccdfba9e1c13e6ced91e25a",
+      "validation_indices_sha256": "fd2ea858191a0c05b765589948e62f9024ad345e25de1f660f28b43f20562746",
+      "train_target_distribution": {
+        "False": 0.899515625,
+        "True": 0.100484375
+      },
+      "validation_target_distribution": {
+        "False": 0.8995,
+        "True": 0.1005
+      }
+    },
+    {
+      "fold": 4,
+      "train_size": 128000,
+      "validation_size": 32000,
+      "train_indices_sha256": "bc37a4c41445ae792fc045ef6eaceb15fdc62ba6d6465efce351d00d167081f2",
+      "validation_indices_sha256": "6ccd439f1fa41bae6fc2a20fcbddd9fe5cbfa4713b564e0b2e67f31a159d00ff",
+      "train_target_distribution": {
+        "False": 0.899515625,
+        "True": 0.100484375
+      },
+      "validation_target_distribution": {
+        "False": 0.8995,
+        "True": 0.1005
+      }
+    },
+    {
+      "fold": 5,
+      "train_size": 128000,
+      "validation_size": 32000,
+      "train_indices_sha256": "e3be9a4f0ffa937844bada7369fed9a00f7a5229f63624b0656bed0afe8cfc7f",
+      "validation_indices_sha256": "f02857ec18151fb4695bd7a5541af44d4b86a4f6a1b217e67cdb7fcd9ed6766d",
+      "train_target_distribution": {
+        "False": 0.899515625,
+        "True": 0.100484375
+      },
+      "validation_target_distribution": {
+        "False": 0.8995,
+        "True": 0.1005
+      }
+    }
+  ],
+  "return_train_score": true,
+  "convergence_warning_detected": false,
+  "convergence_warning_messages": [],
+  "status": "completed"
+}

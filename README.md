@@ -327,6 +327,48 @@ causal effects. Interpret their signs and magnitudes jointly with stability
 across folds, exact-zero selection frequency, convergence, and validation
 metrics. The reserved final test partition is never evaluated by this audit.
 
+## Logistic Regression Learning Curves
+
+ADA-ML-08 measures how the selected ROC-AUC configuration (L2, `C=0.01`,
+unweighted) and its recall-oriented balanced alternative react to increasing
+training volume. Run the protected campaign once from the repository root:
+
+```bash
+python scripts/run_logistic_learning_curves.py
+```
+
+For each of the five shared stratified folds, the script trains on stratified
+subsets of 5%, 10%, 25%, 50%, 75%, and 100% of that fold's training portion.
+It reports actual sample counts, train and full-fold validation metrics,
+dispersion, convergence, iteration counts, and fit time. CSV/JSON tables are
+written under `reports/tables/` and vector PDF figures under
+`reports/figures/`. The final test partition is fingerprint-verified only: it
+is never passed to a model, scored, or used to interpret the curves.
+
+## Pre-Final Model Selection
+
+ADA-ML-09 standardizes recorded training cross-validation results before the
+group locks a final pipeline. It loads no dataset and retrains no model. Run:
+
+```bash
+python scripts/build_model_selection_report.py
+```
+
+The report uses ROC-AUC as the fixed primary metric while preserving Average
+Precision, F1, precision, recall, balanced accuracy, generalization gap,
+variability, fit time, convergence, and complexity metadata where available.
+It creates comparison, exclusion, coverage, decision, portfolio, and meeting
+files under `reports/model_selection/`, plus vector figures under
+`reports/figures/`. There is no arbitrary composite score and Accuracy alone
+cannot determine selection. Incomparable or unverifiable protocols are flagged
+instead of ranked as equivalent.
+
+This stage supports the professor's requirements to compare multiple models,
+use appropriate metrics, justify decisions, and document reproducible variants
+and comparisons. The current report is incomplete until the retained models of
+Members 02–04 are available. The final pipeline decision is collective and
+must be documented in a group meeting. No final-test metric is read or created.
+
 ## Running notebooks
 
 Start Jupyter from the repository root:

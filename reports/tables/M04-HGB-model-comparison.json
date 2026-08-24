@@ -1,0 +1,59 @@
+{
+  "comparison_id": "M04-HGB-COMP-001",
+  "baseline_id": "M04-HGB-001",
+  "tuned_source": "M04-HGB-OOF-001",
+  "baseline_source_type": "five_fold_validation_mean",
+  "tuned_source_type": "aggregated_oof_predictions",
+  "final_test_used": false,
+  "tuned_parameters": {
+    "min_samples_leaf": 100,
+    "max_leaf_nodes": 31,
+    "max_iter": 700,
+    "learning_rate": 0.05,
+    "l2_regularization": 10.0
+  },
+  "metrics": [
+    {
+      "metric": "ROC-AUC",
+      "baseline_value": 0.8845963847629816,
+      "tuned_value": 0.891437809210276,
+      "absolute_change": 0.006841424447294409
+    },
+    {
+      "metric": "Average Precision",
+      "baseline_value": 0.5728792216100832,
+      "tuned_value": 0.5908599650158652,
+      "absolute_change": 0.01798074340578204
+    },
+    {
+      "metric": "F1",
+      "baseline_value": 0.3872554085638541,
+      "tuned_value": 0.4152417723846295,
+      "absolute_change": 0.027986363820775406
+    },
+    {
+      "metric": "Precision",
+      "baseline_value": 0.7826709844016149,
+      "tuned_value": 0.7955265938710814,
+      "absolute_change": 0.012855609469466511
+    },
+    {
+      "metric": "Recall",
+      "baseline_value": 0.2573073590059036,
+      "tuned_value": 0.2809429033461873,
+      "absolute_change": 0.0236355443402837
+    },
+    {
+      "metric": "Accuracy",
+      "baseline_value": 0.91818125,
+      "tuned_value": 0.9204875,
+      "absolute_change": 0.002306250000000065
+    },
+    {
+      "metric": "Balanced Accuracy",
+      "baseline_value": 0.6246584605930968,
+      "tuned_value": 0.6364380168959227,
+      "absolute_change": 0.0117795563028259
+    }
+  ]
+}

@@ -23,6 +23,8 @@ EXPECTED_TICKETS = {
     "ADA-ML-05",
     "ADA-ML-06",
     "ADA-ML-07",
+    "ADA-ML-08",
+    "ADA-ML-09",
 }
 FILENAME_PATTERN = re.compile(
     r"^\d{4}-\d{2}-\d{2}_(ADA-(?:SETUP|DATA|ML)-\d{2})_[a-z0-9-]+\.md$"
@@ -117,10 +119,14 @@ def test_pr_placeholder_and_main_code_references() -> None:
         "src/logistic_class_weight.py",
         "src/search.py",
         "src/logistic_coefficient_analysis.py",
+        "src/learning_curves.py",
+        "src/model_selection.py",
         "scripts/run_data_audit.py",
         "scripts/create_data_split.py",
         "scripts/run_logistic_grid_search.py",
         "scripts/run_logistic_coefficient_analysis.py",
+        "scripts/run_logistic_learning_curves.py",
+        "scripts/build_model_selection_report.py",
     )
     assert all((ROOT / relative_path).is_file() for relative_path in required_paths)
 

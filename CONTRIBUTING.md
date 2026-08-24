@@ -121,3 +121,22 @@ include its additional traceability fields.
   folds before interpreting or selecting features.
 - Preserve historical experiment parameterizations; API migrations belong to
   new, explicitly documented analyses.
+
+## Learning curves
+
+- Learning curves use training data only; the final test remains reserved.
+- Every reduced training subset must be stratified and reproducible.
+- Report actual sample counts, not fractions alone.
+- Report both train and validation metrics so generalization gaps remain visible.
+- Evaluate every fraction on the complete validation fold; never subsample it.
+
+## Pre-final model selection
+
+- Only training cross-validation results may enter pre-final model selection.
+- Final-test metrics must not appear before one pipeline is collectively locked.
+- All candidates must use the common evaluation protocol.
+- Do not rank incomparable experiments as though they were equivalent; report
+  missing protocol metadata as not verifiable.
+- Use transparent multi-criteria review, never an arbitrary composite score or
+  Accuracy alone.
+- Document the final model decision and rationale in a group meeting.

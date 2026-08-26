@@ -25,9 +25,10 @@ EXPECTED_TICKETS = {
     "ADA-ML-07",
     "ADA-ML-08",
     "ADA-ML-09",
+    "ADA-UI-01",
 }
 FILENAME_PATTERN = re.compile(
-    r"^\d{4}-\d{2}-\d{2}_(ADA-(?:SETUP|DATA|ML)-\d{2})_[a-z0-9-]+\.md$"
+    r"^\d{4}-\d{2}-\d{2}_(ADA-(?:SETUP|DATA|ML|UI)-\d{2})_[a-z0-9-]+\.md$"
 )
 SECTION_EQUIVALENTS = {
     "Objective": ("## Objective", "## Scientific question", "## Problem", "## Reason for the audit"),

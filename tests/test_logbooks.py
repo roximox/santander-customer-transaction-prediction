@@ -25,6 +25,7 @@ EXPECTED_TICKETS = {
     "ADA-ML-07",
     "ADA-ML-08",
     "ADA-ML-09",
+    "ADA-ML-10",
     "ADA-UI-01",
 }
 FILENAME_PATTERN = re.compile(

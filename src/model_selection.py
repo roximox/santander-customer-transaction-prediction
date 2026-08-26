@@ -20,7 +20,7 @@ from src.config import get_project_root
 METRICS = ("roc_auc", "average_precision", "f1", "precision", "recall", "accuracy", "balanced_accuracy")
 EXPECTED_FAMILIES = (
     ("Member 01", "LOGISTIC_REGRESSION"), ("Member 02", "RANDOM_FOREST"),
-    ("Member 02", "EXTRA_TREES"), ("Member 03", "PCA"),
+    ("Member 01", "EXTRA_TREES"), ("Member 03", "PCA"),
     ("Member 03", "FEATURE_SELECTION"), ("Member 04", "HIST_GRADIENT_BOOSTING"),
 )
 

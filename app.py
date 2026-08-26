@@ -61,7 +61,7 @@ filtered = filter_experiments(experiments, members=members, families=families, e
 def overview() -> None:
     page_header("Project Overview", "Executive view of saved cross-validation evidence")
     cards = st.columns(4)
-    values = (("Total observations", "200,000"), ("Development observations", "160,000"), ("Reserved final test", "40,000"), ("Numerical features", "200"), ("CV folds", "5"), ("Automated tests", "182"), ("Registered experiments", str(len(load_registry()))), ("Eligible candidates", str(len(eligible))))
+    values = (("Total observations", "200,000"), ("Development observations", "160,000"), ("Reserved final test", "40,000"), ("Numerical features", "200"), ("CV folds", "5"), ("Automated tests", "185"), ("Registered experiments", str(len(load_registry()))), ("Eligible candidates", str(len(eligible))))
     for index, (label, value) in enumerate(values): cards[index % 4].metric(label, value)
     st.subheader("Scientific workflow")
     stages = ["OpenML", "Data Audit", "float32 optimization", "Stratified Split", "5-fold CV", "Experiments", "Model Comparison", "Group Model Lock", "🔒 Final Test"]
@@ -124,7 +124,10 @@ def explorer() -> None:
 
 
 def model_comparison() -> None:
-    page_header("INTERIM MODEL COMPARISON — Member 02 models pending", "Eligible saved CV candidates only; no final winner is declared")
+    missing = selection["summary"].get("missing_expected_model_families", [])
+    pending = ", ".join(family.replace("_", " ").title() for family in missing)
+    title = "INTERIM MODEL COMPARISON" + (f" — {pending} pending" if pending else " — full expected coverage")
+    page_header(title, "Eligible saved CV candidates only; no final winner is declared")
     data = filter_experiments(eligible, members=members, families=families, experiment_ids=experiment_ids, include_dummy=include_dummy)
     st.plotly_chart(charts.metric_ranking(data, metric, show_variability), width="stretch")
     left, right = st.columns(2)
@@ -254,7 +257,7 @@ Feature Selection and PCA currently have limited effect on ranking performance r
 ### Gradient Boosting
 HistGradientBoosting is the current strongest ranking candidate, with higher cost and a larger train-validation gap.
 ### Current limitation
-Member 02 Random Forest and Extra Trees results remain missing.
+Member 02 Random Forest and Decision Tree results and Member 01 Extra Trees are integrated. Expected model-family coverage is complete, but the group has not yet locked a final pipeline.
 ### Next decision
 Integrate remaining models, rerun pre-final selection, lock one group pipeline, and only then unlock final-test evaluation.
 """)

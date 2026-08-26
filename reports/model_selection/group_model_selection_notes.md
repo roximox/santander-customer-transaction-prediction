@@ -2,8 +2,11 @@
 
 ## Available Candidates
 
+- M01-ET-001: Extra Trees Baseline (Member 01)
 - M01-LR-001: Logistic Regression L2 Baseline (Member 01)
 - M01-LR-002: Logistic Regression L2 Balanced (Member 01)
+- M02-DT-001: Decision Tree (Member 02)
+- M02-RF-001: Random Forest (Member 02)
 - M03-FS-001: L1 Feature Selection + Logistic Regression (Member 03)
 - M03-PCA-001: PCA + Logistic Regression (Member 03)
 - M04-HGB-001: HistGradientBoosting Baseline (Member 04)
@@ -13,8 +16,7 @@
 
 ## Missing Candidates
 
-- Member 02: RANDOM_FOREST
-- Member 02: EXTRA_TREES
+- None
 
 ## Comparison Protocol
 
@@ -26,7 +28,7 @@ No model is retrained and no arbitrary composite score is calculated.
 
 - best_roc_auc: M04-HGB-002
 - best_average_precision: M04-HGB-002
-- best_f1: M01-LR-SEARCH-001::candidate_004
+- best_f1: M01-ET-001
 - best_recall: M01-LR-SEARCH-001::candidate_004
 - best_precision: M04-HGB-002
 - best_balanced_accuracy: M01-LR-SEARCH-001::candidate_004

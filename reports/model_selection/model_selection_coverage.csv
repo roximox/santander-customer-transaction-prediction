@@ -1,0 +1,7 @@
+member,expected_family,experiments_found,eligible_candidates,status
+Member 01,LOGISTIC_REGRESSION,4,4,available
+Member 02,RANDOM_FOREST,0,0,missing
+Member 02,EXTRA_TREES,0,0,missing
+Member 03,PCA,1,1,available
+Member 03,FEATURE_SELECTION,1,1,available
+Member 04,HIST_GRADIENT_BOOSTING,2,2,available

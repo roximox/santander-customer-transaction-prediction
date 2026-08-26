@@ -1,0 +1,37 @@
+{
+  "date_utc": "2026-08-24T11:29:49.298811+00:00",
+  "number_of_discovered_experiments": 10,
+  "number_of_eligible_candidates": 8,
+  "number_of_excluded_candidates": 4,
+  "members_represented": [
+    "Member 01",
+    "Member 03",
+    "Member 04"
+  ],
+  "model_families_represented": [
+    "FEATURE_SELECTION",
+    "HIST_GRADIENT_BOOSTING",
+    "LOGISTIC_REGRESSION",
+    "PCA"
+  ],
+  "best_by_metric": {
+    "roc_auc": "M04-HGB-002",
+    "average_precision": "M04-HGB-002",
+    "f1": "M01-LR-SEARCH-001::candidate_004",
+    "precision": "M04-HGB-002",
+    "recall": "M01-LR-SEARCH-001::candidate_004",
+    "balanced_accuracy": "M01-LR-SEARCH-001::candidate_004"
+  },
+  "competitive_candidate_ids": [
+    "M04-HGB-002"
+  ],
+  "comparability_status": "partially_comparable",
+  "missing_expected_model_families": [
+    "RANDOM_FOREST",
+    "EXTRA_TREES"
+  ],
+  "final_test_used": false,
+  "selection_status": "waiting_for_additional_models",
+  "selection_method": "Multi-criteria review; no composite score and no final winner.",
+  "selected_search_candidate_provenance": "Recorded M01-LR-SEARCH-001 candidate rows; historical files unchanged."
+}

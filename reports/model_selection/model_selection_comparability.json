@@ -1,0 +1,50 @@
+{
+  "comparability_status": "partially_comparable",
+  "candidate_count": 8,
+  "checks": {
+    "n_samples": {
+      "status": "consistent",
+      "observed_values": [
+        "160000"
+      ]
+    },
+    "n_splits": {
+      "status": "consistent",
+      "observed_values": [
+        "5"
+      ]
+    },
+    "cv_strategy": {
+      "status": "consistent",
+      "observed_values": [
+        "StratifiedKFold"
+      ]
+    },
+    "random_state": {
+      "status": "consistent",
+      "observed_values": [
+        "42"
+      ]
+    },
+    "primary_metric": {
+      "status": "consistent",
+      "observed_values": [
+        "roc_auc"
+      ]
+    },
+    "target_distribution": {
+      "status": "not verifiable",
+      "observed_values": [
+        "{\"False\": 0.8995125, \"True\": 0.1004875}"
+      ]
+    },
+    "data_source": {
+      "status": "not verifiable",
+      "observed_values": []
+    },
+    "final_test_usage": {
+      "status": "consistent",
+      "detail": "No candidate reports final-test usage."
+    }
+  }
+}

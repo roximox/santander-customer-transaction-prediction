@@ -17,6 +17,7 @@ def test_main_directories_exist() -> None:
         "reports/tables",
         "reports/experiments",
         "reports/searches",
+        "reports/model_selection",
         "reports/logbook",
         "reports/meetings",
         "reports/portfolio",
@@ -44,6 +45,13 @@ def test_main_files_exist() -> None:
         "src/logistic_class_weight.py",
         "src/search.py",
         "src/logistic_coefficient_analysis.py",
+        "src/model_selection.py",
+        "app.py",
+        "src/dashboard/__init__.py",
+        "src/dashboard/loaders.py",
+        "src/dashboard/components.py",
+        "src/dashboard/charts.py",
+        "src/dashboard/formatting.py",
         "scripts/verify_evaluation_framework.py",
         "scripts/verify_experiment_orchestrator.py",
         "scripts/run_dummy_baselines.py",
@@ -52,6 +60,7 @@ def test_main_files_exist() -> None:
         "scripts/run_logistic_class_weight_comparison.py",
         "scripts/run_logistic_grid_search.py",
         "scripts/run_logistic_coefficient_analysis.py",
+        "scripts/build_model_selection_report.py",
         "tests/test_evaluation.py",
         "tests/test_experiments.py",
         "tests/test_dummy_baselines.py",
@@ -60,6 +69,8 @@ def test_main_files_exist() -> None:
         "tests/test_logistic_class_weight.py",
         "tests/test_search.py",
         "tests/test_logistic_coefficient_analysis.py",
+        "tests/test_model_selection.py",
+        "tests/test_dashboard.py",
         "reports/experiments/experiment_template.csv",
         "reports/logbook/README.md",
         "reports/logbook/templates/logbook_entry_template.md",
@@ -77,6 +88,7 @@ def test_required_gitkeep_files_exist() -> None:
         "reports/tables",
         "reports/experiments",
         "reports/searches",
+        "reports/model_selection",
         "reports/meetings",
         "reports/portfolio",
         "models",
@@ -127,7 +139,7 @@ def test_only_member_01_has_an_initial_entry() -> None:
     ]
     assert all(item in entry for item in required)
 
-    for number in range(2, 5):
+    for number in (2, 3, 4):
         year = logbook / f"member_{number:02d}/2026"
         entries = [path for path in year.iterdir() if path.name != ".gitkeep"]
-        assert entries == []
+        assert len(entries) >= 1, f"member_{number:02d} should have logbook entries."

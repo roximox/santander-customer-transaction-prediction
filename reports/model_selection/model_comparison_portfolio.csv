@@ -1,0 +1,2 @@
+Model,Member,ROC-AUC mean ± std,Average Precision mean ± std,F1,Precision,Recall,Balanced Accuracy,Train-validation gap,Fit time
+HistGradientBoosting Tuned,Member 04,0.891449 ± 0.002836,0.591089 ± 0.010028,0.41524813752426376,0.7957469720820509,0.28094235277732643,0.6364377416827398,0.08213079696688275,115.01385912895202

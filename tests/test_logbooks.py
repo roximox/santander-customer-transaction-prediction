@@ -23,9 +23,12 @@ EXPECTED_TICKETS = {
     "ADA-ML-05",
     "ADA-ML-06",
     "ADA-ML-07",
+    "ADA-ML-08",
+    "ADA-ML-09",
+    "ADA-UI-01",
 }
 FILENAME_PATTERN = re.compile(
-    r"^\d{4}-\d{2}-\d{2}_(ADA-(?:SETUP|DATA|ML)-\d{2})_[a-z0-9-]+\.md$"
+    r"^\d{4}-\d{2}-\d{2}_(ADA-(?:SETUP|DATA|ML|UI)-\d{2})_[a-z0-9-]+\.md$"
 )
 SECTION_EQUIVALENTS = {
     "Objective": ("## Objective", "## Scientific question", "## Problem", "## Reason for the audit"),
@@ -55,8 +58,6 @@ OTHER_MEMBER_HASHES = {
     "member_02/2026/.gitkeep": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
     "member_03/README.md": "57b34e97cbe870fd80738fcd7fa7333b56adf05708268d25e633215a7d65f467",
     "member_03/2026/.gitkeep": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
-    "member_04/README.md": "bed888e01228e33f60fe27f5982188bda26dadac16e98defb98af267b227ed80",
-    "member_04/2026/.gitkeep": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
 }
 
 
@@ -117,10 +118,14 @@ def test_pr_placeholder_and_main_code_references() -> None:
         "src/logistic_class_weight.py",
         "src/search.py",
         "src/logistic_coefficient_analysis.py",
+        "src/learning_curves.py",
+        "src/model_selection.py",
         "scripts/run_data_audit.py",
         "scripts/create_data_split.py",
         "scripts/run_logistic_grid_search.py",
         "scripts/run_logistic_coefficient_analysis.py",
+        "scripts/run_logistic_learning_curves.py",
+        "scripts/build_model_selection_report.py",
     )
     assert all((ROOT / relative_path).is_file() for relative_path in required_paths)
 

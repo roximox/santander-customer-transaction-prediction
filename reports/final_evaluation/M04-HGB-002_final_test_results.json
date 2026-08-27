@@ -1,0 +1,44 @@
+{
+  "evaluation_id": "FINAL-M04-HGB-002-001",
+  "date_utc": "2026-08-26T16:25:59.682522+00:00",
+  "experiment_id": "M04-HGB-002",
+  "model_name": "HistGradientBoosting Tuned",
+  "member": "Member 04",
+  "status": "completed",
+  "execution_count": 1,
+  "selection_reopened": false,
+  "n_train": 160000,
+  "n_final_test": 40000,
+  "n_features": 200,
+  "train_fingerprint": "61c403ec521d15ab9d6316606eba5acdfc22381cb764b6da76a65041ec11f477",
+  "final_test_fingerprint": "bf7d43e492967dad1358676e9bf8355a910823077b59118014db12af3e26f586",
+  "numeric_dtype": "float32",
+  "estimator_class": "sklearn.ensemble._hist_gradient_boosting.gradient_boosting.HistGradientBoostingClassifier",
+  "estimator_parameters": {
+    "l2_regularization": 10.0,
+    "learning_rate": 0.05,
+    "loss": "log_loss",
+    "max_depth": null,
+    "max_iter": 700,
+    "max_leaf_nodes": 31,
+    "min_samples_leaf": 100,
+    "random_state": 42
+  },
+  "fit_time_seconds": 40.28293229197152,
+  "metrics": {
+    "roc_auc": 0.8912137201706862,
+    "average_precision": 0.5843853954578117,
+    "f1": 0.40363232023721274,
+    "precision": 0.7914244186046512,
+    "recall": 0.2708955223880597,
+    "accuracy": 0.91955,
+    "balanced_accuracy": 0.6314594343457809,
+    "confusion_matrix": {
+      "tn": 35693,
+      "fp": 287,
+      "fn": 2931,
+      "tp": 1089
+    },
+    "threshold": 0.5
+  }
+}

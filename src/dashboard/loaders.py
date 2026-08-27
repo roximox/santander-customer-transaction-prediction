@@ -132,6 +132,8 @@ def load_model_comparison(eligible_only: bool = True, root: str | Path | None = 
 def load_selection_outputs(root: str | Path | None = None) -> dict[str, Any]:
     return {
         "summary": load_json("reports/model_selection/model_selection_summary.json", root),
+        "lock": load_json("reports/model_selection/final_model_lock.json", root),
+        "final_test": load_json("reports/final_evaluation/M04-HGB-002_final_test_results.json", root),
         "comparability": load_json("reports/model_selection/model_selection_comparability.json", root),
         "coverage": load_csv("reports/model_selection/model_selection_coverage.csv", ("member", "expected_family", "status"), root),
         "decision": load_csv("reports/model_selection/model_selection_decision.csv", ("selection_category", "experiment_id"), root),

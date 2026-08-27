@@ -1,0 +1,49 @@
+{
+  "decision_id": "GROUP-MODEL-LOCK-001",
+  "decision_date": "2026-08-26",
+  "status": "final_test_completed",
+  "collective_confirmation": true,
+  "selected_experiment_id": "M04-HGB-002",
+  "model_name": "HistGradientBoosting Tuned",
+  "model_family": "HIST_GRADIENT_BOOSTING",
+  "member": "Member 04",
+  "estimator_class": "sklearn.ensemble.HistGradientBoostingClassifier",
+  "estimator_parameters": {
+    "l2_regularization": 10.0,
+    "learning_rate": 0.05,
+    "loss": "log_loss",
+    "max_depth": null,
+    "max_iter": 700,
+    "max_leaf_nodes": 31,
+    "min_samples_leaf": 100,
+    "random_state": 42
+  },
+  "classification_threshold": 0.5,
+  "selection_basis": {
+    "primary_metric": "roc_auc",
+    "roc_auc_mean": 0.8914490594718993,
+    "roc_auc_std": 0.0028364521368533825,
+    "average_precision_mean": 0.5910892652910229,
+    "average_precision_std": 0.010028489459778139,
+    "rationale": "Highest recorded eligible mean CV ROC-AUC and Average Precision, with complete expected-family coverage and collective team confirmation."
+  },
+  "data_protocol": {
+    "development_samples": 160000,
+    "cv_strategy": "StratifiedKFold",
+    "n_splits": 5,
+    "shuffle": true,
+    "random_state": 42,
+    "train_fingerprint": "61c403ec521d15ab9d6316606eba5acdfc22381cb764b6da76a65041ec11f477",
+    "reserved_test_fingerprint": "bf7d43e492967dad1358676e9bf8355a910823077b59118014db12af3e26f586"
+  },
+  "known_limitations": [
+    "The recorded train-validation ROC-AUC gap is 0.08213079696688275.",
+    "The recorded mean fit time is 115.01385912895202 seconds per fold.",
+    "At threshold 0.5, recorded mean CV recall is 0.28094235277732643."
+  ],
+  "final_test_used": true,
+  "final_test_status": "COMPLETED_ONCE",
+  "meeting_record": "reports/meetings/2026-08-26_final-model-selection-decision.md",
+  "final_evaluation_id": "FINAL-M04-HGB-002-001",
+  "final_result_file": "reports/final_evaluation/M04-HGB-002_final_test_results.json"
+}

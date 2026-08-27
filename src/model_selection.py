@@ -176,6 +176,53 @@ def normalize_search_candidate(candidate: Mapping[str, Any], search_summary: Map
     return normalize_experiment_summary(merged)
 
 
+def enrich_shared_protocol_metadata(
+    summaries: Sequence[Mapping[str, Any]],
+    split_metadata: Mapping[str, Any],
+    *,
+    provenance_file: str,
+) -> list[dict[str, Any]]:
+    """Fill report-only provenance from the official split when protocols match.
+
+    Recorded experiment summaries are never mutated. Metadata is inherited only
+    when a candidate matches the authoritative development dimensions and shared
+    random state; incompatible candidates retain their original missing values.
+    """
+    train_dimensions = split_metadata.get("train_dimensions")
+    if not isinstance(train_dimensions, Sequence) or len(train_dimensions) != 2:
+        raise ValueError("Official split metadata must contain train_dimensions.")
+    target_distribution = split_metadata.get("train_target_distribution")
+    openml_id = split_metadata.get("openml_id")
+    random_state = split_metadata.get("random_state")
+    if not isinstance(target_distribution, Mapping) or openml_id is None or random_state is None:
+        raise ValueError("Official split metadata lacks provenance fields.")
+
+    enriched: list[dict[str, Any]] = []
+    for source in summaries:
+        item = dict(source)
+        matches_shared_split = (
+            item.get("n_samples") == train_dimensions[0]
+            and item.get("n_features") == train_dimensions[1]
+            and item.get("random_state") == random_state
+            and item.get("cv_strategy") == "StratifiedKFold"
+        )
+        inherited: list[str] = []
+        if matches_shared_split and item.get("target_distribution") is None:
+            item["target_distribution"] = dict(target_distribution)
+            inherited.append("target_distribution")
+        if matches_shared_split and item.get("data_source") is None:
+            item["data_source"] = f"OpenML-{openml_id}"
+            inherited.append("data_source")
+        item["shared_metadata_provenance"] = provenance_file if inherited else None
+        item["inherited_metadata_fields"] = inherited
+        item["missing_metadata"] = [
+            key for key in ("n_samples", "n_splits", "cv_strategy", "random_state", "target_distribution", "data_source")
+            if item.get(key) is None
+        ]
+        enriched.append(item)
+    return enriched
+
+
 def build_model_comparison_table(normalized_summaries: Sequence[Mapping[str, Any]], *, include_dummy: bool = False) -> pd.DataFrame:
     """Build one non-mutating comparison row per normalized result."""
     table = pd.DataFrame([dict(item) for item in normalized_summaries])

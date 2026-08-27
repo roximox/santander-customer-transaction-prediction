@@ -1,5 +1,5 @@
 {
-  "date_utc": "2026-08-26T15:48:46.505862+00:00",
+  "date_utc": "2026-08-27T14:37:52.201414+00:00",
   "number_of_discovered_experiments": 13,
   "number_of_eligible_candidates": 11,
   "number_of_excluded_candidates": 4,
@@ -29,7 +29,7 @@
   "competitive_candidate_ids": [
     "M04-HGB-002"
   ],
-  "comparability_status": "partially_comparable",
+  "comparability_status": "comparable",
   "missing_expected_model_families": [],
   "final_test_used": false,
   "selection_status": "ready_for_group_review",

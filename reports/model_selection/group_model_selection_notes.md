@@ -50,9 +50,9 @@ separately. Accuracy alone is insufficient for this imbalanced problem.
 
 ## Limitations
 
-Comparability status: `partially_comparable`. Missing protocol
-metadata are marked not verifiable. Results from Members 02–04 are currently
-absent, so the group comparison is incomplete.
+Comparability status: `comparable`. Unknown protocol
+metadata would be marked not verifiable; incompatible values would not be
+silently ranked as equivalent.
 
 ## Questions for the Group
 
@@ -60,12 +60,14 @@ absent, so the group comparison is incomplete.
 - Which candidates from Members 02–04 are scientifically retained?
 - Are all retained pipelines evaluated with the common CV protocol?
 
-## Decision to be Made
+## Decision Scope
 
-The group must review the completed candidate set and lock exactly one pipeline.
-No final model or group decision is recorded by this framework.
+This generated report provides pre-selection evidence and does not itself make
+or overwrite the collective group decision. The authoritative post-review lock
+is stored separately in `reports/model_selection/final_model_lock.json`.
 
 ## Final Test Rule
 
-The final test set must remain untouched until the group has selected and locked
-one final pipeline.
+At model-selection time, the final test set must remain untouched until the
+group has selected and locked one final pipeline. Any later final result remains
+separate from this cross-validation comparison.

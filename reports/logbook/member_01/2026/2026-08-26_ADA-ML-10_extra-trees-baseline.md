@@ -7,9 +7,9 @@
 - Sprint: Sprint 2
 - Ticket ID: ADA-ML-10
 - Branch: develop
-- Pull Request: To be updated after Pull Request creation
-- Time spent: TO BE COMPLETED BY YASSINE ELHARI
-- Related meeting: TO BE COMPLETED BY YASSINE ELHARI
+- Pull Request: Not applicable — committed directly to `develop` (`190c7c5`)
+- Time spent: 3 hours
+- Related meeting: [2026-08-26 — Final Model-Selection Decision](../../../meetings/2026-08-26_final-model-selection-decision.md)
 
 ## Title
 

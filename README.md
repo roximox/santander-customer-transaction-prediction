@@ -432,6 +432,13 @@ difficulties, adaptations, and code or report references. Each member is
 responsible for the accuracy and completeness of their own directory; see
 `reports/logbook/README.md` for the full convention.
 
+## Individual Portfolio
+
+The personal portfolio summarizes each member's responsibilities, completed
+tasks, scientific results, teamwork impact, and principal deliverables.
+
+- [Member 01 — Yassine Elhari](reports/portfolio/member_01_yassine_elhari.md)
+
 ## Reproducibility and leakage prevention
 
 All team members must use:

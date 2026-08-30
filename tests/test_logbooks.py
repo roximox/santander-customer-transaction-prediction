@@ -98,16 +98,19 @@ def test_entries_identify_yassine_and_have_complete_structure() -> None:
             assert any(title in content for title in equivalents), (
                 f"{path.name}: missing {section} or a clear equivalent"
             )
-        assert "- Time spent: TO BE COMPLETED BY YASSINE ELHARI" in content
-        assert "- Related meeting: TO BE COMPLETED BY YASSINE ELHARI" in content
+        assert re.search(r"^- Time spent: \d+(?:\.\d+)? hours$", content, re.MULTILINE)
+        assert re.search(r"^- Related meeting: \[2026-\d{2}-\d{2} — .+\]", content, re.MULTILINE)
         assert "final test" in content.lower()
         assert "closed" in content.lower() or "not used" in content.lower()
 
 
-def test_pr_placeholder_and_main_code_references() -> None:
+def test_pr_traceability_and_main_code_references() -> None:
     for path in _entries():
         content = path.read_text(encoding="utf-8")
-        assert "- Pull Request: To be updated after Pull Request creation" in content
+        pull_request = re.findall(r"^- Pull Request: (.+)$", content, re.MULTILINE)
+        assert len(pull_request) == 1
+        assert "To be updated" not in pull_request[0]
+        assert "github.com/roximox/" in pull_request[0] or "committed directly" in pull_request[0]
 
     required_paths = (
         "src/data.py",

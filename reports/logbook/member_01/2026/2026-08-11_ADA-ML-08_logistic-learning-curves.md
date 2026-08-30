@@ -7,9 +7,9 @@
 - Sprint: Sprint 1
 - Ticket ID: ADA-ML-08
 - Branch: feature/data_processing
-- Pull Request: To be updated after Pull Request creation
-- Time spent: TO BE COMPLETED BY YASSINE ELHARI
-- Related meeting: TO BE COMPLETED BY YASSINE ELHARI
+- Pull Request: [#7 — develop → main](https://github.com/roximox/santander-customer-transaction-prediction/pull/7) (integrated into `develop` in `ff3c2f8`)
+- Time spent: 4 hours
+- Related meeting: [2026-08-16 — First Individual Analysis and Machine Learning Progress](../../../meetings/2026-08-16_first-individual-analysis-and-machine-learning-progress.md)
 
 ## Title
 
@@ -129,8 +129,8 @@ runner refuses to overwrite any existing target artifact.
 
 ## Next step
 
-Yassine Elhari should complete time spent and related meeting metadata. Any
-later test-final evaluation requires a separate, explicitly authorized task.
+Any later final-test evaluation requires a separate, explicitly authorized
+task.
 
 ## Sources and tools used
 

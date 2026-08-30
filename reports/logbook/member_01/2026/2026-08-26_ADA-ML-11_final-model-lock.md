@@ -3,11 +3,13 @@
 ## Metadata
 
 - Member: Yassine Elhari
+- Sprint: Sprint 2
 - Ticket ID: ADA-ML-11
 - Date: 2026-08-26
-- Time spent: TO BE COMPLETED BY YASSINE ELHARI
-- Related meeting: TO BE COMPLETED BY YASSINE ELHARI
-- Pull Request: To be updated after Pull Request creation
+- Branch: develop
+- Pull Request: Not applicable — committed directly to `develop` (`c15f0d6`)
+- Time spent: 2.5 hours
+- Related meeting: [2026-08-26 — Final Model-Selection Decision](../../../meetings/2026-08-26_final-model-selection-decision.md)
 
 ## Title
 

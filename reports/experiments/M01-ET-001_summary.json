@@ -1,0 +1,171 @@
+{
+  "experiment_id": "M01-ET-001",
+  "model_name": "Extra Trees Baseline",
+  "member": "Member 01",
+  "branch": "develop",
+  "date_utc": "2026-08-26T15:48:27+00:00",
+  "n_samples": 160000,
+  "n_features": 200,
+  "cv_strategy": "StratifiedKFold",
+  "n_splits": 5,
+  "shuffle": true,
+  "random_state": 42,
+  "primary_metric": "roc_auc",
+  "primary_score_mean": 0.8479455541940222,
+  "primary_score_std": 0.0030731569763638128,
+  "metrics": {
+    "roc_auc": {
+      "validation_mean": 0.8479455541940222,
+      "validation_std": 0.0030731569763638128,
+      "train_mean": 0.9098900815802884,
+      "train_std": 0.0008011387625361282
+    },
+    "average_precision": {
+      "validation_mean": 0.47545878869309843,
+      "validation_std": 0.007537188477520056,
+      "train_mean": 0.6726176290785725,
+      "train_std": 0.003374612776197742
+    },
+    "f1": {
+      "validation_mean": 0.4419429728521318,
+      "validation_std": 0.002289565329789582,
+      "train_mean": 0.5265783434396341,
+      "train_std": 0.0017319695602440136
+    },
+    "precision": {
+      "validation_mean": 0.33057518480838366,
+      "validation_std": 0.0019827777264100864,
+      "train_mean": 0.39571226106155083,
+      "train_std": 0.001517992040866847
+    },
+    "recall": {
+      "validation_mean": 0.6665001199291258,
+      "validation_std": 0.004819603519023566,
+      "train_mean": 0.7867739123615711,
+      "train_std": 0.0018903481292009893
+    },
+    "accuracy": {
+      "validation_mean": 0.8308562499999999,
+      "validation_std": 0.0011763622422536592,
+      "train_mean": 0.8578390625000001,
+      "train_std": 0.0006798509142635629
+    },
+    "balanced_accuracy": {
+      "validation_mean": 0.7578585253530987,
+      "validation_std": 0.0021287878322584944,
+      "train_mean": 0.826275951011722,
+      "train_std": 0.0011812322058514112
+    }
+  },
+  "fit_time_mean": 4.988862037658691,
+  "fit_time_std": 0.28755797913450276,
+  "score_time_mean": 0.9622577667236328,
+  "score_time_std": 0.05003924159667664,
+  "estimator_class": "sklearn.ensemble._forest.ExtraTreesClassifier",
+  "estimator_parameters": {
+    "bootstrap": false,
+    "ccp_alpha": 0.0,
+    "class_weight": "balanced",
+    "criterion": "gini",
+    "max_depth": 8,
+    "max_features": "sqrt",
+    "max_leaf_nodes": null,
+    "max_samples": null,
+    "min_impurity_decrease": 0.0,
+    "min_samples_leaf": 1,
+    "min_samples_split": 2,
+    "min_weight_fraction_leaf": 0.0,
+    "monotonic_cst": null,
+    "n_estimators": 200,
+    "n_jobs": -1,
+    "oob_score": false,
+    "random_state": 42,
+    "verbose": 0,
+    "warm_start": false
+  },
+  "target_distribution": {
+    "False": 0.8995125,
+    "True": 0.1004875
+  },
+  "cv_fingerprints": [
+    {
+      "fold": 1,
+      "train_size": 128000,
+      "validation_size": 32000,
+      "train_indices_sha256": "fb2fcb462f054b9ad83705fe9dc3ab92d82737e3c5a3130d2c5f282e95304fff",
+      "validation_indices_sha256": "3cffb7d4d6194b1efac6a37a06229c97aa4209e7a2cd981a4b0653bab32119d7",
+      "train_target_distribution": {
+        "False": 0.8995078125,
+        "True": 0.1004921875
+      },
+      "validation_target_distribution": {
+        "False": 0.89953125,
+        "True": 0.10046875
+      }
+    },
+    {
+      "fold": 2,
+      "train_size": 128000,
+      "validation_size": 32000,
+      "train_indices_sha256": "47436f1b4ad0e17e82c10ca0b9672b649a581b23024a61124129688ad755cccb",
+      "validation_indices_sha256": "15facf5b3523b30b6fd306700494b13e5834b5cb7e379571cc93099e2d98bd8a",
+      "train_target_distribution": {
+        "False": 0.8995078125,
+        "True": 0.1004921875
+      },
+      "validation_target_distribution": {
+        "False": 0.89953125,
+        "True": 0.10046875
+      }
+    },
+    {
+      "fold": 3,
+      "train_size": 128000,
+      "validation_size": 32000,
+      "train_indices_sha256": "d52ea69439e5cecfb28f1190ae24294a461fa2cf1ccdfba9e1c13e6ced91e25a",
+      "validation_indices_sha256": "fd2ea858191a0c05b765589948e62f9024ad345e25de1f660f28b43f20562746",
+      "train_target_distribution": {
+        "False": 0.899515625,
+        "True": 0.100484375
+      },
+      "validation_target_distribution": {
+        "False": 0.8995,
+        "True": 0.1005
+      }
+    },
+    {
+      "fold": 4,
+      "train_size": 128000,
+      "validation_size": 32000,
+      "train_indices_sha256": "bc37a4c41445ae792fc045ef6eaceb15fdc62ba6d6465efce351d00d167081f2",
+      "validation_indices_sha256": "6ccd439f1fa41bae6fc2a20fcbddd9fe5cbfa4713b564e0b2e67f31a159d00ff",
+      "train_target_distribution": {
+        "False": 0.899515625,
+        "True": 0.100484375
+      },
+      "validation_target_distribution": {
+        "False": 0.8995,
+        "True": 0.1005
+      }
+    },
+    {
+      "fold": 5,
+      "train_size": 128000,
+      "validation_size": 32000,
+      "train_indices_sha256": "e3be9a4f0ffa937844bada7369fed9a00f7a5229f63624b0656bed0afe8cfc7f",
+      "validation_indices_sha256": "f02857ec18151fb4695bd7a5541af44d4b86a4f6a1b217e67cdb7fcd9ed6766d",
+      "train_target_distribution": {
+        "False": 0.899515625,
+        "True": 0.100484375
+      },
+      "validation_target_distribution": {
+        "False": 0.8995,
+        "True": 0.1005
+      }
+    }
+  ],
+  "return_train_score": true,
+  "convergence_warning_detected": false,
+  "convergence_warning_messages": [],
+  "status": "completed"
+}

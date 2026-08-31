@@ -61,6 +61,7 @@ def test_main_files_exist() -> None:
         "scripts/run_logistic_grid_search.py",
         "scripts/run_logistic_coefficient_analysis.py",
         "scripts/build_model_selection_report.py",
+        "scripts/run_extra_trees_baseline.py",
         "tests/test_evaluation.py",
         "tests/test_experiments.py",
         "tests/test_dummy_baselines.py",
@@ -71,6 +72,7 @@ def test_main_files_exist() -> None:
         "tests/test_logistic_coefficient_analysis.py",
         "tests/test_model_selection.py",
         "tests/test_dashboard.py",
+        "tests/test_extra_trees_experiment.py",
         "reports/experiments/experiment_template.csv",
         "reports/logbook/README.md",
         "reports/logbook/templates/logbook_entry_template.md",
@@ -139,11 +141,7 @@ def test_only_member_01_has_an_initial_entry() -> None:
     ]
     assert all(item in entry for item in required)
 
-    member_02_year = logbook / "member_02/2026"
-    member_02_entries = [p for p in member_02_year.iterdir() if p.name != ".gitkeep"]
-    assert member_02_entries == []
-
-    for number in (3, 4):
+    for number in (2, 3, 4):
         year = logbook / f"member_{number:02d}/2026"
         entries = [path for path in year.iterdir() if path.name != ".gitkeep"]
         assert len(entries) >= 1, f"member_{number:02d} should have logbook entries."

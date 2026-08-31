@@ -12,6 +12,7 @@ import plotly.graph_objects as go
 from streamlit.testing.v1 import AppTest
 
 from src.dashboard import charts
+from src.dashboard.components import arrow_safe_dataframe
 from src.dashboard.loaders import (
     filter_experiments, load_csv, load_experiment_summary, load_experiments,
     load_json, load_learning_curves, load_model_comparison, load_registry,
@@ -81,6 +82,7 @@ def test_learning_curve_and_selection_loaders(tmp_path: Path) -> None:
     logistic.parent.mkdir(parents=True)
     pd.DataFrame([{"configuration_id": "LR", "train_size_mean": 10, "train_roc_auc_mean": .8, "validation_roc_auc_mean": .7}]).to_csv(logistic, index=False)
     _write(tmp_path / "reports/model_selection/model_selection_summary.json", json.dumps({"selection_status": "waiting_for_additional_models", "missing_expected_model_families": ["RANDOM_FOREST", "EXTRA_TREES"], "final_test_used": False}))
+    _write(tmp_path / "reports/model_selection/final_model_lock.json", json.dumps({"selected_experiment_id": "M04-HGB-002", "final_test_used": False}))
     curves = load_learning_curves(tmp_path)
     assert len(curves["Logistic Regression"]) == 1
     assert curves["HistGradientBoosting Tuned"].empty
@@ -88,6 +90,8 @@ def test_learning_curve_and_selection_loaders(tmp_path: Path) -> None:
     assert outputs["summary"]["final_test_used"] is False
     assert selection_status(tmp_path) == "waiting_for_additional_models"
     assert outputs["summary"]["missing_expected_model_families"] == ["RANDOM_FOREST", "EXTRA_TREES"]
+    assert outputs["lock"]["selected_experiment_id"] == "M04-HGB-002"
+    assert outputs["lock"]["final_test_used"] is False
 
 
 def test_model_comparison_loader_validates_columns(tmp_path: Path) -> None:
@@ -116,6 +120,15 @@ def test_chart_builders_return_plotly_figures() -> None:
     assert all(isinstance(figure, go.Figure) for figure in figures)
 
 
+def test_dataframe_display_normalizes_mixed_arrow_columns() -> None:
+    frame = pd.DataFrame({"Control": ["status", "count", "reopened"], "Value": ["completed", 1, False]})
+
+    safe = arrow_safe_dataframe(frame)
+
+    assert safe["Value"].tolist() == ["completed", "1", "False"]
+    assert frame["Value"].tolist() == ["completed", 1, False]
+
+
 def test_dashboard_has_no_training_or_final_test_action() -> None:
     paths = [ROOT / "app.py", *sorted((ROOT / "src/dashboard").glob("*.py"))]
     trees = [ast.parse(path.read_text(encoding="utf-8")) for path in paths]
@@ -126,6 +139,7 @@ def test_dashboard_has_no_training_or_final_test_action() -> None:
     source = "\n".join(path.read_text(encoding="utf-8") for path in paths)
     assert "Evaluate final test" not in source
     assert "Final test evaluation: LOCKED" in source
+    assert "Final test evaluation: COMPLETED ONCE" in source
 
 
 def test_loaders_do_not_mutate_repository_artifacts() -> None:
@@ -140,3 +154,14 @@ def test_streamlit_overview_smoke() -> None:
     app = AppTest.from_file(str(ROOT / "app.py"), default_timeout=30).run()
     assert not app.exception
     assert [title.value for title in app.title] == ["Project Overview"]
+
+
+def test_model_selection_separates_pre_and_post_selection_states() -> None:
+    app = AppTest.from_file(str(ROOT / "app.py"), default_timeout=30).run()
+    app.selectbox[0].select("Model Selection").run()
+
+    assert not app.exception
+    subheaders = [item.value for item in app.subheader]
+    assert "Pre-selection comparability" in subheaders
+    assert "Post-selection state" in subheaders
+    assert any("Overall pre-selection audit: COMPARABLE" in item.value for item in app.success)

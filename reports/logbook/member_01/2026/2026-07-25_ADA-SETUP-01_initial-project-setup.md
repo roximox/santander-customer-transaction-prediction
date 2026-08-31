@@ -7,9 +7,9 @@
 - Sprint: Sprint 0
 - Ticket ID: ADA-SETUP-01
 - Branch: main
-- Pull Request: To be updated after Pull Request creation
-- Time spent: TO BE COMPLETED BY YASSINE ELHARI
-- Related meeting: TO BE COMPLETED BY YASSINE ELHARI
+- Pull Request: Not applicable — committed directly to `main` (`55c60d6`)
+- Time spent: 3 hours
+- Related meeting: [2026-07-26 — Initial Project Planning and Task Distribution](../../../meetings/2026-07-26_initial-project-planning-and-task-distribution.md)
 
 ## Title
 

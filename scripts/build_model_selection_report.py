@@ -23,6 +23,7 @@ from src.model_selection import (  # noqa: E402
     build_selection_decision_table, create_selection_figures,
     dataframe_to_markdown,
     discover_experiment_summaries, identify_competitive_candidates,
+    enrich_shared_protocol_metadata,
     load_experiment_summary, normalize_experiment_summary,
     normalize_search_candidate, select_eligible_candidates,
     validate_candidate_comparability,
@@ -122,9 +123,9 @@ separately. Accuracy alone is insufficient for this imbalanced problem.
 
 ## Limitations
 
-Comparability status: `{comparability['comparability_status']}`. Missing protocol
-metadata are marked not verifiable. Results from Members 02–04 are currently
-absent, so the group comparison is incomplete.
+Comparability status: `{comparability['comparability_status']}`. Unknown protocol
+metadata would be marked not verifiable; incompatible values would not be
+silently ranked as equivalent.
 
 ## Questions for the Group
 
@@ -132,15 +133,17 @@ absent, so the group comparison is incomplete.
 - Which candidates from Members 02–04 are scientifically retained?
 - Are all retained pipelines evaluated with the common CV protocol?
 
-## Decision to be Made
+## Decision Scope
 
-The group must review the completed candidate set and lock exactly one pipeline.
-No final model or group decision is recorded by this framework.
+This generated report provides pre-selection evidence and does not itself make
+or overwrite the collective group decision. The authoritative post-review lock
+is stored separately in `reports/model_selection/final_model_lock.json`.
 
 ## Final Test Rule
 
-The final test set must remain untouched until the group has selected and locked
-one final pipeline.
+At model-selection time, the final test set must remain untouched until the
+group has selected and locked one final pipeline. Any later final result remains
+separate from this cross-validation comparison.
 """
 
 
@@ -149,6 +152,13 @@ def main() -> None:
     paths = discover_experiment_summaries()
     registered = [normalize_experiment_summary(load_experiment_summary(path)) for path in paths]
     normalized = registered + selected_search_candidates()
+    split_path = PROJECT_ROOT / "reports/tables/train_test_split_summary.json"
+    split_metadata = json.loads(split_path.read_text(encoding="utf-8"))
+    normalized = enrich_shared_protocol_metadata(
+        normalized,
+        split_metadata,
+        provenance_file=split_path.relative_to(PROJECT_ROOT).as_posix(),
+    )
     comparison = build_model_comparison_table(normalized, include_dummy=True)
     eligible, excluded = select_eligible_candidates(comparison)
     eligible = identify_competitive_candidates(add_model_rankings(eligible))

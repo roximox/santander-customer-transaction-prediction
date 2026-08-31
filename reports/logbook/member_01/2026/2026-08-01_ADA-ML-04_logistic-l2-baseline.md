@@ -7,9 +7,9 @@
 - Sprint: Sprint 1
 - Ticket ID: ADA-ML-04
 - Branch: feature/data_processing
-- Pull Request: To be updated after Pull Request creation
-- Time spent: TO BE COMPLETED BY YASSINE ELHARI
-- Related meeting: TO BE COMPLETED BY YASSINE ELHARI
+- Pull Request: [#2 — feature/data_processing → main](https://github.com/roximox/santander-customer-transaction-prediction/pull/2)
+- Time spent: 3 hours
+- Related meeting: [2026-08-16 — First Individual Analysis and Machine Learning Progress](../../../meetings/2026-08-16_first-individual-analysis-and-machine-learning-progress.md)
 
 ## Title
 

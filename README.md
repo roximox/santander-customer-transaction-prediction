@@ -345,7 +345,7 @@ written under `reports/tables/` and vector PDF figures under
 `reports/figures/`. The final test partition is fingerprint-verified only: it
 is never passed to a model, scored, or used to interpret the curves.
 
-## Pre-Final Model Selection
+## Model Selection and Final Evaluation
 
 ADA-ML-09 standardizes recorded training cross-validation results before the
 group locks a final pipeline. It loads no dataset and retrains no model. Run:
@@ -354,7 +354,7 @@ group locks a final pipeline. It loads no dataset and retrains no model. Run:
 python scripts/build_model_selection_report.py
 ```
 
-The report uses ROC-AUC as the fixed primary metric while preserving Average
+The pre-final report uses ROC-AUC as the fixed primary metric while preserving Average
 Precision, F1, precision, recall, balanced accuracy, generalization gap,
 variability, fit time, convergence, and complexity metadata where available.
 It creates comparison, exclusion, coverage, decision, portfolio, and meeting
@@ -365,9 +365,18 @@ instead of ranked as equivalent.
 
 This stage supports the professor's requirements to compare multiple models,
 use appropriate metrics, justify decisions, and document reproducible variants
-and comparisons. The current report is incomplete until the retained models of
-Members 02–04 are available. The final pipeline decision is collective and
-must be documented in a group meeting. No final-test metric is read or created.
+and comparisons. Expected-family coverage is complete and the eligible
+candidate protocols are comparable. The group collectively selected and froze
+`M04-HGB-002` (`HistGradientBoosting Tuned`) before opening the reserved
+partition.
+
+The locked model was evaluated exactly once on the 40,000-row final partition.
+It obtained ROC-AUC 0.891214 and Average Precision 0.584385, compared with CV
+means of 0.891449 and 0.591089. The complete result is stored in
+`reports/final_evaluation/M04-HGB-002_final_test_results.json`, and the
+scientific interpretation is in `reports/scientific_conclusions.md`. The
+single-use guard prohibits another final-test execution; model or threshold
+tuning from these final labels is not permitted.
 
 ## Running notebooks
 
@@ -378,7 +387,9 @@ jupyter lab
 ```
 
 Run notebooks in numerical order and execute every notebook from top to bottom
-before review. Notebooks currently contain planning scaffolds only.
+before review. The analysis notebooks use the shared infrastructure and saved
+experiment artifacts; they must not reopen model selection or rerun the final
+evaluation.
 
 ## Interactive Dashboard
 
@@ -392,10 +403,10 @@ streamlit run app.py
 
 The dashboard reads saved CSV and JSON artifacts from `reports/`; it does not
 retrain models, contact OpenML during normal startup, write to the experiment
-registry, or evaluate the reserved final test set. Registered experiments are
-discovered dynamically, so future Member 02 results become visible where their
-artifact schema is supported. Missing optional analyses are shown as concise
-warnings rather than application failures.
+registry, or execute the final test. It displays the already recorded unique
+final result and separates pre-selection comparability from the post-selection
+lock state. Registered experiments are discovered dynamically. Missing optional
+analyses are shown as concise warnings rather than application failures.
 
 ## Team workflow and Git strategy
 
@@ -421,6 +432,13 @@ difficulties, adaptations, and code or report references. Each member is
 responsible for the accuracy and completeness of their own directory; see
 `reports/logbook/README.md` for the full convention.
 
+## Individual Portfolio
+
+The personal portfolio summarizes each member's responsibilities, completed
+tasks, scientific results, teamwork impact, and principal deliverables.
+
+- [Member 01 — Yassine Elhari](reports/portfolio/member_01_yassine_elhari.md)
+
 ## Reproducibility and leakage prevention
 
 All team members must use:
@@ -431,8 +449,9 @@ All team members must use:
 - the same experiment conventions.
 
 Shared values live in `configs/config.yaml`. Fit preprocessing and feature
-selection on training folds only. Keep the test set isolated and never use it
-for model selection, threshold tuning, or iterative feature decisions.
+selection on training folds only. The final partition was used exactly once,
+after the collective lock, and must never be reused for model selection,
+threshold tuning, or iterative feature decisions.
 
 ## Agile workflow
 
@@ -449,8 +468,9 @@ templates in `reports/meetings/` and `reports/logbook/`.
 
 ## Current status
 
-**Phase 2 — reproducible data and Logistic Regression workflow.** OpenML
-loading, structural and memory auditing, the shared stratified split, common
-evaluation and experiment infrastructure, Dummy baselines, Logistic Regression
-comparisons, grid search, and coefficient-stability analysis are present. The
-reserved final test set remains closed.
+**Final evaluation complete.** The shared data and validation infrastructure,
+all expected model families, reproducible experiment registry, comparable
+pre-selection portfolio, collective model lock, and read-only dashboard are in
+place. `M04-HGB-002` was evaluated exactly once on the reserved final partition;
+selection remains frozen and the final scientific report is available under
+`reports/scientific_conclusions.md`.

@@ -1,6 +1,6 @@
 {
-  "comparability_status": "partially_comparable",
-  "candidate_count": 8,
+  "comparability_status": "comparable",
+  "candidate_count": 11,
   "checks": {
     "n_samples": {
       "status": "consistent",
@@ -33,14 +33,16 @@
       ]
     },
     "target_distribution": {
-      "status": "not verifiable",
+      "status": "consistent",
       "observed_values": [
         "{\"False\": 0.8995125, \"True\": 0.1004875}"
       ]
     },
     "data_source": {
-      "status": "not verifiable",
-      "observed_values": []
+      "status": "consistent",
+      "observed_values": [
+        "OpenML-45566"
+      ]
     },
     "final_test_usage": {
       "status": "consistent",

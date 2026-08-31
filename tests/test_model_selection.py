@@ -14,7 +14,8 @@ from src.model_selection import (
     add_model_rankings, build_coverage_table, build_model_comparison_table,
     build_portfolio_table, build_selection_decision_table,
     dataframe_to_markdown,
-    discover_experiment_summaries, identify_competitive_candidates,
+    discover_experiment_summaries, enrich_shared_protocol_metadata,
+    identify_competitive_candidates,
     load_experiment_summary, normalize_experiment_summary,
     normalize_search_candidate, select_eligible_candidates,
     validate_candidate_comparability, validate_relative_output_path,
@@ -125,6 +126,45 @@ def test_search_candidate_is_normalizable() -> None:
     search = {"search_id": "M01-LR-SEARCH-001", "member": "Member 01", "n_samples": 160000, "n_features": 200, "n_splits": 5, "primary_metric": "roc_auc", "status": "completed", "final_test_used": False}
     result = normalize_search_candidate(candidate, search, summary_file="reports/searches/s.json")
     assert result["source_type"] == "grid_search_candidate" and result["model_family"] == "LOGISTIC_REGRESSION"
+
+
+def test_shared_protocol_metadata_enrichment_is_traceable_and_non_mutating() -> None:
+    source = normalize_experiment_summary(_summary())
+    source["target_distribution"] = None
+    source["data_source"] = None
+    original = deepcopy(source)
+    split = {
+        "train_dimensions": [160000, 200], "random_state": 42,
+        "openml_id": 45566,
+        "train_target_distribution": {"False": .8995125, "True": .1004875},
+    }
+
+    result = enrich_shared_protocol_metadata(
+        [source], split, provenance_file="reports/tables/train_test_split_summary.json"
+    )[0]
+
+    assert source == original
+    assert result["data_source"] == "OpenML-45566"
+    assert result["target_distribution"] == split["train_target_distribution"]
+    assert result["inherited_metadata_fields"] == ["target_distribution", "data_source"]
+    assert result["shared_metadata_provenance"] == "reports/tables/train_test_split_summary.json"
+    assert not result["missing_metadata"]
+
+
+def test_shared_metadata_is_not_applied_to_an_incompatible_protocol() -> None:
+    source = normalize_experiment_summary(_summary())
+    source.update(n_samples=120000, target_distribution=None, data_source=None)
+    split = {
+        "train_dimensions": [160000, 200], "random_state": 42,
+        "openml_id": 45566,
+        "train_target_distribution": {"False": .9, "True": .1},
+    }
+
+    result = enrich_shared_protocol_metadata([source], split, provenance_file="split.json")[0]
+
+    assert result["target_distribution"] is None
+    assert result["data_source"] is None
+    assert result["shared_metadata_provenance"] is None
 
 
 def test_portfolio_csv_markdown_json_and_relative_paths(tmp_path: Path) -> None:

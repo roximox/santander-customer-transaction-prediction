@@ -49,7 +49,8 @@ with st.sidebar:
     show_variability = st.checkbox("Show CV variability", value=True)
     sort_criterion = st.selectbox("Sort criterion", ("Metric descending", "Fit time ascending", "Experiment ID"))
     st.divider()
-    st.markdown('<div class="locked">Final test status: RESERVED / NOT USED</div>', unsafe_allow_html=True)
+    final_status = "COMPLETED ONCE" if selection["final_test"].get("status") == "completed" else "RESERVED / NOT USED"
+    st.markdown(f'<div class="locked">Final test status: {final_status}</div>', unsafe_allow_html=True)
     st.caption("Primary metric: ROC-AUC")
     summary = selection["summary"]
     st.caption("Available: " + ", ".join(summary.get("model_families_represented", [])))
@@ -61,13 +62,16 @@ filtered = filter_experiments(experiments, members=members, families=families, e
 def overview() -> None:
     page_header("Project Overview", "Executive view of saved cross-validation evidence")
     cards = st.columns(4)
-    values = (("Total observations", "200,000"), ("Development observations", "160,000"), ("Reserved final test", "40,000"), ("Numerical features", "200"), ("CV folds", "5"), ("Automated tests", "182"), ("Registered experiments", str(len(load_registry()))), ("Eligible candidates", str(len(eligible))))
+    values = (("Total observations", "200,000"), ("Development observations", "160,000"), ("Reserved final test", "40,000"), ("Numerical features", "200"), ("CV folds", "5"), ("Selected model", selection["lock"].get("selected_experiment_id", "Not locked")), ("Registered experiments", str(len(load_registry()))), ("Eligible candidates", str(len(eligible))))
     for index, (label, value) in enumerate(values): cards[index % 4].metric(label, value)
     st.subheader("Scientific workflow")
     stages = ["OpenML", "Data Audit", "float32 optimization", "Stratified Split", "5-fold CV", "Experiments", "Model Comparison", "Group Model Lock", "🔒 Final Test"]
     st.markdown(" → ".join(f"**{stage}**" for stage in stages))
-    final_test_banner()
-    st.info("The dashboard reports cross-validation evidence only. Final test evaluation remains locked until group model selection is complete.")
+    final_test_banner(selection["final_test"])
+    if selection["final_test"].get("status") == "completed":
+        st.info("The group model choice remains frozen. Its single reserved final-test evaluation is complete and cannot be rerun for model selection.")
+    else:
+        st.info("The dashboard reports cross-validation evidence only. The group model choice is locked; the reserved final-test evaluation has not been executed.")
 
 
 def dataset_page() -> None:
@@ -96,7 +100,7 @@ def reproducibility() -> None:
     st.subheader("5-fold StratifiedKFold")
     st.markdown(" | ".join(f"**Fold {fold}** · ≈128,000 train / ≈32,000 validation" for fold in range(1, 6)))
     st.write("Every development observation is used once for validation and four times for training. Shuffle is enabled and random_state is 42.")
-    final_test_banner()
+    final_test_banner(selection["final_test"])
 
 
 def explorer() -> None:
@@ -124,7 +128,10 @@ def explorer() -> None:
 
 
 def model_comparison() -> None:
-    page_header("INTERIM MODEL COMPARISON — Member 02 models pending", "Eligible saved CV candidates only; no final winner is declared")
+    missing = selection["summary"].get("missing_expected_model_families", [])
+    pending = ", ".join(family.replace("_", " ").title() for family in missing)
+    title = "INTERIM MODEL COMPARISON" + (f" — {pending} pending" if pending else " — full expected coverage")
+    page_header(title, "Eligible saved CV candidates only; no final winner is declared")
     data = filter_experiments(eligible, members=members, families=families, experiment_ids=experiment_ids, include_dummy=include_dummy)
     st.plotly_chart(charts.metric_ranking(data, metric, show_variability), width="stretch")
     left, right = st.columns(2)
@@ -225,40 +232,188 @@ def learning_curves_page() -> None:
 
 def selection_page() -> None:
     page_header("Model Selection", "Transparent multi-criteria review of saved CV evidence")
-    summary, coverage, comparability, decision = selection["summary"], selection["coverage"], selection["comparability"], selection["decision"]
-    status_pill("Selection status", summary.get("selection_status"))
+    summary, lock, coverage, comparability, decision = selection["summary"], selection["lock"], selection["coverage"], selection["comparability"], selection["decision"]
+    status_pill("Generated comparison status", summary.get("selection_status"))
+    status_pill("Current project status", lock.get("status", "not_locked"))
+    if lock.get("selected_experiment_id"):
+        decision_message = (
+            "completed its single final evaluation"
+            if lock.get("final_test_status") == "COMPLETED_ONCE"
+            else "is locked for the single final evaluation"
+        )
+        st.success(
+            f"Collective decision: {lock['selected_experiment_id']} — {lock.get('model_name', 'model')} "
+            f"{decision_message}."
+        )
+        st.write({
+            "Decision status": lock.get("status"),
+            "Selected member": lock.get("member"),
+            "Classification threshold": lock.get("classification_threshold"),
+            "Final test used": lock.get("final_test_used"),
+        })
     st.subheader("Current best by metric")
     best = summary.get("best_by_metric", {})
     st.write(pd.DataFrame([{"Metric": metric_label(key), "Experiment": value} for key, value in best.items()]))
     st.subheader("Candidate coverage")
     dataframe(coverage)
     for family in summary.get("missing_expected_model_families", []): st.warning(f"No {family.replace('_', ' ').title()} results are currently registered.")
-    st.subheader("Comparability")
+    st.subheader("Pre-selection comparability")
+    st.caption(
+        "This audit describes the cross-validation evidence used before the collective model lock; "
+        "the final-test result is intentionally excluded from candidate comparison."
+    )
     checks = comparability.get("checks", {})
-    dataframe(pd.DataFrame([{"Check": key, **value} for key, value in checks.items()]))
+    core_protocol = ("n_samples", "n_splits", "cv_strategy", "random_state", "primary_metric")
+    core_consistent = all(checks.get(name, {}).get("status") == "consistent" for name in core_protocol)
+    target_known = int(eligible.get("target_distribution", pd.Series(dtype=object)).notna().sum())
+    source_known = int(eligible.get("data_source", pd.Series(dtype=object)).notna().sum())
+    total_candidates = len(eligible)
+    comparison_rows = [
+        {
+            "Scope": "Core methodological protocol",
+            "Status": "CONSISTENT" if core_consistent else "INCOMPATIBLE",
+            "Detail": "160,000 development rows; 5-fold StratifiedKFold; random_state=42; primary metric ROC-AUC.",
+        },
+        {
+            "Scope": "Target-distribution metadata",
+            "Status": checks.get("target_distribution", {}).get("status", "not verifiable").upper(),
+            "Detail": f"Recorded for {target_known}/{total_candidates} candidates; missing metadata does not demonstrate a protocol difference.",
+        },
+        {
+            "Scope": "Data-source metadata",
+            "Status": checks.get("data_source", {}).get("status", "not verifiable").upper(),
+            "Detail": f"Recorded for {source_known}/{total_candidates} candidates; the shared split evidence remains consistent.",
+        },
+        {
+            "Scope": "Final-test use during selection",
+            "Status": checks.get("final_test_usage", {}).get("status", "unknown").upper(),
+            "Detail": "No candidate used final-test metrics for selection. The selected model was evaluated only after the collective lock.",
+        },
+    ]
+    dataframe(pd.DataFrame(comparison_rows))
+    comparability_status = str(comparability.get("comparability_status", "unknown"))
+    if comparability_status == "comparable":
+        st.success(
+            "Overall pre-selection audit: COMPARABLE. The shared CV protocol and required provenance metadata "
+            "are consistent across all eligible candidates."
+        )
+    else:
+        st.info(
+            f"Overall pre-selection audit: {comparability_status.replace('_', ' ').upper()}. "
+            "Any partial status reflects missing provenance metadata unless a check is explicitly marked incompatible."
+        )
+    st.subheader("Post-selection state")
+    dataframe(pd.DataFrame([
+        {"Control": "Selected pipeline", "Value": lock.get("selected_experiment_id", "Not locked")},
+        {"Control": "Collective model lock", "Value": lock.get("status", "Not available")},
+        {"Control": "Final evaluation", "Value": lock.get("final_test_status", "Not available")},
+        {"Control": "Execution count", "Value": selection["final_test"].get("execution_count", "Not available")},
+        {"Control": "Selection reopened", "Value": selection["final_test"].get("selection_reopened", "Not available")},
+    ]))
     if not professor_mode:
         st.subheader("Selection decision evidence")
         dataframe(decision)
-    final_test_banner()
+    final_test_banner(selection["final_test"])
 
 
 def conclusions() -> None:
-    page_header("Scientific Conclusions", "Interim evidence for professor and group review")
-    st.markdown("""
-### Data
-The clean numerical dataset is imbalanced; validated float32 conversion halves feature memory.
-### Logistic Regression
-The baseline is stable with a small generalization gap. Class weighting changes the precision/recall trade-off.
-### Dimensionality reduction
-Feature Selection and PCA currently have limited effect on ranking performance relative to the Logistic baseline.
-### Gradient Boosting
-HistGradientBoosting is the current strongest ranking candidate, with higher cost and a larger train-validation gap.
-### Current limitation
-Member 02 Random Forest and Extra Trees results remain missing.
-### Next decision
-Integrate remaining models, rerun pre-final selection, lock one group pipeline, and only then unlock final-test evaluation.
-""")
-    final_test_banner()
+    page_header("Scientific Conclusions", "Collective model decision based on complete cross-validation evidence")
+    selection_summary = selection["summary"]
+    model_lock = selection["lock"]
+    available = eligible.set_index("experiment_id", drop=False) if not eligible.empty else pd.DataFrame()
+
+    def candidate(experiment_id: str) -> pd.Series:
+        if available.empty or experiment_id not in available.index:
+            return pd.Series(dtype=object)
+        row = available.loc[experiment_id]
+        return row.iloc[0] if isinstance(row, pd.DataFrame) else row
+
+    hgb = candidate("M04-HGB-002")
+    logistic = candidate("M01-LR-001")
+    balanced = candidate("M01-LR-SEARCH-001::candidate_004")
+    extra_trees = candidate("M01-ET-001")
+    random_forest = candidate("M02-RF-001")
+    decision_tree = candidate("M02-DT-001")
+    feature_selection = candidate("M03-FS-001")
+    pca = candidate("M03-PCA-001")
+
+    st.subheader("Executive evidence summary")
+    cards = st.columns(4)
+    cards[0].metric("Registered experiments", selection_summary.get("number_of_discovered_experiments", "Not recorded"))
+    cards[1].metric("Eligible candidates", selection_summary.get("number_of_eligible_candidates", "Not recorded"))
+    cards[2].metric("Expected families missing", len(selection_summary.get("missing_expected_model_families", [])))
+    cards[3].metric("Selection status", str(selection_summary.get("selection_status", "unknown")).replace("_", " ").upper())
+
+    st.subheader("Data and reproducibility")
+    data_audit, split = audit["audit"], audit["split"]
+    st.markdown(
+        f"""
+- The dataset contains **{data_audit.get('n_rows', 200000):,} observations** and **{data_audit.get('n_features', 200)} numerical features**, with no recorded missing feature values or duplicate rows.
+- The positive class represents **{data_audit.get('target_proportions', {}).get('True', .10049):.2%}** of observations, so Accuracy alone is not an adequate selection metric.
+- Validated float32 conversion reduces feature memory by **{data_audit.get('memory_reduction_percentage', 50):.2f}%**, with a maximum recorded absolute conversion error of **{data_audit.get('maximum_absolute_error', 0):.3e}**.
+- All candidates use the **{split.get('train_dimensions', [160000])[0]:,}-row development partition**, five-fold StratifiedKFold, and `random_state=42`.
+"""
+    )
+
+    st.subheader("Logistic Regression")
+    st.markdown(
+        f"""
+- The unweighted baseline is stable: mean CV ROC-AUC **{format_number(logistic.get('roc_auc_mean'), 6)}** with a train-validation gap of **{format_number(logistic.get('roc_auc_generalization_gap'), 6)}**.
+- Class weighting preserves similar ranking performance but changes the operating trade-off: the balanced candidate reaches recall **{format_number(balanced.get('recall_mean'), 6)}** and balanced accuracy **{format_number(balanced.get('balanced_accuracy_mean'), 6)}**, with precision **{format_number(balanced.get('precision_mean'), 6)}**.
+- Logistic Regression remains substantially cheaper to fit than the tree ensembles and HGB in the recorded experiments.
+"""
+    )
+
+    st.subheader("Feature Selection and PCA")
+    st.markdown(
+        f"""
+- Feature Selection records ROC-AUC **{format_number(feature_selection.get('roc_auc_mean'), 6)}**, close to the Logistic baseline.
+- PCA records ROC-AUC **{format_number(pca.get('roc_auc_mean'), 6)}**, also close to the Logistic baseline.
+- Current evidence therefore shows no material ranking improvement from these two transformations in this configuration; it does not imply that dimensionality reduction is universally ineffective.
+"""
+    )
+
+    st.subheader("Tree ensembles and Decision Tree")
+    st.markdown(
+        f"""
+- Decision Tree provides the weakest recorded ranking result among eligible candidates, with ROC-AUC **{format_number(decision_tree.get('roc_auc_mean'), 6)}**.
+- Random Forest improves over the single Decision Tree to ROC-AUC **{format_number(random_forest.get('roc_auc_mean'), 6)}** and balanced accuracy **{format_number(random_forest.get('balanced_accuracy_mean'), 6)}**, but remains below the linear and HGB candidates on ranking metrics.
+- Member 01 Extra Trees reaches ROC-AUC **{format_number(extra_trees.get('roc_auc_mean'), 6)}**, recall **{format_number(extra_trees.get('recall_mean'), 6)}**, and the highest recorded mean CV F1, **{format_number(extra_trees.get('f1_mean'), 6)}**.
+- Extra Trees offers a different threshold-metric trade-off; it is not the strongest ROC-AUC candidate and is not automatically the final choice.
+"""
+    )
+
+    st.subheader("HistGradientBoosting")
+    st.markdown(
+        f"""
+- Tuned HGB currently has the highest mean CV ROC-AUC (**{format_number(hgb.get('roc_auc_mean'), 6)}**), Average Precision (**{format_number(hgb.get('average_precision_mean'), 6)}**), and precision (**{format_number(hgb.get('precision_mean'), 6)}**).
+- Its recorded fit time (**{format_number(hgb.get('fit_time_mean'), 2)} seconds per fold**) and train-validation gap (**{format_number(hgb.get('roc_auc_generalization_gap'), 6)}**) are substantially larger than those of Logistic Regression.
+- The tuned configuration improves the recorded HGB baseline, but the competitiveness label remains a **CV variability heuristic — not a formal statistical test**.
+"""
+    )
+
+    st.subheader("Final model-selection conclusion")
+    best = selection_summary.get("best_by_metric", {})
+    dataframe(pd.DataFrame([{"Criterion": metric_label(name), "Current experiment": experiment_id} for name, experiment_id in best.items()]))
+    st.success(
+        f"The team collectively selected and locked {model_lock.get('selected_experiment_id', 'M04-HGB-002')} — "
+        f"{model_lock.get('model_name', 'HistGradientBoosting Tuned')}. It leads the recorded candidates on both "
+        "ROC-AUC and Average Precision, the two ranking metrics most relevant to this imbalanced problem. "
+        "This is a pragmatic multi-criteria decision, not a claim of statistical superiority."
+    )
+    final_result = selection["final_test"]
+    if final_result.get("status") == "completed":
+        st.subheader("Final-test result")
+        metrics = final_result.get("metrics", {})
+        metric_cards(metrics, ("roc_auc", "average_precision", "f1", "precision", "recall", "balanced_accuracy"))
+        st.caption("Single execution on the 40,000-row reserved partition; model selection was not reopened.")
+    else:
+        st.subheader("Remaining final step")
+        st.markdown(
+            "The selected pipeline, estimator parameters, and classification threshold are frozen in the model-lock artifact. "
+            "The only remaining scientific evaluation is one execution on the reserved final-test partition; it has not yet been run."
+        )
+    final_test_banner(final_result)
 
 
 ROUTES = {

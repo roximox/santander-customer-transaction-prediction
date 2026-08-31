@@ -2,8 +2,11 @@
 
 ## Available Candidates
 
+- M01-ET-001: Extra Trees Baseline (Member 01)
 - M01-LR-001: Logistic Regression L2 Baseline (Member 01)
 - M01-LR-002: Logistic Regression L2 Balanced (Member 01)
+- M02-DT-001: Decision Tree (Member 02)
+- M02-RF-001: Random Forest (Member 02)
 - M03-FS-001: L1 Feature Selection + Logistic Regression (Member 03)
 - M03-PCA-001: PCA + Logistic Regression (Member 03)
 - M04-HGB-001: HistGradientBoosting Baseline (Member 04)
@@ -13,8 +16,7 @@
 
 ## Missing Candidates
 
-- Member 02: RANDOM_FOREST
-- Member 02: EXTRA_TREES
+- None
 
 ## Comparison Protocol
 
@@ -26,7 +28,7 @@ No model is retrained and no arbitrary composite score is calculated.
 
 - best_roc_auc: M04-HGB-002
 - best_average_precision: M04-HGB-002
-- best_f1: M01-LR-SEARCH-001::candidate_004
+- best_f1: M01-ET-001
 - best_recall: M01-LR-SEARCH-001::candidate_004
 - best_precision: M04-HGB-002
 - best_balanced_accuracy: M01-LR-SEARCH-001::candidate_004
@@ -48,9 +50,9 @@ separately. Accuracy alone is insufficient for this imbalanced problem.
 
 ## Limitations
 
-Comparability status: `partially_comparable`. Missing protocol
-metadata are marked not verifiable. Results from Members 02–04 are currently
-absent, so the group comparison is incomplete.
+Comparability status: `comparable`. Unknown protocol
+metadata would be marked not verifiable; incompatible values would not be
+silently ranked as equivalent.
 
 ## Questions for the Group
 
@@ -58,12 +60,14 @@ absent, so the group comparison is incomplete.
 - Which candidates from Members 02–04 are scientifically retained?
 - Are all retained pipelines evaluated with the common CV protocol?
 
-## Decision to be Made
+## Decision Scope
 
-The group must review the completed candidate set and lock exactly one pipeline.
-No final model or group decision is recorded by this framework.
+This generated report provides pre-selection evidence and does not itself make
+or overwrite the collective group decision. The authoritative post-review lock
+is stored separately in `reports/model_selection/final_model_lock.json`.
 
 ## Final Test Rule
 
-The final test set must remain untouched until the group has selected and locked
-one final pipeline.
+At model-selection time, the final test set must remain untouched until the
+group has selected and locked one final pipeline. Any later final result remains
+separate from this cross-validation comparison.

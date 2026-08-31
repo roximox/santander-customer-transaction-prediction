@@ -7,9 +7,9 @@
 - Sprint: Sprint 2
 - Ticket ID: ADA-UI-01
 - Branch: develop
-- Pull Request: To be updated after Pull Request creation
-- Time spent: TO BE COMPLETED BY YASSINE ELHARI
-- Related meeting: TO BE COMPLETED BY YASSINE ELHARI
+- Pull Request: [#7 — develop → main](https://github.com/roximox/santander-customer-transaction-prediction/pull/7) (feature merged into `develop` in `37830b3`)
+- Time spent: 6 hours
+- Related meeting: [2026-08-23 — Model Progress, Optimization and Evaluation](../../../meetings/2026-08-23_model-progress-optimization-and-evaluation.md)
 
 ## Title
 

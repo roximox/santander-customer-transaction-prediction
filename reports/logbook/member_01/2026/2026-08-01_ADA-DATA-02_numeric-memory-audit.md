@@ -7,9 +7,9 @@
 - Sprint: Sprint 1
 - Ticket ID: ADA-DATA-02
 - Branch: feature/data_processing
-- Pull Request: To be updated after Pull Request creation
-- Time spent: TO BE COMPLETED BY YASSINE ELHARI
-- Related meeting: TO BE COMPLETED BY YASSINE ELHARI
+- Pull Request: [#2 — feature/data_processing → main](https://github.com/roximox/santander-customer-transaction-prediction/pull/2)
+- Time spent: 3 hours
+- Related meeting: [2026-08-02 — Project Structure and Common Data Foundation](../../../meetings/2026-08-02_project-structure-and-common-data-foundation.md)
 
 ## Title
 

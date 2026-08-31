@@ -1,144 +1,121 @@
 # Logbook Entry
-
+ 
 ## Metadata
-
-Date: 2026-08-14
-Member: Chaymae Akouaouch
-Sprint: Not confirmed
-Ticket ID: M04-HGB-SEARCH-001
-Branch: feature/model-optimization
-Pull Request: Not created yet
-Time spent: Not recorded yet
-Related meeting: No related meeting yet
-
+ 
+**Date:** 2026-08-14
+**Member:** Chaymae Akouaouch
+**Phase:** Model optimization and hyperparameter tuning
+**Ticket ID:** M04-HGB-SEARCH-001
+**Branch:** feature/model-optimization
+**Related meeting:** 2026-08-09 — Data Processing, Validation Strategy and Start of Individual Analysis
+ 
 ## Title
-
-HistGradientBoosting hyperparameter tuning
-
-## Goal
-
-Improve the untuned HistGradientBoosting baseline `M04-HGB-001` through
-training-only hyperparameter optimization while keeping the final test
-partition closed.
-
-Baseline reference:
-
-- Validation ROC-AUC: 0.884596
-- Average Precision: 0.572879
-- Train ROC-AUC: 0.975659
-- Generalization gap: 0.091063
-
-## Search design
-
-`RandomizedSearchCV` was selected instead of a full `GridSearchCV` because the
-predeclared HGB space has 768 Cartesian combinations; randomized search makes it
-possible to evaluate a deterministic, bounded subset while retaining the common
-cross-validation protocol.
-
+ 
+HistGradientBoosting Hyperparameter Optimization
+ 
+## Context and Goal
+ 
+After establishing the `M04-HGB-001` baseline, I continued the Member 04 model-optimization track, following the validation strategy the group agreed on at the meeting on 2026-08-09.
+ 
+The baseline reached a validation ROC-AUC of 0.884596 and Average Precision of 0.572879, with a train ROC-AUC of 0.975659 that left a train-validation gap of 0.091063.
+ 
+My goal for this step was to see whether controlled hyperparameter optimization could improve validation performance while also narrowing that generalization gap. As before, the reserved final-test partition stayed outside the optimization and model-selection process.
+ 
+## Search Design
+ 
+I went with `RandomizedSearchCV` rather than an exhaustive `GridSearchCV`. The predefined HGB search space had 768 possible parameter combinations, so a randomized search let me evaluate a bounded, reproducible subset while keeping the same cross-validation protocol.
+ 
 The search space was:
-
+ 
 - `learning_rate`: [0.03, 0.05, 0.1, 0.15]
 - `max_iter`: [150, 300, 500, 700]
 - `max_leaf_nodes`: [15, 31, 63]
 - `min_samples_leaf`: [10, 20, 50, 100]
 - `l2_regularization`: [0.0, 0.1, 1.0, 10.0]
-
-The actual search used 20 candidates, 5-fold stratified cross-validation, and
-100 total fits with `random_state=42` and `n_jobs=1`. ROC-AUC was the primary
-metric, common project metrics were retained, and only the training partition
-was used.
-
+The search evaluated 20 candidates using five-fold stratified cross-validation, for 100 total fits. I used `random_state=42` for reproducibility and `n_jobs=1`.
+ 
+ROC-AUC stayed the primary selection metric, with the common project metrics tracked alongside it for additional evaluation.
+ 
 ## Implementation
-
-`src/gradient_boosting_search.py` defines the search ID and HGB search space,
-creates an unfitted `RandomizedSearchCV`, converts fitted search results to a
-candidate-level DataFrame, and creates a JSON-compatible summary.
-
-`scripts/run_gradient_boosting_search.py` loads the dataset, reproduces the
-common shared split, verifies train and reserved-test fingerprints, removes
-reserved test data from the tuning workflow, runs `search.fit(X_train, y_train)`,
-converts and summarizes results, and reuses `src.search.save_grid_search_results()`
-for persistence.
-
-Member 1's `src/search.py` was not modified for HGB search logic; only its
-existing generic save helper was reused.
-
-## Work steps
-
-1. Reviewed Member 1's existing `src/search.py`.
-2. Identified that its result conversion was Logistic-specific.
-3. Decided not to modify shared Member 1 search logic.
-4. Created a separate Member 4 HGB search module.
-5. Defined a bounded HGB search space.
-6. Prepared deterministic `RandomizedSearchCV`.
-7. Added HGB-specific result conversion and search summary helpers.
-8. Created the HGB search runner.
-9. Verified the search object before execution.
-10. Executed `python scripts/run_gradient_boosting_search.py`.
-11. Reviewed the best candidate and compared it with the HGB baseline.
-12. Confirmed the final test partition was not evaluated.
-
+ 
+I created `src/gradient_boosting_search.py` to define the HGB search space, build the unfitted `RandomizedSearchCV`, convert the fitted search results into a candidate-level DataFrame, and produce a JSON-compatible summary.
+ 
+I also created `scripts/run_gradient_boosting_search.py` to reproduce the shared split, verify the dataset fingerprints, run the search on the development partition, summarize the results, and persist the search artifacts.
+ 
+Before writing any of this, I looked at the existing shared `src/search.py` implementation. Its result-conversion logic turned out to be specific to the Logistic Regression workflow, so rather than adapting it, I kept it untouched and wrote the HGB-specific conversion in the Member 04 module, reusing the existing generic persistence helper where it still applied.
+ 
+## Work Performed
+ 
+1. Reviewed the existing shared search infrastructure.
+2. Identified that the existing result-conversion logic was specific to the Logistic Regression workflow.
+3. Decided to leave the shared implementation unchanged and build a separate HGB-specific search module.
+4. Defined a bounded HistGradientBoosting search space.
+5. Configured a deterministic `RandomizedSearchCV`.
+6. Implemented HGB-specific candidate-result conversion and summary helpers.
+7. Created the reproducible HGB search runner.
+8. Verified the search configuration before execution.
+9. Executed `python scripts/run_gradient_boosting_search.py`.
+10. Reviewed the 20 evaluated candidates and identified the best one by validation ROC-AUC.
+11. Compared the selected candidate with `M04-HGB-001`.
+12. Confirmed that the reserved final-test partition was not used for fitting, tuning, model selection, or scoring.
 ## Results
-
-Best candidate: `candidate_011`
-
-Best parameters:
-
-- `min_samples_leaf = 100`
-- `max_leaf_nodes = 31`
-- `max_iter = 700`
-- `learning_rate = 0.05`
-- `l2_regularization = 10.0`
-
-- Best Validation ROC-AUC: 0.891449
+ 
+The search selected `candidate_011`.
+ 
+The selected configuration was:
+ 
+- `learning_rate=0.05`
+- `max_iter=700`
+- `max_leaf_nodes=31`
+- `min_samples_leaf=100`
+- `l2_regularization=10.0`
+- `random_state=42`
+The selected candidate achieved:
+ 
+- Validation ROC-AUC: 0.891449
+- Average Precision: 0.591089
 - Train ROC-AUC: 0.973580
 - Generalization gap: 0.082131
-- Validation Average Precision: 0.591089
-- Candidates: 20
-- CV folds: 5
-- Total fits: 100
-
-## Baseline comparison
-
+The search evaluated 20 candidates across five folds, for 100 model fits in total.
+ 
+## Baseline Comparison
+ 
 | Metric | M04-HGB-001 Baseline | M04-HGB-SEARCH-001 Best Candidate | Change |
 |---|---:|---:|---:|
 | Validation ROC-AUC | 0.884596 | 0.891449 | +0.006853 |
 | Average Precision | 0.572879 | 0.591089 | +0.018210 |
 | Train ROC-AUC | 0.975659 | 0.973580 | -0.002079 |
 | Generalization gap | 0.091063 | 0.082131 | -0.008932 |
-
-## Interpretation
-
-The tuned candidate improves validation ROC-AUC relative to the baseline, and
-Average Precision also improves. Train ROC-AUC decreases slightly while
-validation ROC-AUC increases, making the train/validation gap smaller. This is
-consistent with improved generalization, but it does not establish that
-overfitting has been eliminated.
-
-The best candidate uses a lower learning rate, more boosting iterations, a
-larger minimum leaf size, and stronger L2 regularization. These settings are
-consistent with a more regularized, slower-learning model. It is the best HGB
-configuration found in this bounded 20-candidate search, not necessarily the
-global optimum, and it is not yet the final group model.
-
-## Reproducibility and leakage safeguards
-
-- Same shared train/test split.
-- Fingerprint verification.
-- `random_state=42`.
-- Training data only.
-- 5-fold stratified CV.
-- Same shared metrics.
-- No final-test predictions.
-- No final-test scoring.
-- No test-based model selection.
-
-## Generated artifacts
-
+ 
+## Interpretation and Decision
+ 
+The selected candidate improved validation ROC-AUC from 0.884596 to 0.891449 and Average Precision from 0.572879 to 0.591089 compared with the baseline.
+ 
+At the same time, train ROC-AUC dropped slightly while validation ROC-AUC rose, narrowing the train-validation ROC-AUC gap from 0.091063 to 0.082131. I take this as evidence of improved generalization relative to the baseline, though not as proof that overfitting has been eliminated.
+ 
+The selected configuration pairs a lower learning rate with more boosting iterations, a larger minimum leaf size, and stronger L2 regularization — settings that fit the picture of a slower, more regularized model. That said, the search results don't establish the individual causal contribution of each hyperparameter on their own.
+ 
+It's also worth noting that this candidate was the best among the 20 evaluated, not necessarily the global optimum across the full search space.
+ 
+Given these results, I froze this configuration for the next diagnostic step instead of running another search. The next question was whether its validation behaviour held up as the amount of training data increased.
+ 
+## Difficulties and Observations
+ 
+One design decision was whether to modify the existing shared search infrastructure or build HGB-specific handling instead. Since part of the existing result conversion was tied to the Logistic Regression workflow, I left the shared implementation alone and kept the HGB-specific logic isolated in the Member 04 module.
+ 
+Balancing search coverage against computational cost was another consideration. The full predefined search space had 768 combinations; sampling 20 reproducible candidates kept the workload manageable, but it also means the selected configuration can't be claimed as the global optimum.
+ 
+## Generated Artifacts
+ 
 - `reports/searches/M04-HGB-SEARCH-001_candidates.csv`
 - `reports/searches/M04-HGB-SEARCH-001_summary.json`
-
-## Next planned work
-
-Learning-curve analysis for the selected/tuned HistGradientBoosting
-configuration. This has not yet been implemented or executed.
+## Reproducibility
+ 
+The search used the shared train/test split, verified dataset fingerprints, `random_state=42`, and five-fold stratified cross-validation.
+ 
+Only development data was used for hyperparameter optimization and candidate selection. The reserved final-test partition was not used for model fitting, hyperparameter tuning, candidate selection, or scoring.
+ 
+## Next Step
+ 
+Use the selected HistGradientBoosting configuration in a training-only learning-curve analysis to investigate validation performance and the train-validation gap as the amount of training data increases.
+ 

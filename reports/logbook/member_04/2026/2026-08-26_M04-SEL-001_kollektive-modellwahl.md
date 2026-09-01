@@ -1,10 +1,15 @@
 # 2026-08-26 – M04-SEL-001 – HGB-Beitrag zur kollektiven Finalmodellprüfung
 
 **Mitglied:** Chaymae Akouaouch (Member 04)
+
 **Kategorie:** Meeting und Review
+
 **Zugehöriges Experiment:** `M04-HGB-002`
+
 **Zugehöriges Gruppentreffen:** 2026-08-26 – Entscheidung über die finale Modellauswahl
+
 **Branch:** `feature/model-optimization`
+
 **Zeitaufwand:** 2.5 h
 
 ## Ziel

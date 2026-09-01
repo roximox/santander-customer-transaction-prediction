@@ -1,10 +1,15 @@
 # 2026-08-15 – M04-HGB-OOF-001B – ROC-, Precision-Recall- und Confusion-Matrix-Analyse
 
 **Mitglied:** Chaymae Akouaouch (Member 04)
+
 **Kategorie:** Wissenschaftliche Analyse
+
 **Zugehöriges Experiment:** `M04-HGB-OOF-001`
+
 **Zugehöriges Gruppentreffen:** 2026-08-16 – Erster individueller Analyse- und ML-Fortschritt
+
 **Branch:** `feature/model-optimization`
+
 **Zeitaufwand:** 3 h
 
 ## Ziel

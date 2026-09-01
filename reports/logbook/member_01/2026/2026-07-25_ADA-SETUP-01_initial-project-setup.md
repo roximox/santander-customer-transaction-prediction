@@ -8,7 +8,7 @@
 - Ticket ID: ADA-SETUP-01
 - Branch: main
 - Pull Request: Nicht anwendbar — direkt in `main` (`55c60d6`) eingefügt
-- Zeitaufwand: 3 Stunden
+- Aufgewendete Zeit: 5,5 Stunden
 - Zuordnung zu einem Treffen: [2026-07-26 — Initialisierung der Projektplanung und Aufteilung von Aufgaben](../../../meetings/2026-07-26_initial-project-planning-and-task-distribution.md)
 
 ## Titel

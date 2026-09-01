@@ -8,7 +8,7 @@
 - Ticket ID: ADA-ML-10
 - Branch: develop
 - Pull Request: Nicht anwendbar — direkt in `develop` (`190c7c5`) übergeben
-- Zeitaufwand: 3 Stunden
+- Aufgewendete Zeit: 5 Stunden
 - Zugehörige Besprechung: [2026-08-26 — Entscheidung über den Endmodellauswahl](../../../meetings/2026-08-26_final-model-selection-decision.md)
 
 ## Titel

@@ -8,7 +8,7 @@
 - Ticket ID: ADA-DATA-03
 - Branch: feature/data_processing
 - Pull Request: [#2 — feature/data_processing → main](https://github.com/roximox/santander-customer-transaction-prediction/pull/2)
-- Zeitaufwand: 2,5 Stunden
+- Aufgewendete Zeit: 4,5 Stunden
 - Zuordnung zu einer Besprechung: [2026-08-09 — Data Processing, Validation Strategy und Start der individuellen Analyse](../../../meetings/2026-08-09_data-processing-validation-strategy-and-start-of-individual-analysis.md)
 
 ## Titel

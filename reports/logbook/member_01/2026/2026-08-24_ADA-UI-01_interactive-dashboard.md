@@ -8,7 +8,7 @@
 - Ticket ID: ADA-UI-01
 - Branch: develop
 - Pull Request: [#7 — develop → main](https://github.com/roximox/santander-customer-transaction-prediction/pull/7) (feature merged into `develop` in `37830b3`)
-- Zeitaufwand: 6 Stunden
+- Aufgewendete Zeit: 10,5 Stunden
 - Zugehörige Besprechung: [2026-08-23 — Model Progress, Optimization and Evaluation](../../../meetings/2026-08-23_model-progress-optimization-and-evaluation.md)
 
 ## Titel

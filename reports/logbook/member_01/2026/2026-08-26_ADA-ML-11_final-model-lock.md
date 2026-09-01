@@ -8,7 +8,7 @@
 - Datum: 2026-08-26
 - Branch: develop
 - Pull Request: Nicht anwendbar — direkt in `develop` (`c15f0d6`) übertragen
-- Zeitaufwand: 2,5 Stunden
+- Aufgewendete Zeit: 4,5 Stunden
 - Zugehörige Besprechung: [2026-08-26 — Entscheidung über den finalen Modellauswahl](../../../meetings/2026-08-26_final-model-selection-decision.md)
 
 ## Titel

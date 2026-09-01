@@ -1,10 +1,15 @@
 # 2026-08-15 – M04-HGB-COMP-001A – Reproduzierbarer Vergleich zwischen Baseline und optimiertem HGB-Modell
 
 **Mitglied:** Chaymae Akouaouch (Member 04)
+
 **Kategorie:** Implementierung und Validierung
+
 **Zugehöriges Experiment:** `M04-HGB-COMP-001`
+
 **Zugehöriges Gruppentreffen:** 2026-08-16 – Erster individueller Analyse- und ML-Fortschritt
+
 **Branch:** `feature/model-optimization`
+
 **Zeitaufwand:** 4 h
 
 ## Ziel

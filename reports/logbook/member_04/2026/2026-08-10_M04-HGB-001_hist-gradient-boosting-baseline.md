@@ -3,10 +3,15 @@
 **Zeitraum:** 10.–12.08.2026
 
 **Mitglied:** Chaymae Akouaouch (Member 04)
+
 **Kategorie:** Implementierung, Experiment und Analyse
+
 **Zugehöriges Experiment:** `M04-HGB-001`
+
 **Zugehöriges Gruppentreffen:** 2026-08-09 – Datenverarbeitung und Validierungsstrategie
+
 **Branch:** `feature/model-optimization`
+
 **Zeitaufwand:** 8 h
 
 ## Ziel

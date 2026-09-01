@@ -1,10 +1,15 @@
 # 2026-08-31 – M04-PORT-001 – Erstellung und Qualitätsprüfung meines E-Portfolios
 
 **Mitglied:** Chaymae Akouaouch (Member 04)
+
 **Kategorie:** E-Portfolio und Logbuch
+
 **Zugehöriges Experiment:** Gesamtes HGB-Arbeitspaket
+
 **Zugehöriges Gruppentreffen:** 2026-08-31 – Finale Abgabe- und Präsentationsprüfung
+
 **Branch:** `feature/model-optimization`
+
 **Zeitaufwand:** 10 h
 
 ## Ziel

@@ -1,10 +1,15 @@
 # 2026-08-15 – M04-HGB-COMP-001B – Wissenschaftliche Interpretation der HGB-Optimierungsgewinne
 
 **Mitglied:** Chaymae Akouaouch (Member 04)
+
 **Kategorie:** Analyse und Interpretation
+
 **Zugehöriges Experiment:** `M04-HGB-COMP-001`
+
 **Zugehöriges Gruppentreffen:** 2026-08-16 – Erster individueller Analyse- und ML-Fortschritt
+
 **Branch:** `feature/model-optimization`
+
 **Zeitaufwand:** 2 h
 
 ## Ziel

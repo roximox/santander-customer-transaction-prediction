@@ -47,4 +47,4 @@ Abgabe der final geprüften Projektunterlagen.
 ## Repository-Evidenz
 
 - `reports/meetings/2026-08-31_final-submission-and-presentation-review.md`
-- Abschließende Portfolio-, Merge- und Bereinigungscommits vom 31.08.
+- Abschließende Portfolio-, Merge- und Bereinigungsarbeiten im Rahmen des Projektabschlusses

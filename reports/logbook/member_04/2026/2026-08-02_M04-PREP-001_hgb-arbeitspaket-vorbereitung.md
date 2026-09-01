@@ -1,10 +1,15 @@
 # 2026-08-02 – M04-PREP-001 – Einarbeitung und Planung des HistGradientBoosting-Arbeitspakets
 
 **Mitglied:** Chaymae Akouaouch (Member 04)
+
 **Kategorie:** Einarbeitung und Planung
+
 **Zugehöriges Experiment:** Vorbereitung für `M04-HGB-001`
+
 **Zugehöriges Gruppentreffen:** 2026-08-02 – Projektstruktur und gemeinsame Datenbasis
+
 **Branch:** `feature/model-optimization`
+
 **Zeitaufwand:** 2.5 h
 
 ## Ziel

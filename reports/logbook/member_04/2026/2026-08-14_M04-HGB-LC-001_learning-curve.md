@@ -1,10 +1,15 @@
 # 2026-08-14 – M04-HGB-LC-001 – Learning-Curve-Diagnostik des optimierten HGB-Modells
 
 **Mitglied:** Chaymae Akouaouch (Member 04)
+
 **Kategorie:** Implementierung, Experiment und Analyse
+
 **Zugehöriges Experiment:** `M04-HGB-LC-001`
+
 **Zugehöriges Gruppentreffen:** 2026-08-16 – Erster individueller Analyse- und ML-Fortschritt
+
 **Branch:** `feature/model-optimization`
+
 **Zeitaufwand:** 7 h
 
 ## Ziel

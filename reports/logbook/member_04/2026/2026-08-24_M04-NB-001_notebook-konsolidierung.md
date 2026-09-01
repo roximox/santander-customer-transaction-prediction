@@ -1,10 +1,15 @@
 # 2026-08-24 – M04-NB-001 – Konsolidierung des HGB-Analyse-Notebooks
 
 **Mitglied:** Chaymae Akouaouch (Member 04)
+
 **Kategorie:** Notebook und Dokumentation
+
 **Zugehöriges Experiment:** Gesamtes HGB-Arbeitspaket
+
 **Zugehöriges Gruppentreffen:** 2026-08-23 – Modellfortschritt, Optimierung und Evaluation
+
 **Branch:** `feature/model-optimization`
+
 **Zeitaufwand:** 6 h
 
 ## Ziel

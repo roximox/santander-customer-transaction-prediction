@@ -1,10 +1,15 @@
 # 2026-08-22 – M04-HGB-TEST-001 – Entwicklung und Validierung der HGB-Testsuite
 
 **Mitglied:** Chaymae Akouaouch (Member 04)
+
 **Kategorie:** Tests und Debugging
+
 **Zugehöriges Experiment:** Gesamtes HGB-Arbeitspaket
+
 **Zugehöriges Gruppentreffen:** 2026-08-23 – Modellfortschritt, Optimierung und Evaluation
+
 **Branch:** `feature/model-optimization`
+
 **Zeitaufwand:** 14 h
 
 ## Ziel

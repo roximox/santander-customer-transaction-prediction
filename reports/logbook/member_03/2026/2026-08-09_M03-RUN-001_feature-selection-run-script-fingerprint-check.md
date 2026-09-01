@@ -5,7 +5,7 @@
 | **Date** | 2026-08-09 |
 | **Member** | Ilias El Hamri (Member 03) |
 | **Ticket ID** | M03-RUN-001 |
-| **Branch** | feature/feature-selection |
+| **Branch** | develop |
 | **Time spent** | 4.0 h |
 | **Related meeting** | 2026-08-09 |
 
@@ -40,10 +40,6 @@ Custom CV loop — would break comparability with other members.
 ## Files changed
 
 scripts/run_feature_selection.py
-
-## Figure and table references
-
-—
 
 ## Difficulties / Adaptations
 

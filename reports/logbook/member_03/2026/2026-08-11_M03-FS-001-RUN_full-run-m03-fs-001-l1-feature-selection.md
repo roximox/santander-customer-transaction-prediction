@@ -5,7 +5,7 @@
 | **Date** | 2026-08-11 |
 | **Member** | Ilias El Hamri (Member 03) |
 | **Ticket ID** | M03-FS-001-RUN |
-| **Branch** | feature/feature-selection |
+| **Branch** | develop |
 | **Time spent** | 6.0 h |
 | **Related meeting** | 2026-08-09 |
 
@@ -42,7 +42,7 @@ reports/experiments/M03-FS-001_summary.json, reports/figures/feature_selection_c
 
 ## Figure and table references
 
-reports/figures/feature_selection_cv_scores.pdf
+- `reports/figures/feature_selection_cv_scores.pdf`
 
 ## Difficulties / Adaptations
 

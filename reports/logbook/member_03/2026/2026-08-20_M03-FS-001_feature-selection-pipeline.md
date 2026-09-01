@@ -5,7 +5,7 @@
 | **Date** | 2026-08-20 |
 | **Member** | Ilias El Hamri (Member 03) |
 | **Ticket ID** | M03-FS-001 |
-| **Branch** | feature/feature-selection |
+| **Branch** | develop |
 | **Time spent** | 2.0 h |
 | **Related meeting** | 2026-08-16 |
 
@@ -40,7 +40,7 @@ src/feature_selection.py; scripts/run_feature_selection.py; tests/test_feature_s
 
 ## Figure and table references
 
-reports/figures/feature_selection_cv_scores.pdf
+- `reports/figures/feature_selection_cv_scores.pdf`
 
 ## Difficulties / Adaptations
 

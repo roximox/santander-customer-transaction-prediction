@@ -5,7 +5,7 @@
 | **Date** | 2026-08-13 |
 | **Member** | Ilias El Hamri (Member 03) |
 | **Ticket ID** | M03-CMP-001 |
-| **Branch** | feature/feature-selection |
+| **Branch** | develop |
 | **Time spent** | 4.0 h |
 | **Related meeting** | 2026-08-16 |
 
@@ -42,7 +42,8 @@ reports/figures/* (local for portfolio), comparison notes
 
 ## Figure and table references
 
-reports/figures/feature_selection_cv_scores.pdf, reports/figures/pca_cv_scores.pdf (manual comparison figures for portfolio)
+- `reports/figures/feature_selection_cv_scores.pdf`
+- `reports/figures/pca_cv_scores.pdf`
 
 ## Difficulties / Adaptations
 

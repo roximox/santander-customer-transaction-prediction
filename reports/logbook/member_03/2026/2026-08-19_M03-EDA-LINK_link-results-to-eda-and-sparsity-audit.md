@@ -5,7 +5,7 @@
 | **Date** | 2026-08-19 |
 | **Member** | Ilias El Hamri (Member 03) |
 | **Ticket ID** | M03-EDA-LINK |
-| **Branch** | main |
+| **Branch** | develop |
 | **Time spent** | 2.5 h |
 | **Related meeting** | 2026-08-16 |
 
@@ -38,10 +38,6 @@ Claiming the reductions 'failed' — they behaved exactly as the EDA predicted.
 ## Files changed
 
 notes/interpretation.md
-
-## Figure and table references
-
-—
 
 ## Difficulties / Adaptations
 

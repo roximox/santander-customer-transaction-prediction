@@ -5,7 +5,7 @@
 | **Date** | 2026-08-24 |
 | **Member** | Ilias El Hamri (Member 03) |
 | **Ticket ID** | M03-FIG-001 |
-| **Branch** | main |
+| **Branch** | develop |
 | **Time spent** | 3.5 h |
 | **Related meeting** | 2026-08-23 |
 
@@ -41,7 +41,9 @@ reports/figures/ (portfolio versions)
 
 ## Figure and table references
 
-reports/figures/fig1_fold_roc_auc.png, fig2_metric_profile.png, fig3_fit_time.png
+- `reports/figures/fig1_fold_roc_auc.png`
+- `reports/figures/fig2_metric_profile.png`
+- `reports/figures/fig3_fit_time.png`
 
 ## Difficulties / Adaptations
 

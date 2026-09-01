@@ -5,7 +5,7 @@
 | **Date** | 2026-08-29 |
 | **Member** | Ilias El Hamri (Member 03) |
 | **Ticket ID** | M03-PORT-003 |
-| **Branch** | main |
+| **Branch** | develop |
 | **Time spent** | 4.5 h |
 | **Related meeting** | 2026-08-28 |
 
@@ -18,7 +18,7 @@ Write confidential member assessment, sources, AI declaration, and expand logboo
 - Drafted section 4 (three teammates, strength + weakness each)
 - Pinned library versions from the actual environment
 - Declared generative-AI use with representative prompts
-- Added intermediate logbook tickets to reach ~100 h evidence
+- Completed the missing metadata fields (time spent, related meeting) in earlier entries
 
 ## Methodology
 
@@ -39,10 +39,6 @@ Generic praise without concrete examples.
 ## Files changed
 
 portfolio
-
-## Figure and table references
-
-—
 
 ## Difficulties / Adaptations
 

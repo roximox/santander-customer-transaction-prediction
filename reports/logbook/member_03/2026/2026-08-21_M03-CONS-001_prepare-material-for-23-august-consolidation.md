@@ -5,7 +5,7 @@
 | **Date** | 2026-08-21 |
 | **Member** | Ilias El Hamri (Member 03) |
 | **Ticket ID** | M03-CONS-001 |
-| **Branch** | main |
+| **Branch** | develop |
 | **Time spent** | 3.0 h |
 | **Related meeting** | 2026-08-23 |
 
@@ -38,10 +38,6 @@ None.
 ## Files changed
 
 reports/meetings/prep_2026-08-23_M03.md
-
-## Figure and table references
-
-—
 
 ## Difficulties / Adaptations
 

@@ -5,7 +5,7 @@
 | **Date** | 2026-08-04 |
 | **Member** | Ilias El Hamri (Member 03) |
 | **Ticket ID** | M03-TEST-001 |
-| **Branch** | feature/feature-selection |
+| **Branch** | develop |
 | **Time spent** | 4.5 h |
 | **Related meeting** | 2026-08-02 |
 
@@ -40,10 +40,6 @@ Testing only on real data — too slow and would require the full split.
 ## Files changed
 
 tests/test_feature_selection.py
-
-## Figure and table references
-
-—
 
 ## Difficulties / Adaptations
 

@@ -5,7 +5,7 @@
 | **Date** | 2026-08-31 |
 | **Member** | Ilias El Hamri (Member 03) |
 | **Ticket ID** | M03-MEET-008 |
-| **Branch** | main |
+| **Branch** | develop |
 | **Time spent** | 2.0 h |
 | **Related meeting** | 2026-08-31 |
 
@@ -38,10 +38,6 @@ None.
 ## Files changed
 
 final submission package
-
-## Figure and table references
-
-—
 
 ## Difficulties / Adaptations
 

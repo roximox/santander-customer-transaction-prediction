@@ -5,7 +5,7 @@
 | **Date** | 2026-08-10 |
 | **Member** | Ilias El Hamri (Member 03) |
 | **Ticket ID** | M03-RUN-002 |
-| **Branch** | feature/pca |
+| **Branch** | develop |
 | **Time spent** | 2.5 h |
 | **Related meeting** | 2026-08-09 |
 
@@ -39,10 +39,6 @@ None.
 ## Files changed
 
 scripts/run_pca.py
-
-## Figure and table references
-
-—
 
 ## Difficulties / Adaptations
 

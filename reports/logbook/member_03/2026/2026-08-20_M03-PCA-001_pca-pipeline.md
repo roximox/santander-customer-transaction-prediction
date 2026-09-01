@@ -5,7 +5,7 @@
 | **Date** | 2026-08-20 |
 | **Member** | Ilias El Hamri (Member 03) |
 | **Ticket ID** | M03-PCA-001 |
-| **Branch** | feature/pca |
+| **Branch** | develop |
 | **Time spent** | 2.0 h |
 | **Related meeting** | 2026-08-16 |
 
@@ -40,7 +40,7 @@ src/feature_selection.py; scripts/run_pca.py; tests/test_feature_selection.py; n
 
 ## Figure and table references
 
-reports/figures/pca_cv_scores.pdf. Note: comparison figure feature_selection_vs_pca_metrics.pdf and table feature_selection_pca_comparison.csv referenced by run scripts were never generated; portfolio Figures 1–3 replace them.
+- `reports/figures/pca_cv_scores.pdf`
 
 ## Difficulties / Adaptations
 

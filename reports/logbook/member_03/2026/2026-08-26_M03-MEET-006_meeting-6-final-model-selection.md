@@ -5,7 +5,7 @@
 | **Date** | 2026-08-26 |
 | **Member** | Ilias El Hamri (Member 03) |
 | **Ticket ID** | M03-MEET-006 |
-| **Branch** | main |
+| **Branch** | develop |
 | **Time spent** | 2.5 h |
 | **Related meeting** | 2026-08-26 |
 
@@ -38,10 +38,6 @@ None.
 ## Files changed
 
 reports/model_selection/final_model_lock.json (read)
-
-## Figure and table references
-
-—
 
 ## Difficulties / Adaptations
 

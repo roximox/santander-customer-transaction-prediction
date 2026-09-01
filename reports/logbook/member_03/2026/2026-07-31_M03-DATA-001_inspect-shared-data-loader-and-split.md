@@ -5,7 +5,7 @@
 | **Date** | 2026-07-31 |
 | **Member** | Ilias El Hamri (Member 03) |
 | **Ticket ID** | M03-DATA-001 |
-| **Branch** | main |
+| **Branch** | develop |
 | **Time spent** | 2.5 h |
 | **Related meeting** | 2026-08-02 |
 
@@ -38,11 +38,7 @@ Loading the full 200k and splitting locally — rejected to keep comparability.
 
 ## Files changed
 
-reports/tables/train_test_split_summary.json
-
-## Figure and table references
-
-—
+None — inspection only. `src/data.py` and `reports/tables/train_test_split_summary.json` are Member 01 artefacts and were read, not modified.
 
 ## Difficulties / Adaptations
 

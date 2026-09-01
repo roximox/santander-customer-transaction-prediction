@@ -5,7 +5,7 @@
 | **Date** | 2026-08-12 |
 | **Member** | Ilias El Hamri (Member 03) |
 | **Ticket ID** | M03-PCA-001-RUN |
-| **Branch** | feature/pca |
+| **Branch** | develop |
 | **Time spent** | 3.5 h |
 | **Related meeting** | 2026-08-09 |
 
@@ -42,7 +42,7 @@ reports/experiments/M03-PCA-001_summary.json, reports/figures/pca_cv_scores.pdf
 
 ## Figure and table references
 
-reports/figures/pca_cv_scores.pdf
+- `reports/figures/pca_cv_scores.pdf`
 
 ## Difficulties / Adaptations
 

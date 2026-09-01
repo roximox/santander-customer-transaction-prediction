@@ -5,7 +5,7 @@
 | **Date** | 2026-07-29 |
 | **Member** | Ilias El Hamri (Member 03) |
 | **Ticket ID** | M03-LIT-001 |
-| **Branch** | main |
+| **Branch** | develop |
 | **Time spent** | 4.0 h |
 | **Related meeting** | 2026-07-26 |
 
@@ -39,10 +39,6 @@ Recursive feature elimination (too slow on 160k×200); univariate chi2 (ignores 
 ## Files changed
 
 notes/method_selection.md (local)
-
-## Figure and table references
-
-—
 
 ## Difficulties / Adaptations
 

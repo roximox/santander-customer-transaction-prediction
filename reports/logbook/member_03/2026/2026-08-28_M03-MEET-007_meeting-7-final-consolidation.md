@@ -5,7 +5,7 @@
 | **Date** | 2026-08-28 |
 | **Member** | Ilias El Hamri (Member 03) |
 | **Ticket ID** | M03-MEET-007 |
-| **Branch** | main |
+| **Branch** | develop |
 | **Time spent** | 2.0 h |
 | **Related meeting** | 2026-08-28 |
 
@@ -38,10 +38,6 @@ Any last-minute experiment.
 ## Files changed
 
 reports/meetings/2026-08-28.md
-
-## Figure and table references
-
-—
 
 ## Difficulties / Adaptations
 

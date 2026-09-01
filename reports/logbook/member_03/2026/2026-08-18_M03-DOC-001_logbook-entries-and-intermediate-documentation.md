@@ -5,7 +5,7 @@
 | **Date** | 2026-08-18 |
 | **Member** | Ilias El Hamri (Member 03) |
 | **Ticket ID** | M03-DOC-001 |
-| **Branch** | main |
+| **Branch** | develop |
 | **Time spent** | 3.5 h |
 | **Related meeting** | 2026-08-16 |
 
@@ -38,10 +38,6 @@ Writing only the two final-run tickets — insufficient for workload evidence.
 ## Files changed
 
 reports/logbook/member_03/2026/*.md
-
-## Figure and table references
-
-—
 
 ## Difficulties / Adaptations
 

@@ -5,7 +5,7 @@
 | **Date** | 2026-08-27 |
 | **Member** | Ilias El Hamri (Member 03) |
 | **Ticket ID** | M03-PORT-002 |
-| **Branch** | main |
+| **Branch** | develop |
 | **Time spent** | 3.0 h |
 | **Related meeting** | 2026-08-26 |
 
@@ -38,10 +38,6 @@ None.
 ## Files changed
 
 portfolio draft
-
-## Figure and table references
-
-—
 
 ## Difficulties / Adaptations
 

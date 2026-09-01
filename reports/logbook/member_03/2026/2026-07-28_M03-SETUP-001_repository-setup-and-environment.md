@@ -5,7 +5,7 @@
 | **Date** | 2026-07-28 |
 | **Member** | Ilias El Hamri (Member 03) |
 | **Ticket ID** | M03-SETUP-001 |
-| **Branch** | main |
+| **Branch** | develop |
 | **Time spent** | 3.5 h |
 | **Related meeting** | 2026-07-26 |
 
@@ -40,10 +40,6 @@ Creating a separate venv instead of conda — rejected to stay aligned with grou
 ## Files changed
 
 environment.yml (read), pyproject.toml (read)
-
-## Figure and table references
-
-—
 
 ## Difficulties / Adaptations
 

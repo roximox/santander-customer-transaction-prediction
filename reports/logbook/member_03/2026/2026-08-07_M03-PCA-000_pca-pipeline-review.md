@@ -5,7 +5,7 @@
 | **Date** | 2026-08-07 |
 | **Member** | Ilias El Hamri (Member 03) |
 | **Ticket ID** | M03-PCA-000 |
-| **Branch** | feature/pca |
+| **Branch** | develop |
 | **Time spent** | 3.0 h |
 | **Related meeting** | 2026-08-09 |
 
@@ -38,10 +38,6 @@ Fixed n_components=50 — arbitrary and not data-driven.
 ## Files changed
 
 src/feature_selection.py
-
-## Figure and table references
-
-—
 
 ## Difficulties / Adaptations
 

@@ -5,7 +5,7 @@
 | **Date** | 2026-08-14 |
 | **Member** | Ilias El Hamri (Member 03) |
 | **Ticket ID** | M03-NB-001 |
-| **Branch** | feature/feature-selection |
+| **Branch** | develop |
 | **Time spent** | 3.0 h |
 | **Related meeting** | 2026-08-16 |
 
@@ -38,10 +38,6 @@ Putting the full 5-fold run inside the notebook by default — too slow for inte
 ## Files changed
 
 notebooks/05_feature_selection.ipynb
-
-## Figure and table references
-
-—
 
 ## Difficulties / Adaptations
 

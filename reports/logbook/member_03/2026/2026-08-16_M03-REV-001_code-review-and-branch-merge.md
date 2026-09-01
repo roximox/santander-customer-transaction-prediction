@@ -5,20 +5,20 @@
 | **Date** | 2026-08-16 |
 | **Member** | Ilias El Hamri (Member 03) |
 | **Ticket ID** | M03-REV-001 |
-| **Branch** | main |
+| **Branch** | develop |
 | **Time spent** | 3.0 h |
 | **Related meeting** | 2026-08-16 |
 
 ## Objective
 
-Address review comments and merge feature/feature-selection and feature/pca.
+Address review comments and merge feature/feature-selection and feature/pca into develop.
 
 ## Work performed
 
 - Responded to comments on max_iter and solver choice
 - Added explicit random_state to all estimators
-- Merged both branches into main after CI green
-- Updated experiment registry
+- Merged both feature branches into develop after CI green
+- Registered the two M03 experiments in the shared registry maintained by Member 01
 
 ## Methodology
 
@@ -38,11 +38,7 @@ Late addition of a third C value — would require new experiment IDs and re-run
 
 ## Files changed
 
-src/feature_selection.py, experiment_registry.csv
-
-## Figure and table references
-
-—
+src/feature_selection.py (registry rows for M03-FS-001 and M03-PCA-001 added via the shared registration helper)
 
 ## Difficulties / Adaptations
 

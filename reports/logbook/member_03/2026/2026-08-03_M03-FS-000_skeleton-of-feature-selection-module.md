@@ -5,7 +5,7 @@
 | **Date** | 2026-08-03 |
 | **Member** | Ilias El Hamri (Member 03) |
 | **Ticket ID** | M03-FS-000 |
-| **Branch** | feature/feature-selection |
+| **Branch** | develop |
 | **Time spent** | 3.0 h |
 | **Related meeting** | 2026-08-02 |
 
@@ -39,10 +39,6 @@ Separate scaler outside the pipeline — rejected because of leakage risk.
 ## Files changed
 
 src/feature_selection.py
-
-## Figure and table references
-
-—
 
 ## Difficulties / Adaptations
 

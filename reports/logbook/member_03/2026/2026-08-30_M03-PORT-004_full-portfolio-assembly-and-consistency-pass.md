@@ -5,7 +5,7 @@
 | **Date** | 2026-08-30 |
 | **Member** | Ilias El Hamri (Member 03) |
 | **Ticket ID** | M03-PORT-004 |
-| **Branch** | main |
+| **Branch** | develop |
 | **Time spent** | 5.0 h |
 | **Related meeting** | 2026-08-31 |
 
@@ -39,10 +39,6 @@ None.
 ## Files changed
 
 ADA_124_ElHamri_Portfolio.docx
-
-## Figure and table references
-
-Figures 1–5 embedded
 
 ## Difficulties / Adaptations
 

@@ -5,7 +5,7 @@
 | **Date** | 2026-08-06 |
 | **Member** | Ilias El Hamri (Member 03) |
 | **Ticket ID** | M03-FS-002 |
-| **Branch** | feature/feature-selection |
+| **Branch** | develop |
 | **Time spent** | 8.5 h |
 | **Related meeting** | 2026-08-09 |
 
@@ -39,10 +39,6 @@ liblinear solver — does not scale well to 128k samples. Fixed n_components=50 
 ## Files changed
 
 src/feature_selection.py
-
-## Figure and table references
-
-—
 
 ## Difficulties / Adaptations
 

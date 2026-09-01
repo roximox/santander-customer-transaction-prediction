@@ -21,4 +21,18 @@ of each task; they are not measurements reconstructed from Git timestamps.
 | Collective final-model selection | 3 h |
 | EDA/tree presentation preparation | 6 h |
 | Final consistency review | 4 h |
-| **Documented estimated total** | **48 h** |
+| Project planning and role definition | 4 h |
+| EDA scope and data-foundation review | 5 h |
+| Validation and EDA methodology discussion | 6 h |
+| EDA-result analysis and peer discussion | 7 h |
+| Tree-result consolidation and discussion | 8 h |
+| Portfolio drafting and evidence selection | 12 h |
+| Logbook reconstruction and conclusion writing | 10 h |
+| **Documented retrospective total** | **100 h** |
+
+The 52 additional hours document activities Aya confirmed were actually
+performed but not recorded contemporaneously. They cover preparation,
+participation in meetings, colleague discussions, scientific result analysis,
+portfolio drafting, conclusion writing, and Logbook consolidation. They are
+kept separate from the original 48-hour implementation and final-task estimate
+to reduce double counting.

@@ -1,10 +1,15 @@
 # 2026-08-09 – M04-PREP-002 – Prüfung des Train/Test-/CV-Protokolls für HGB
 
 **Mitglied:** Chaymae Akouaouch (Member 04)
+
 **Kategorie:** Einarbeitung und Reproduzierbarkeit
+
 **Zugehöriges Experiment:** Vorbereitung für `M04-HGB-001`
+
 **Zugehöriges Gruppentreffen:** 2026-08-09 – Datenverarbeitung und Validierungsstrategie
+
 **Branch:** `feature/model-optimization`
+
 **Zeitaufwand:** 2.5 h
 
 ## Ziel

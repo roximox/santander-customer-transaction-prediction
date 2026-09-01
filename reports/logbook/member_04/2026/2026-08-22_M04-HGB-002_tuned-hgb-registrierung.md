@@ -1,10 +1,15 @@
 # 2026-08-22 – M04-HGB-002 – Registrierung und Reproduzierbarkeitsprüfung des optimierten HGB-Modells
 
 **Mitglied:** Chaymae Akouaouch (Member 04)
+
 **Kategorie:** Experiment und Integration
+
 **Zugehöriges Experiment:** `M04-HGB-002`
+
 **Zugehöriges Gruppentreffen:** 2026-08-23 – Modellfortschritt, Optimierung und Evaluation
+
 **Branch:** `feature/model-optimization`
+
 **Zeitaufwand:** 5 h
 
 ## Ziel

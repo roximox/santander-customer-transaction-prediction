@@ -1,118 +1,55 @@
-# Logbook Entry
+# 2026-08-20 · M03-FS-001 — L1 feature selection + Logistic Regression pipeline (formal ticket)
 
-## Metadata
-
-- Date: 2026-08-20
-- Member: Ilias El Hamri
-- Sprint: Sprint 1
-- Ticket ID: M03-FS-001
-- Branch: feature/feature-selection
-- Pull Request: To be updated after Pull Request creation
-- Time spent: TO BE COMPLETED BY ILIAS EL HAMRI
-- Related meeting: TO BE COMPLETED BY ILIAS EL HAMRI
-
-## Title
-
-L1 Feature Selection + Logistic Regression Pipeline
+| Field | Value |
+| --- | --- |
+| **Date** | 2026-08-20 |
+| **Member** | Ilias El Hamri (Member 03) |
+| **Ticket ID** | M03-FS-001 |
+| **Branch** | develop |
+| **Time spent** | 2.0 h |
+| **Related meeting** | 2026-08-16 |
 
 ## Objective
 
-Implement a leakage-safe, embedded feature-selection pipeline (M03-FS-001) using L1-penalized
-Logistic Regression to automatically remove uninformative features before training a final
-L2 classifier, evaluated using the shared 5-fold stratified cross-validation protocol.
-
-## Context
-
-The Santander dataset contains 200 anonymous numeric features. Without selection, many may be
-noisy or redundant, adding computational cost without predictive benefit. Selecting features
-within each training fold prevents any information from the validation or test partitions from
-influencing which features are retained.
+Formalise the already-executed M03-FS-001 experiment as a complete logbook entry.
 
 ## Work performed
 
-- Implemented `src/feature_selection.py` with factory functions `create_feature_selection_pipeline()`
-  and `create_pca_pipeline()`, and reporting helpers `build_fs_pca_comparison()`,
-  `save_fs_pca_comparison()`, `save_fs_cv_figure()`, `save_pca_cv_figure()`,
-  and `save_fs_vs_pca_figure()`.
-- Implemented `scripts/run_feature_selection.py` to execute M03-FS-001 with split fingerprint
-  verification, `run_and_save_experiment`, and CV figure export.
-- Implemented `scripts/verify_feature_selection.py` as an offline synthetic smoke test.
-- Implemented `tests/test_feature_selection.py` with offline unit tests.
-- Completed `notebooks/05_feature_selection.ipynb` with inline code comments and the
-  full StandardScaler → SelectFromModel(L1) → LogisticRegression(L2) pipeline.
+- Consolidated all metrics, files and decisions into the standard ticket template
+- Recorded saga slow-down and missing retained-feature count as difficulties
 
 ## Methodology
 
-L1 regularization was chosen because its mathematical properties force uninformative feature
-coefficients to exactly zero. `SelectFromModel` wraps the L1 estimator and drops features
-whose learned importance is zero. The final L2 classifier is then trained exclusively on
-the surviving features. All steps are encapsulated inside a scikit-learn `Pipeline` so that
-`StandardScaler`, `SelectFromModel`, and `LogisticRegression` are each fitted independently
-within each of the five training folds during cross-validation.
+Same as earlier runs. StandardScaler → SelectFromModel(L1, C=0.1, saga) → L2 LR inside one Pipeline, refit per fold.
 
 ## Results
 
-The pipeline was evaluated using the shared `evaluate_model_cv` function on training data only.
-Exact metric values are recorded after running `scripts/run_feature_selection.py`.
-The final test partition was not evaluated.
-
-## Interpretation
-
-Results reflect training-data cross-validation performance only. Scientific interpretation of
-the ROC-AUC, Average Precision, and feature stability across folds is documented after
-the experiment is run and the results are reviewed.
+Mean validation ROC-AUC 0.859187 ± 0.003237; Average Precision 0.507566; F1 0.390561; precision 0.688834; recall 0.272671; balanced accuracy 0.629432; train–validation ROC-AUC gap 0.002338; mean fit time 15.876 s per fold. Final test partition not evaluated.
 
 ## Decision
 
-L1 (saga, C=0.1) was selected for the selector as an untuned starting point. L2 (lbfgs, C=1.0)
-was selected for the final classifier to match the project baseline. Hyperparameter tuning is
-deferred to a separate, explicitly documented experiment.
-
-## Difficulties
-
-None.
-
-## Adaptations and deviations from the plan
-
-None.
+C=0.1 kept; sweep deferred. Result statistically indistinguishable from unreduced baseline M01-LR-001.
 
 ## Rejected approaches
 
-Global feature selection applied before cross-validation was rejected to prevent data leakage.
-Fitting `SelectFromModel` outside a Pipeline was rejected for the same reason.
+Fitting the selector on the full development partition before CV (leaks). Univariate filter selection (ignores multivariate structure).
 
 ## Files changed
 
-- `src/feature_selection.py`
-- `scripts/run_feature_selection.py`
-- `scripts/verify_feature_selection.py`
-- `tests/test_feature_selection.py`
-- `notebooks/05_feature_selection.ipynb`
-- `reports/logbook/member_03/2026/2026-08-20_M03-FS-001_feature-selection-pipeline.md`
-
-## Code references
-
-`create_feature_selection_pipeline` and `save_fs_cv_figure` in `src/feature_selection.py`.
-`main` and `refuse_existing_outputs` in `scripts/run_feature_selection.py`.
+src/feature_selection.py; scripts/run_feature_selection.py; tests/test_feature_selection.py; notebooks/05_feature_selection.ipynb; reports/logbook/member_03/2026/2026-08-20_M03-FS-001_feature-selection-pipeline.md
 
 ## Figure and table references
 
-- `reports/figures/feature_selection_cv_scores.pdf` (generated by `scripts/run_feature_selection.py`)
-- `reports/tables/feature_selection_pca_comparison.csv` (generated after both M03 experiments run)
+- `reports/figures/feature_selection_cv_scores.pdf`
 
-## Reproducibility notes
+## Difficulties / Adaptations
 
-All estimators use `random_state` from `configs/config.yaml` (value 42). The shared stratified
-5-fold CV with `shuffle=True` and `random_state=42` is used via `create_stratified_cv()`.
-Split fingerprints are verified against the shared project constants before the experiment runs.
-The final test set was not used and remained closed.
+Saga solver slow on 128k×200; memory pressure during float32 conversion on first attempts; retained feature count per fold never logged.
 
 ## Next step
 
-Run `scripts/run_feature_selection.py` to produce the registered M03-FS-001 experiment results,
-then compare ROC-AUC with the logistic baseline (M01-LR-001) and the PCA experiment (M03-PCA-001).
+Formal PCA ticket.
 
-## Sources and tools used
+## Reproducibility notes
 
-Python, scikit-learn, pandas, matplotlib, pytest, and the project's internal `src.evaluation`,
-`src.experiments`, `src.validation`, and `src.feature_selection` modules.
+All estimators take `random_state = 42` from `configs/config.yaml` where applicable. Shared stratified 5-fold CV with `shuffle = True` is created by `create_stratified_cv()`. Split fingerprints are verified against the shared project constants before any experiment runs. The reserved final test partition was not used for any M03 development experiment.

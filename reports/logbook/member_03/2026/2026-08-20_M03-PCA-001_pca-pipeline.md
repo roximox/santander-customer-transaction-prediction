@@ -1,118 +1,55 @@
-# Logbook Entry
+# 2026-08-20 · M03-PCA-001 — PCA (95% variance) + Logistic Regression pipeline (formal ticket)
 
-## Metadata
-
-- Date: 2026-08-20
-- Member: Ilias El Hamri
-- Sprint: Sprint 1
-- Ticket ID: M03-PCA-001
-- Branch: feature/pca
-- Pull Request: To be updated after Pull Request creation
-- Time spent: TO BE COMPLETED BY ILIAS EL HAMRI
-- Related meeting: TO BE COMPLETED BY ILIAS EL HAMRI
-
-## Title
-
-PCA (95% Variance Threshold) + Logistic Regression Pipeline
+| Field | Value |
+| --- | --- |
+| **Date** | 2026-08-20 |
+| **Member** | Ilias El Hamri (Member 03) |
+| **Ticket ID** | M03-PCA-001 |
+| **Branch** | develop |
+| **Time spent** | 2.0 h |
+| **Related meeting** | 2026-08-16 |
 
 ## Objective
 
-Implement a leakage-safe dimensionality reduction pipeline (M03-PCA-001) using PCA with
-a 95% variance threshold to compress 200 features before training a final L2 classifier,
-evaluated using the shared 5-fold stratified cross-validation protocol.
-
-## Context
-
-With 200 anonymous features, many may be highly correlated. PCA compresses these into
-a smaller number of orthogonal principal components that collectively explain most of the
-variance, potentially improving generalization and reducing fitting time. PCA must be fitted
-on training data only within each cross-validation fold to prevent leakage.
+Formalise the already-executed M03-PCA-001 experiment.
 
 ## Work performed
 
-- Implemented `create_pca_pipeline()` factory in `src/feature_selection.py`.
-- Implemented `save_pca_cv_figure()` and `save_fs_vs_pca_figure()` reporting helpers
-  in `src/feature_selection.py`.
-- Implemented `scripts/run_pca.py` to execute M03-PCA-001 with split fingerprint
-  verification, `run_and_save_experiment`, and CV figure export.
-- Completed `notebooks/06_pca.ipynb` with inline code comments and the full
-  StandardScaler → PCA(n_components=0.95) → LogisticRegression(L2) pipeline.
+- Consolidated metrics and limitations (component count not stored)
+- Noted that comparison figure referenced by scripts was never auto-generated
 
 ## Methodology
 
-PCA is sensitive to feature scales because it decomposes variance. `StandardScaler` is
-applied first to ensure that all 200 features contribute equally to the decomposition.
-`n_components=0.95` automatically selects the minimum number of components needed to
-preserve 95% of the total explained variance, avoiding an arbitrary fixed component count.
-All steps are encapsulated in a scikit-learn `Pipeline` so they are refitted independently
-within each of the five training folds during cross-validation.
+Same CV protocol. StandardScaler → PCA(n_components=0.95) → L2 LR inside one Pipeline, refit per fold.
 
 ## Results
 
-The pipeline was evaluated using the shared `evaluate_model_cv` function on training data only.
-Exact metric values are recorded after running `scripts/run_pca.py`. The final test partition
-was not evaluated.
-
-## Interpretation
-
-Results reflect training-data cross-validation performance only. The number of components
-selected by PCA may vary slightly across folds due to different training subsets.
-Scientific interpretation of the ROC-AUC and Average Precision is documented after the
-experiment is run and the results are reviewed and compared with M03-FS-001.
+Mean validation ROC-AUC 0.858865 ± 0.003267; Average Precision 0.506556; F1 0.389600; precision 0.689166; recall 0.271676; balanced accuracy 0.628973; train–validation ROC-AUC gap 0.002340; mean fit time 2.197 s per fold. Final test partition not evaluated.
 
 ## Decision
 
-`n_components=0.95` was selected as a principled default: it preserves the vast majority
-of information while achieving meaningful dimensionality reduction. The variance threshold
-can be tuned in a separate, explicitly documented experiment if required.
-
-## Difficulties
-
-None.
-
-## Adaptations and deviations from the plan
-
-None.
+n_components=0.95 kept. Difference from baseline −0.000322 ROC-AUC is within fold noise; pure overhead.
 
 ## Rejected approaches
 
-Fitting PCA globally on the entire dataset before cross-validation was rejected to prevent
-data leakage. Using a fixed number of components without a principled justification was
-rejected in favour of a variance-based threshold.
+Fitting PCA globally before CV (leaks). Fixed number of components without justification.
 
 ## Files changed
 
-- `src/feature_selection.py`
-- `scripts/run_pca.py`
-- `tests/test_feature_selection.py`
-- `notebooks/06_pca.ipynb`
-- `reports/logbook/member_03/2026/2026-08-20_M03-PCA-001_pca-pipeline.md`
-
-## Code references
-
-`create_pca_pipeline` and `save_pca_cv_figure` in `src/feature_selection.py`.
-`main` and `refuse_existing_outputs` in `scripts/run_pca.py`.
+src/feature_selection.py; scripts/run_pca.py; tests/test_feature_selection.py; notebooks/06_pca.ipynb; reports/logbook/member_03/2026/2026-08-20_M03-PCA-001_pca-pipeline.md
 
 ## Figure and table references
 
-- `reports/figures/pca_cv_scores.pdf` (generated by `scripts/run_pca.py`)
-- `reports/figures/feature_selection_vs_pca_metrics.pdf` (generated after both M03 experiments run)
-- `reports/tables/feature_selection_pca_comparison.csv` (generated after both M03 experiments run)
+- `reports/figures/pca_cv_scores.pdf`
 
-## Reproducibility notes
+## Difficulties / Adaptations
 
-All estimators use `random_state` from `configs/config.yaml` (value 42). The shared stratified
-5-fold CV with `shuffle=True` and `random_state=42` is used via `create_stratified_cv()`.
-Split fingerprints are verified against the shared project constants before the experiment runs.
-The number of PCA components selected may differ across folds but the random state is fixed.
-The final test set was not used and remained closed.
+Per-fold component count not recorded; comparison artefacts had to be produced manually for the portfolio.
 
 ## Next step
 
-Compare ROC-AUC, Average Precision, and fit time of M03-PCA-001 against M03-FS-001 and
-the logistic baseline M01-LR-001 using `build_fs_pca_comparison()`.
+Consolidation work for group comparison.
 
-## Sources and tools used
+## Reproducibility notes
 
-Python, scikit-learn, pandas, matplotlib, pytest, and the project's internal `src.evaluation`,
-`src.experiments`, `src.validation`, and `src.feature_selection` modules.
+All estimators take `random_state = 42` from `configs/config.yaml` where applicable. Shared stratified 5-fold CV with `shuffle = True` is created by `create_stratified_cv()`. Split fingerprints are verified against the shared project constants before any experiment runs. The reserved final test partition was not used for any M03 development experiment.

@@ -1,10 +1,15 @@
 # 2026-08-15 – M04-HGB-OOF-001A – Implementierung und Ausführung der HGB-OOF-Evaluation
 
 **Mitglied:** Chaymae Akouaouch (Member 04)
+
 **Kategorie:** Implementierung und Experiment
+
 **Zugehöriges Experiment:** `M04-HGB-OOF-001`
+
 **Zugehöriges Gruppentreffen:** 2026-08-16 – Erster individueller Analyse- und ML-Fortschritt
+
 **Branch:** `feature/model-optimization`
+
 **Zeitaufwand:** 8 h
 
 ## Ziel

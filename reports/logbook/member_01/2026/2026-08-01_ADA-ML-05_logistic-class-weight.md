@@ -1,102 +1,79 @@
-# Logbook Entry
+# Logbucheintrag
 
-## Metadata
+## Metadaten
 
-- Date: 2026-08-01
-- Member: Yassine Elhari
+- Datum: 2026-08-01
+- Mitglied: Yassine Elhari
 - Sprint: Sprint 1
 - Ticket ID: ADA-ML-05
 - Branch: feature/data_processing
 - Pull Request: [#2 — feature/data_processing → main](https://github.com/roximox/santander-customer-transaction-prediction/pull/2)
-- Time spent: 2.5 hours
-- Related meeting: [2026-08-16 — First Individual Analysis and Machine Learning Progress](../../../meetings/2026-08-16_first-individual-analysis-and-machine-learning-progress.md)
+- Zeitaufwand: 2,5 Stunden
+- Zugehörige Besprechung: [2026-08-16 — Erste individuelle Analyse und Fortschritt in der maschinellen Lernung](../../../meetings/2026-08-16_first-individual-analysis-and-machine-learning-progress.md)
 
-## Title
+## Titel
 
-Logistic Regression class-weight comparison
+Logistische Regressionsklasse mit Gewichtsvergleich
 
-## Scientific question
+## Wissenschaftliche Frage
 
-Does balanced class weighting improve positive-class recall, F1, and balanced
-accuracy without excessive losses in precision, ROC-AUC, and Average Precision?
+Gibt es bei einem ausgewogenen Klassengewicht eine Verbesserung der positiven-Klassenaufrufrate, F1-Wert und ausgeglichenen Genauigkeit ohne erhebliche Verluste in Präzision, ROC-AUC und Durchschnittspräzision?
 
-## Controlled change
+## Kontrollierte Änderung
 
-`M01-LR-002`, named `Logistic Regression L2 Balanced`, changed only
-`class_weight` from `None` to `"balanced"` relative to `M01-LR-001`. The
-`StandardScaler` → `LogisticRegression` Pipeline, L2 penalty, `C=1.0`, `lbfgs`,
-`max_iter=1000`, `random_state=42`, shared five folds, split, and metrics were
-unchanged. The official split fingerprints matched, and only training data was
-evaluated.
+`M01-LR-002`, benannt `Logistic Regression L2 Balanced`, änderte nur `class_weight` von `None` zu `"balanced"` im Vergleich zu `M01-LR-001`. Die Pipeline `StandardScaler` → `LogisticRegression`, L2-Penalty, `C=1.0`, `lbfgs`, `max_iter=1000`, `random_state=42`, fünf Fälle, Spaltung und Metriken wurden unverändert. Die offiziellen Splitterfingerabdrücke passierten, und nur das Trainingssatz wurde bewertet.
 
-## Results and deltas
+## Ergebnisse und Differenzen
 
-| Metric | M01-LR-001 | M01-LR-002 | Balanced − unweighted |
+| Metrik | M01-LR-001 | M01-LR-002 | Ausgewogen - ungewichtet |
 |---|---:|---:|---:|
-| ROC-AUC | 0.859188 | 0.859011 | -0.000176 |
-| Average Precision | 0.507566 | 0.506430 | -0.001135 |
-| Precision | 0.688813 | 0.284560 | -0.404253 |
-| Recall | 0.272484 | 0.773541 | +0.501057 |
-| F1 | 0.390361 | 0.416059 | +0.025698 |
-| Accuracy | 0.914481 | 0.781794 | -0.132687 |
-| Balanced accuracy | 0.629343 | 0.778128 | +0.148786 |
+| ROC-AUC | 0,859188 | 0,859011 | -0,000176 |
+| Durchschnittliche Präzision | 0,507566 | 0,506430 | -0,001135 |
+| Präzision | 0,688813 | 0,284560 | -0,404253 |
+| Aufrufrate | 0,272484 | 0,773541 | +0,501057 |
+| F1-Wert | 0,390361 | 0,416059 | +0,025698 |
+| Genauigkeit | 0,914481 | 0,781794 | -0,132687 |
+| Ausgewogene Genauigkeit | 0,629343 | 0,778128 | +0,148786 |
 
-The balanced model's train ROC-AUC was 0.861823 and validation ROC-AUC was
-0.859011, giving a gap of 0.002812. Validation ROC-AUC standard deviation was
-0.003121 and Average Precision standard deviation was 0.008519, indicating
-similar fold stability to the unweighted baseline. No `ConvergenceWarning` was
-detected.
+Das ausgewogene Modell hatte eine Trainings-ROC-AUC von 0,861823 und eine Validierungs-ROC-AUC von 0,859011, was einen Abstand von 0,002812 ergab. Die Standardabweichung der Validierungs-ROC-AUC betrug 0,003121 und die Durchschnittliche Präzision standardisierte sich auf 0,008519, was eine ähnliche Faltstabilität wie das ungewichtete Basismodell zeigte. Kein `ConvergenceWarning` wurde ermittelt.
 
-## Interpretation and decision
+## Interpretation und Entscheidung
 
-Balanced weighting greatly increased recall and balanced accuracy, and produced
-a smaller F1 gain. The cost was a large precision decrease and a substantial
-accuracy decrease. ROC-AUC and Average Precision were effectively stable but
-slightly lower, so class weighting changed the operating trade-off rather than
-improving ranking discrimination.
+Ausgewogenes Gewicht stieg die Aufrufrate und ausgeglichenen Genauigkeit deutlich, produzierte jedoch einen großen Verlust in Präzision und eine erhebliche Genauigkeitsabnahme. ROC-AUC und Durchschnittliche Präzision waren effektiv stabil, aber leicht niedriger, so dass das Klassengewicht die Betriebsgewinn-Abwägung nicht verbesserte, sondern den Betriebsschlüssel änderte.
 
-`M01-LR-002` is retained as a recall-oriented alternative, not declared globally
-better. With ROC-AUC as the primary metric and no documented relative cost for
-false negatives and false positives, `M01-LR-001` remains the neutral baseline.
-A selection between them should follow an explicit operational cost objective.
+`M01-LR-002` wird als Alternativ für eine Aufruforientierte Lösung beibehalten und nicht weltweit besser erklärt. Mit ROC-AUC als Hauptmetrik und ohne dokumentierten relativen Verlust für falsche Negativergebnisse und falsche Positivergebnisse bleibt `M01-LR-001` das neutrale Basismodell. Eine Auswahl zwischen ihnen sollte einen expliziten Betriebskostenziel haben.
 
-## Limits and next step
+## Grenzen und nächster Schritt
 
-This comparison does not optimize a threshold, tune regularization, calibrate
-probabilities, or establish deployment costs. A future experiment should first
-define the desired precision-recall or cost trade-off under a new ID. The final
-test partition remains closed.
+Diese Vergleichung optimiert nicht eine Schwelle, passt die Regulierung, kalibriert die Wahrscheinlichkeiten oder legt die Betriebskosten fest. Ein zukünftiges Experiment sollte zunächst das gewünschte Präzisionsaufruf- oder Kostenvergleichgewicht unter einem neuen ID definieren. Die endgültige Testpartition bleibt geschlossen.
 
-## Decision
+## Entscheidung
 
-Retain M01-LR-002 as a recall-oriented alternative while M01-LR-001 remains the
-neutral baseline until operational error costs are defined.
+`M01-LR-002` wird als Aufruforientierte Alternative beibehalten und `M01-LR-001` bleibt das neutrale Basismodell, bis Betriebsfehlerkosten definiert werden.
 
-## Difficulties
+## Schwierigkeiten
 
-Balanced weighting improves recall but sharply lowers precision, so no single
-threshold metric gives a sufficient decision rule.
+Ausgewogenes Gewicht verbessert die Aufrufrate, aber senkt die Präzision stark, so dass kein einziges Schwellenwertmetrik einen ausreichenden Entscheidungsschlüssel liefert.
 
-## Adaptations and deviations from the plan
+## Anpassungen und Abweichungen vom Plan
 
-Only `class_weight` changed, preserving a controlled comparison.
+Nur `class_weight` wurde geändert, um eine kontrollierte Vergleichung zu gewährleisten.
 
-## Rejected approaches
+## Abgelehnte Ansätze
 
-Declaring the balanced model globally superior, tuning the threshold, and using
-the final test partition were rejected.
+Die globale Ausgewogenheit des Modells als besser erklärt, die Schwelle zu passen und das endgültige Testset zu verwenden, wurden abgelehnt.
 
-## Files changed
+## Dateien geändert
 
 - `src/logistic_class_weight.py`
 - `scripts/run_logistic_class_weight_comparison.py`
 - `tests/test_logistic_class_weight.py`
 
-## Code references
+## Code-Referenzen
 
-Controlled comparison and output builders in `src/logistic_class_weight.py`.
+Controlierte Vergleich und Ausgabe in `src/logistic_class_weight.py`.
 
-## Figure and table references
+## Figuren- und Tabellenbezug
 
 - `reports/experiments/M01-LR-002_fold_results.csv`
 - `reports/experiments/M01-LR-002_summary.json`
@@ -104,15 +81,10 @@ Controlled comparison and output builders in `src/logistic_class_weight.py`.
 - `reports/figures/logistic_class_weight_metrics.pdf`
 - `reports/figures/logistic_class_weight_cv.pdf`
 
-## Reproducibility notes
+## Reproduzierbarkeitshinweise
 
-The shared split, five folds, Pipeline, and seed match M01-LR-001. The final
-test set remained closed.
+Die geteilte Spaltung, fünf Fälle, Pipeline und Sammlungsschlüssel übersprangen M01-LR-001. Die endgültige Testset blieb geschlossen.
 
-## Sources and tools used
+## Verwendete Quellen und Werkzeuge
 
-scikit-learn, pandas, Matplotlib, pytest, Python, and the experiment registry.
-
-## Next step
-
-Compare predeclared regularization and class-weight configurations by CV only.
+scikit-learn, pandas, Matplotlib, pytest, Python und das Experimentenregister.

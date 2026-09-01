@@ -1,144 +1,91 @@
-# Logbook Entry
+# Logbucheintrag
 
-## Metadata
+## Metadaten
 
-- Date: 2026-08-24
-- Member: Yassine Elhari
+- Datum: 2026-08-24
+- Mitglied: Yassine Elhari
 - Sprint: Sprint 2
 - Ticket ID: ADA-UI-01
 - Branch: develop
 - Pull Request: [#7 — develop → main](https://github.com/roximox/santander-customer-transaction-prediction/pull/7) (feature merged into `develop` in `37830b3`)
-- Time spent: 6 hours
-- Related meeting: [2026-08-23 — Model Progress, Optimization and Evaluation](../../../meetings/2026-08-23_model-progress-optimization-and-evaluation.md)
+- Zeitaufwand: 6 Stunden
+- Zugehörige Besprechung: [2026-08-23 — Model Progress, Optimization and Evaluation](../../../meetings/2026-08-23_model-progress-optimization-and-evaluation.md)
 
-## Title
+## Titel
 
-Interactive Scientific Results Dashboard
+Interaktive Wissenschaftliche Ergebnis-Dashboard
 
-## Objective
+## Ziel
 
-Provide a professional Streamlit interface for exploring the project's saved
-scientific evidence without manually opening CSV, JSON, and PDF artifacts.
+Eine professionelle Streamlit-Oberfläche bereitzustellen, um das gesparte wissenschaftliche Beweismaterial ohne manuelle Öffnung von CSV, JSON und PDF-Artikeln zu erkunden.
 
-## Context
+## Kontext
 
-The repository now contains registered Logistic Regression, Feature Selection,
-PCA, and HistGradientBoosting results. A shared read-only presentation layer is
-needed for professor demonstrations and the e-Portfolio while Member 02 results
-remain unavailable.
+Der Repository enthält jetzt registrierte Logistik-Regression, Feature-Selbstauswahl, PCA und HistGradientBoosting-Ergebnisse. Eine gemeinsame Leseberechtigungsschicht ist erforderlich für die Vorlesungen der Professoren und das e-Portfolio, während die Ergebnisse von Mitglied 02 nicht zugänglich sind.
 
-Before starting the UI work, the team contributions had to be consolidated on
-the shared `develop` branch. Member 03's Feature Selection and PCA work and
-Member 04's HistGradientBoosting optimization work were reviewed and integrated
-with the common data, validation, evaluation, experiment, and model-selection
-infrastructure maintained by Member 01.
+Bevor man mit der UI-Arbeit begann, mussten die Teambeiträge auf der gemeinsamen `develop`-Zweigbranche zusammengefasst werden. Die Beiträge von Mitglied 03 wurden überprüft und in den gemeinsamen Daten, Validierung, Bewertung, Experiment und Modellauswahl-Infrastruktur eingebunden, die von Mitglied 01 unterhalten wird.
 
-## Team integration and merge-conflict resolution
+## Teamintegration und Konfliktlösung
 
-The integration work covered the following activities:
+Die Integration umfasste folgende Aktivitäten:
 
-- synchronized the feature branches with the current remote repository state;
-- merged Member 03's Feature Selection and PCA contribution into `develop`;
-- merged Member 04's `feature/model-optimization` contribution into `develop`;
-- resolved the content conflict in
-  `reports/experiments/experiment_registry.csv` by retaining the existing M03
-  experiment rows and adding the M04 registered experiment rows;
-- preserved the unique experiment identifiers `M03-FS-001`, `M03-PCA-001`,
-  `M04-HGB-001`, and `M04-HGB-002`;
-- adapted integration tests that still assumed Member 04 had no Logbook entries;
-- verified that the merged experiment artifacts, summaries, fold results, and
-  registry entries remained consistent;
-- ran the complete test suite after conflict resolution before pushing the
-  validated `develop` state.
+- Synchronisierte die Feature-Zweige mit dem aktuellen Remote-Repositoryzustand;
+- Mischte die Beiträge von Mitglied 03 in `develop`;
+- Mischte die Beiträge von Mitglied 04 in `develop`;
+- Löste den Inhaltskonflikt in `reports/experiments/experiment_registry.csv` durch die Aufbewahrung der bestehenden M03-Experimenten und die Hinzufügung der M04 registrierten Experimenten;
+- Bewahrte die einzigartigen Experimentidentifikatoren `M03-FS-001`, `M03-PCA-001`, `M04-HGB-001` und `M04-HGB-002`;
+- Anpassete die Integrationstests, die angenommen hatten, dass Mitglied 04 keine Logbuch-Einträge hatte;
+- Überprüfte, dass die integrierten Experimentartikel, Zusammenfassungen, Faltresultate und Registrierungsdaten konsistent blieben;
+- Laufte das komplette Test-Set nach Konfliktlösung vor dem Push der validierten `develop`-Zustand.
 
-The conflict was additive rather than scientific: both branches had appended
-valid experiment rows to the same registry location. The resolution therefore
-kept both sets of records and did not recalculate or alter any recorded score.
+Der Konflikt war additiv und nicht wissenschaftlich: Beide Zweige hatten gültige Experimentartikel in derselben Registrierungsstelle platziert. Die Lösung behielt daher beide Datensätze und änderte keine registrierten Punktzahlen.
 
-## Post-merge scientific compatibility review
+## Nach-Konflikt-Wissenschaftliche Kompatibilitätsprüfung
 
-After integration, the merged Member 03 and Member 04 implementations were
-checked against the shared Member 01 infrastructure. The review confirmed the
-common 160,000-row development partition, five-fold `StratifiedKFold`, shared
-metrics, and `random_state=42` for the registered scripts. It also identified a
-methodological problem in the two Member 03 notebooks: they could evaluate the
-pipeline on the complete dataset. Those notebooks were corrected to verify the
-official split fingerprints, delete the reserved partition, reuse the M03
-production factories, and display the existing experiment artifacts without
-rerunning the official experiments.
+Nach der Integration wurden die integrierten Beiträge von Mitglied 03 und Mitglied 04 gegenüber der gemeinsamen Infrastruktur von Mitglied 01 überprüft. Die Prüfung bestätigte den gemeinsamen Partitionssatz von 160.000 Zeilen, fünf-Fache `StratifiedKFold`, die gemeinsame Metrik und `random_state=42` für die registrierten Skripte. Es wurde auch ein methodologischer Fehler in den beiden M03-Notebooks entdeckt: Sie konnten das Pipeline auf dem gesamten Datensatz auswerten. Diese Notebooks wurden korrigiert, um die offiziellen Spaltensignaturen zu überprüfen, die vorbehaltene Partition zu löschen, die bestehenden M03-Produktionsfabriken wiederzunutzen und die bestehenden Experimentartikel ohne Wiederholung der offiziellen Experimente anzuzeigen.
 
-The pre-final model-selection report was then reviewed after the M03/M04 merge.
-An initially stale report still showed Member 01 only because historical output
-files were protected against overwrite. Once the report was regenerated through
-the intended workflow, the saved comparison exposed the available Logistic
-Regression, Feature Selection, PCA, and HistGradientBoosting candidates while
-continuing to report Random Forest and Extra Trees as missing.
+Die vorletzte Modellauswahl-Berichtsübersicht wurde dann nach der M03/M04-Mischung überprüft. Anfangs war der Bericht noch von Mitglied 01, da historische Ausgabe-Dateien vor dem Überreiben geschützt waren. Nachdem der Bericht durch den vorgesehenen Workflow neu generiert wurde, wurden die verfügbaren Logistik-Regression-, Feature-Selbstauswahl-, PCA- und HistGradientBoosting-Kandidaten sichtbar, während weiterhin Random Forest und Extra Trees als fehlend angezeigt wurden.
 
-## Work performed
+## Durchgeführte Arbeit
 
-Following the team integration and scientific compatibility review, implemented
-a thin `app.py`, defensive cached artifact loaders, reusable Plotly charts,
-formatting helpers, Streamlit components, eleven scientific pages, global
-filters, and a professor mode. Added offline tests, structure checks, launch
-documentation, and explicit final-test safeguards.
+Nach der Teamintegration und wissenschaftlicher Kompatibilitätsprüfung wurde eine dünne `app.py`, defensive geladene Artefakt-Loader, reusbare Plotly-Charts, Formatierungs-Hilfen, Streamlit-Komponenten, elf wissenschaftliche Seiten, globale Filter und einen Professor-Modus implementiert. Die Offline-Tests, Strukturprüfung, Launch-Dokumentation und explizite Endtest-Sicherungen wurden hinzugefügt.
 
-## Methodology
+## Methodik
 
-All displayed values come from existing files under `reports/`. The dashboard
-does not import dataset-loading or experiment-execution modules. It never fits
-an estimator, contacts OpenML during startup, updates the registry, or creates a
-final-test metric. Charts retain 0–1 metric axes where comparisons could
-otherwise exaggerate small differences.
+Alle angezeigten Werte stammen aus bestehenden Dateien unter `reports/`. Das Dashboard importiert keine Datensatzlader oder Experimentausführungsmodul. Es passt nie einen Estimator, kontaktiert OpenML während des Startups, aktualisiert die Registrierung oder erstellt ein Endtest-Metric. Die Charts behalten 0-1 Metrikachsen, wobei Vergleiche sonst übertrieben sein könnten.
 
-## Results
+## Ergebnisse
 
-The team contributions are consolidated on `develop`, the registry contains the
-M03 and M04 registered experiments without duplicate identifiers, and the
-merged suite passed before the dashboard work began. The interface now exposes
-the data audit, split reproducibility, experiment registry, fold metrics,
-interim model comparison, Member 01 analyses, Member 03 dimensionality-reduction
-evidence, Member 04 HGB evidence, learning curves, selection coverage,
-comparability, and interim conclusions. Missing artifacts produce readable
-warnings.
+Die Teambeiträge sind auf `develop` zusammengefasst, die Registrierungsdaten enthalten M03 und M04 registrierte Experimente ohne Duplikate, und das Suite passte vor Beginn der Dashboard-Arbeit. Die Oberfläche zeigt nun die Datenprüfung, Spaltensicherheit, Experiment-Registrierung, Faltmetrik, Interimmodell-Vergleich, Mitglied 01-Analysen, Mitglied 03-Dimensionenauswertungen, Mitglied 04-HGB-Evidenz, Lernkurven, Auswahlkoverage, Vergleichbarkeit und interimme Erkenntnisse. Fehlende Artefakte produzieren lesbare Warnungen.
 
 ## Interpretation
 
-The dashboard separates registered CV experiments from auxiliary analyses and
-keeps the current comparison explicitly interim. It supports scientific review
-without becoming a second machine-learning implementation.
+Das Dashboard trennt registrierte CV-Experimente von Nebenanalysen und hält die aktuelle Vergleichsweise explizit interim. Es unterstützt wissenschaftliche Überprüfung ohne zu zweiten Maschinenlern-Implementierung werden.
 
-## Decision
+## Entscheidung
 
-Use Streamlit with Pandas and Plotly as the single visualization layer over the
-existing scientific artifacts. Preserve one result source for both normal and
-professor modes.
+Mit Streamlit mit Pandas und Plotly als einziges visuelles Schichtengitter über den bestehenden wissenschaftlichen Artefakten. Bewahren Sie eine Ergebnissequelle für beide Normal- und Professor-Modus vor.
 
-## Difficulties
+## Schwierigkeiten
 
-Artifact schemas vary across registered experiments, search results, learning
-curves, and auxiliary analyses. Defensive loaders and missing-column checks are
-therefore necessary. Member 02 coverage is intentionally incomplete. Earlier in
-the workflow, parallel additions to the shared experiment registry also caused
-a merge conflict that required an additive, traceability-preserving resolution.
+Artikel-Schemas variieren sich in den registrierten Experimenten, Suchergebnissen, Lernkurven und Nebenanalysen. Defensive Loader und Überprüfung auf fehlende Spalten sind daher erforderlich. Mitglied 02-Koverage ist absichtlich unvollständig. Früher im Workflow wurden parallele Hinzufügungen zur gemeinsamen Experiment-Registrierung auch zu einem Konflikt geführt, der eine additivere und traceierbare Lösung erforderte.
 
-## Adaptations and deviations from the plan
+## Anpassungen und Abweichungen vom Plan
 
-PDF artifacts are represented through their underlying stored CSV/JSON data
-when available so the dashboard remains interactive. No fake screenshots or
-missing Member 02 results were created.
+PDF-Artikel werden durch ihre zugrunde liegenden gespeicherten CSV/JSON-Daten dargestellt, wenn verfügbar, damit die Oberfläche interaktiv bleibt. Keine falschen Screenshot oder fehlende Mitglied 02-Ergebnisse wurden erstellt.
 
-## Rejected approaches
+## Abgelehnte Ansätze
 
-- Retraining models inside Streamlit.
-- Loading OpenML during application startup.
-- Writing regenerated experiment or selection artifacts.
-- Adding an action that unlocks final-test evaluation.
-- Maintaining separate professor-mode result sources.
+- Modellneubildung innerhalb von Streamlit.
+- Lade von OpenML während der Anwendungsausführung.
+- Erstellung neu generierter Experiment- oder Auswahlartikel.
+- Hinzufügung eines Aktionen, die den Endtest-Evaluation zugänglich macht.
+- Wiederholte Aufrechterhaltung einer separaten Professor-Modus-Quellen.
 
-## Files changed
+## Geänderte Dateien
 
-- `reports/experiments/experiment_registry.csv` during team integration
-- `tests/test_logbooks.py` and `tests/test_project_structure.py` for integration expectations
+- `reports/experiments/experiment_registry.csv` während der Teamintegration
+- `tests/test_logbooks.py` und `tests/test_project_structure.py` für Integrationsempfänglichkeit
 - `notebooks/05_feature_selection.ipynb`
 - `notebooks/06_pca.ipynb`
 - `tests/test_feature_selection.py`
@@ -149,21 +96,15 @@ missing Member 02 results were created.
 - `tests/test_logbooks.py`
 - `requirements.txt`
 - `README.md`
-- this Logbook entry
+- dieser Logbuch-Eintrag
 
-## Code references
+## Code-Referenzen
 
-Team integration reused `src/data.py`, `src/validation.py`, `src/evaluation.py`,
-`src/experiments.py`, and `src/model_selection.py`. The corrected Member 03
-notebooks reuse factories from `src/feature_selection.py` and read their saved
-M03 result artifacts without training.
+Die Teamintegration verwendete `src/data.py`, `src/validation.py`, `src/evaluation.py`, `src/experiments.py` und `src/model_selection.py`. Die korrigierten M03-Notebooks verwenden die Fabriken aus `src/feature_selection.py` und lesen ihre gespeicherten M03-Ergebnisartikel ohne Neubildung.
 
-Cached artifact access is implemented in `src/dashboard/loaders.py`; interactive
-figures are implemented in `src/dashboard/charts.py`; reusable presentation
-elements are implemented in `src/dashboard/components.py`; page orchestration
-and navigation are implemented in `app.py`.
+Die geladenen Artefakte werden in `src/dashboard/loaders.py` implementiert; interaktive Figuren werden in `src/dashboard/charts.py` implementiert; reusbare Präsentations-Elemente werden in `src/dashboard/components.py` implementiert; die Seiteorchestrierung und Navigation werden in `app.py` implementiert.
 
-## Figure and table references
+## Figur- und Tabellennachweise
 
 - `reports/experiments/experiment_registry.csv`
 - `reports/experiments/M03-FS-001_summary.json`
@@ -177,23 +118,18 @@ and navigation are implemented in `app.py`.
 - `reports/tables/logistic_learning_curve_summary.csv`
 - `reports/tables/M04-HGB-learning-curve.csv`
 
-## Reproducibility notes
+## Reproduzierbarkeitsnotizen
 
-Install dependencies with `pip install -r requirements.txt`, then launch from
-the repository root with `streamlit run app.py`. The same saved artifacts drive
-both display modes. The final test remains reserved and no final test metric is
-read or computed; the reserved partition is not used.
+Installiere Abhängigkeiten mit `pip install -r requirements.txt`, dann startet man von der Repository-Root mit `streamlit run app.py`. Die gleichen gespeicherten Artefakte treiben sowohl die Anzeige-Modi vor. Der reservierte Test bleibt vorbehalten und kein Endtest-Metric wird gelesen oder berechnet; die reservierte Partition wird nicht verwendet.
 
-## Next step
+## Nächster Schritt
 
-Run the complete offline test suite and startup smoke test, then demonstrate the
-interim dashboard to the group. Integrate Member 02 artifacts automatically
-once their registered experiments are available.
+Das komplette Offline-Test-Set laufen und den Startup-Smoke-Test durchführen, dann demonstrieren Sie das interim Dashboard der Gruppe. Integrieren Sie Mitglied 02-Artikel automatisch, sobald ihre registrierten Experimente verfügbar sind.
 
-## Sources and tools used
+## Verwendete Quellen und Werkzeuge
 
-- Streamlit documentation and installed runtime.
-- Plotly and Pandas APIs.
-- Existing project artifact schemas and shared model-selection utilities.
-- Repository-local pytest and nbformat validation.
-- No external model training or final test evaluation was used.
+- Streamlit-Dokumentation und installierte Laufzeit.
+- Plotly und Pandas-APIs.
+- Bestehende Projektartikelschemas und gemeinsame Modellauswahl-Tools.
+- Repository-lokale pytest und nbformat-Validierung.
+- Keine externe Modellneubildung oder Endtest-Evaluation wurde verwendet.

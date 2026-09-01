@@ -1,89 +1,89 @@
-# Logbook Entry
+# Logbucheintrag
 
-## Metadata
+## Metadaten
 
-- Member: Yassine Elhari
+- Mitglied: Yassine Elhari
 - Sprint: Sprint 2
 - Ticket ID: ADA-ML-11
-- Date: 2026-08-26
+- Datum: 2026-08-26
 - Branch: develop
-- Pull Request: Not applicable — committed directly to `develop` (`c15f0d6`)
-- Time spent: 2.5 hours
-- Related meeting: [2026-08-26 — Final Model-Selection Decision](../../../meetings/2026-08-26_final-model-selection-decision.md)
+- Pull Request: Nicht anwendbar — direkt in `develop` (`c15f0d6`) übertragen
+- Zeitaufwand: 2,5 Stunden
+- Zugehörige Besprechung: [2026-08-26 — Entscheidung über den finalen Modellauswahl](../../../meetings/2026-08-26_final-model-selection-decision.md)
 
-## Title
+## Titel
 
-Collective final-model selection and reproducible pipeline lock
+Sammlungsfinalmodellauswahl und reproduzierbare Pipelinenlöse
 
-## Objective
+## Ziel
 
-Record the team's confirmed model choice without opening or evaluating the reserved final test.
+Das Team bestätige die gemeinsam ausgewählte Modellwahl ohne den reservierten finalen Test zu öffnen oder zu bewerten.
 
-## Context
+## Kontext
 
-Expected-family coverage was complete after adding Extra Trees. The generated comparison identified M04-HGB-002 as the only competitive candidate and the leader on mean cross-validated ROC-AUC and Average Precision.
+Die erwartete-Familien-Koverage war nach der Hinzufügung von Extra Trees vollständig. Die Vergleichsidentifizierung identifizierte M04-HGB-002 als einziges wettbewerbsfähiges Kandidat und den Spitzenwert bei der mittleren KreuzvalidierungsROC-AUC und dem Durchschnittswert für die Präzision.
 
-## Work performed
+## Durchgeführte Arbeiten
 
-Recorded M04-HGB-002 as the collectively selected pipeline, captured its fixed estimator parameters and threshold, added the meeting decision, and exposed the lock in the read-only UI.
+M04-HGB-002 als gemeinsam ausgewählte Pipelinen, ihre feste Parameter festgelegt und den Wert, die Besprechungentscheidung hinzugefügt und in der Lesebenutzerschnittstelle geöffnet.
 
-## Methodology
+## Methodik
 
-The choice uses only saved five-fold StratifiedKFold evidence from the 160,000-row development partition. No experiment was retrained. The final test remained closed and was not used.
+Die Auswahl verwendet nur gespeicherte fünf-Fold-StratifiedKFold-Evidenz aus der 160.000-Spalten-Entwicklungspartition. Keine Experimentierung wurde wiederholt. Der finale Test blieb geschlossen und wurde nicht verwendet.
 
-## Results
+## Ergebnisse
 
-The selected model has mean CV ROC-AUC 0.891449 and Average Precision 0.591089. Its locked classification threshold is 0.5 and its recorded random state is 42. The single final-test execution produced ROC-AUC 0.891214, Average Precision 0.584385, F1 0.403632, precision 0.791424, recall 0.270896, and balanced accuracy 0.631459.
+Das ausgewählte Modell hat einen mittleren CV-ROC-AUC-Wert von 0,891449 und einen Durchschnittswert für die Präzision von 0,591089. Seine gesicherte Klassifikationswertschranke beträgt 0,5 und sein festgelegter Zufallszustand ist 42. Die einzige finale-Testausführung produzierte einen ROC-AUC-Wert von 0,891214, einen Durchschnittswert für die Präzision von 0,584385, F1-Wert von 0,403632, Präzisionswert von 0,791424, Wiederholungsgrad von 0,270896 und ein ausgeglichenes Genauigkeitsmaß von 0,631459.
 
 ## Interpretation
 
-HGB provides the best recorded ranking evidence for the imbalanced prediction problem, while its larger generalization gap, runtime, and limited recall at the fixed threshold remain explicit limitations.
+HGB bietet die beste gesicherte Beweise für die imbalancesbehaftete Vorhersagemuster, während seine größeren allgemeinisierten Rückschläge, Laufzeit und begrenzte Wiederholungsrate bei der festen Schranke explizite Einschränkungen darstellen.
 
-## Decision
+## Entscheidung
 
-M04-HGB-002 remains the locked final model after one controlled final-test evaluation. Model selection was not reopened. This is a collective multi-criteria choice, not a formal statistical-superiority claim.
+M04-HGB-002 bleibt die gesicherte finale Modellwahl nach einer kontrollierten finalen Testausführung. Die Modellauswahl wurde nicht wieder geöffnet. Dies ist eine kollektive Mehrkriterien-Auswahl, nicht ein formeller statistischer Vorteilanspruch.
 
-## Difficulties
+## Schwierigkeiten
 
-Different models lead different metrics, so the decision required prioritizing ranking quality while retaining threshold and computational limitations.
+Differente Modelle führen zu unterschiedlichen Metriken, so dass die Entscheidung Prioritäten bei der Rangqualität setzen und die Schranke und die Rechenbegrenzungen berücksichtigen musste.
 
-## Adaptations and deviations from the plan
+## Anpassungen und Abweichungen von dem Plan
 
-The group waited for complete expected-family coverage before locking the model.
+Das Team wartete auf eine vollständige erwartete-Familien-Koverage, bevor es den Modellzugriff öffnete.
 
-## Rejected approaches
+## Abgelehnte Ansätze
 
-Rejected reopening hyperparameter search, changing the threshold after selection, and consulting the final test before the model lock.
+Abgelehnt wurden die Wiederholung der Hyperparameter-Suche, das Ändern der Schranke nach der Auswahl und die Berücksichtigung des finalen Tests vor dem Modellzugriff.
 
-## Files changed
+## Geänderte Dateien
 
 - `reports/model_selection/final_model_lock.json`
 - `reports/final_evaluation/M04-HGB-002_final_test_results.json`
 - `reports/meetings/2026-08-26_final-model-selection-decision.md`
 - `app.py`
 - `src/dashboard/loaders.py`
-- dashboard and logbook tests
+- dashboard und Logbuchtests
 
-## Code references
+## Code-Referenzen
 
 - `src/model_selection.py`
 - `src/dashboard/loaders.py`
 - `app.py`
 
-## Figure and table references
+## Figuren- und Tabellenbeziehungen
 
 - `reports/model_selection/model_comparison_eligible.csv`
 - `reports/model_selection/model_selection_decision.csv`
 - `reports/model_selection/model_selection_comparability.json`
 
-## Reproducibility notes
+## Reproduzierbarkeitsnotizen
 
-The lock records the shared split fingerprints, StratifiedKFold configuration, estimator parameters, classification threshold, and the unique final-evaluation identifier. The final test was not used during model selection; it was evaluated exactly once after the collective lock.
+Die Löse schreibt die geteilten Spaltenspuren, StratifiedKFold-Konfiguration, Parameter festgelegt und Schranke sowie den einzigartigen finalen Testausführungsidentifikator fest. Der finale Test wurde während der Modellauswahl nicht verwendet; er wurde genau einmal nach der kollektiven Löse überprüft.
 
-## Next step
+## Weitere Schritte
 
-Finalize the scientific report using the single recorded result. Do not rerun the final evaluation or tune from its metrics.
+Das wissenschaftliche Bericht abschließen, indem die einzige gesicherte Ergebnisse verwenden werden. Keine weitere Ausführung des finalen Tests oder Tuning aus seinen Metriken.
 
-## Sources and tools used
+## Verwendete Quellen und Werkzeuge
 
-Saved experiment summaries, generated model-selection reports, the shared dashboard loaders, pytest, and Streamlit AppTest.
+Gespeicherte Experimentierungsübersichten, generierte Modellauswahlberichte, die gemeinsame Dashboard-Lader, pytest, und Streamlit AppTest.

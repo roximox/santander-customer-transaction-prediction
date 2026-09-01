@@ -1,108 +1,76 @@
-# Logbook Entry
+# Logbucheintrag
 
-## Metadata
+## Metadaten
 
-- Date: 2026-08-01
-- Member: Yassine Elhari
+- Datum: 2026-08-01
+- Mitglied: Yassine Elhari
 - Sprint: Sprint 1
 - Ticket ID: ADA-ML-07
 - Branch: feature/data_processing
 - Pull Request: [#2 — feature/data_processing → main](https://github.com/roximox/santander-customer-transaction-prediction/pull/2)
-- Time spent: 4 hours
-- Related meeting: [2026-08-16 — First Individual Analysis and Machine Learning Progress](../../../meetings/2026-08-16_first-individual-analysis-and-machine-learning-progress.md)
+- Zeitaufwand: 4 Stunden
+- Zugehörige Besprechung: [2026-08-16 — Erster individueller Analyse- und Machine-Learning- Fortschritt](../../../meetings/2026-08-16_first-individual-analysis-and-machine-learning-progress.md)
 
-## Title
+## Titel
 
-Logistic Regression convergence, sparsity and coefficient stability
+Logistische Regressionskonvergenz, Sparsität und Koeffizientenstabilität
 
-## Reason for the audit
+## Grund für die Prüfung
 
-M01-LR-SEARCH-001 produced six convergence warnings that could not be mapped to
-parallel candidates. This audit isolates four scientifically relevant
-configurations and examines convergence, exact L1 sparsity, and coefficient
-stability without starting another grid search.
+M01-LR-SEARCH-001 produzierte sechs Konvergenzwarnungen, die nicht auf parallele Kandidaten zurückgeführt werden konnten. Diese Prüfung isoliert vier wissenschaftlich relevante Konfigurationen und untersucht Konvergenz, exakte L1-Sparsität und Koeffizientenstabilität ohne ein weiteres Grid-Search.
 
-## Configurations and API
+## Konfigurationen und API
 
-The audit covers L2/C=0.01 unweighted, L1/C=0.1 unweighted, L2/C=0.01 balanced,
-and L1/C=100 unweighted. Each uses `StandardScaler` and `LogisticRegression`
-inside a Pipeline on each of the five common training folds. Under scikit-learn
-1.8, `l1_ratio=0` represents L2 and `l1_ratio=1` represents L1 with `saga`.
-Synthetic tests confirm equivalence with the deprecated `penalty` formulations
-for these cases. Historical experiments were not changed.
+Die Prüfung deckt die Konfigurationen L2/C=0.01 ungewichtete, L1/C=0.1 ungewichtete, L2/C=0.01 ausgewogen und L1/C=100 ungewichtete zu. Jede verwendet `StandardScaler` und `LogisticRegression` in einem Pipelinen auf jedem der fünf üblichen Trainingsfälle. Unter scikit-learn 1.8 stellt `l1_ratio=0` die L2 dar und `l1_ratio=1` die L1 mit `saga`. Synthetische Tests bestätigen die Gleichwertigkeit mit den abgelehnten `penalty`-Formulierungen für diese Fälle. Historische Experimente wurden nicht geändert.
 
-## Convergence results
+## Konvergenzergebnisse
 
-All 20 fits converged without `ConvergenceWarning`. Mean `n_iter_` was 19.6 for
-LR-SELECTED-ROC, 23.0 for LR-SELECTED-AP, 31.4 for LR-SELECTED-BALANCED, and
-21.6 for LR-L1-WEAK-REG, all far below `max_iter=2000`. Mean fit times were
-3.33, 5.01, 5.53, and 4.73 seconds respectively. The grid warnings therefore
-do not reproduce with isolated fits and the recommended 1.8 API.
+Alle 20 Fits konvergierten ohne `ConvergenceWarning`. Der durchschnittliche `n_iter_` betrug 19,6 für LR-SELECTED-ROC, 23,0 für LR-SELECTED-AP, 31,4 für LR-SELECTED-BALANCED und 21,6 für LR-L1-WEAK-REG, alle weit unter `max_iter=2000`. Der durchschnittliche Fitzeit betrug 3,33, 5,01, 5,53 und 4,73 Sekunden. Die Grid-Warnungen reproduzieren sich daher nicht mit isolierten Fits und die empfohlene API.
 
-## Sparsity and stability
+## Sparsität und Stabilität
 
-L1/C=0.1 retained 196–200 features per fold (98–100%), with 193 features in the
-five-fold intersection and all 200 in the union. L1/C=100 retained all 200
-features in every fold. Consequently neither L1 candidate offers meaningful
-parsimony at these C values.
+L1/C=0,1 behielt 196–200 Features pro Fold (98–100%), mit 193 Features in der fünf-Fold-Intersektion und alle 200 Features in der Union. L1/C=100 behielt alle 200 Features in jedem Fold. Folglich bieten weder die L1-Kandidaten bei diesen C-Werten bedeutende Parsimonie.
 
-For LR-SELECTED-ROC, leading standardized coefficients—including `var_81`,
-`var_139`, `var_6`, `var_12`, and `var_76`—share the same sign in every fold and
-have small fold standard deviations. Coefficients describe predictive
-associations after scaling, not causal effects.
+Für LR-SELECTED-ROC teilen die führenden Standardisierte Koeffizienten – einschließlich `var_81`, `var_139`, `var_6`, `var_12` und `var_76` – in jedem Fold dieselbe Vorzeichen und haben kleine Folds-Standardabweichungen. Die Koeffizienten beschreiben nach Skalierung vorhergesagte Assoziationen, nicht kausale Effekte.
 
-## Performance and decision
+## Leistung und Entscheidung
 
-LR-SELECTED-ROC retains the best ROC-AUC (0.859201), converges fastest on
-average, and has stable leading coefficients. LR-SELECTED-AP retains the best
-AP (0.507626) by a very small margin but does not materially reduce dimension.
-LR-SELECTED-BALANCED retains the strongest F1 (0.416119) and balanced accuracy
-(0.778194) for recall-oriented use. LR-L1-WEAK-REG adds no parsimony or relevant
-metric advantage.
+LR-SELECTED-ROC behält die beste ROC-AUC (0,859201), konvergiert am schnellsten durchschnittlich und hat stabile führende Koeffizienten. LR-SELECTED-AP hält die beste AP (0,507626) durch einen sehr kleinen Abstand, aber reduziert weder Dimension. LR-SELECTED-BALANCED hält die stärkste F1 (0,416119) und eine ausgewogene Genauigkeit (0,778194) für Anwendungszwecke mit Erinnerung an den Vorzug bei der Anforderung nach Recall. LR-L1-WEAK-REG fügt weder Parsimonie noch einen relevanten Metriken-Vorteil hinzu.
 
-The provisional primary ranking candidate remains LR-SELECTED-ROC. Preserve
-LR-SELECTED-BALANCED as the threshold-dependent recall alternative and do not
-claim a final business choice before costs and threshold policy are specified.
+Die vorläufige Hauptrangierkandidat bleibt LR-SELECTED-ROC. Bewahren Sie LR-SELECTED-BALANCED als den Schwellenabhängigen Recall-Alternative auf und lassen Sie keinen Anspruch auf eine endgültige Geschäftsentscheidung vor Kosten und Schwellenpolitik angegeben werden.
 
-## Limits
+## Grenzen
 
-No final-test data, threshold optimization, calibration, causal coefficient
-interpretation, or final comparison with other members' models was used.
-Stability is measured across five folds from one configured split and seed.
+Keine endgültige Testdaten, Schwellenoptimierung, Kalibrierung, kausale Koeffizienteninterpretation oder Vergleich mit anderen Mitgliedern' Modellen wurde verwendet.
+Stabilität wird über fünf Folds von einer konfigurierten Spaltung und einem festen Sammlungszeitpunkt gemessen.
 
-## Next step
+## Nächster Schritt
 
-Define the operational error-cost question before threshold analysis, while
-keeping the final test partition closed.
+Definieren Sie die Betriebsfehlerkostenfrage vor der Schwellenanalyse, während die endgültige Testteilung geschlossen bleibt.
 
-## Difficulties
+## Schwierigkeiten
 
-Historical parallel warnings were not attributable to candidates, and explicit
-`penalty` is deprecated in scikit-learn 1.8. Exact-zero sparsity also required
-distinguishing true selection from an arbitrary magnitude threshold.
+Historische parallele Warnungen konnten nicht den Kandidaten zugeordnet werden und explizites `penalty` ist in scikit-learn 1,8 deaktiviert. Exakt Null-Sparsität erforderte die Unterscheidung zwischen wahrer Auswahl und einem arithmetischen Schwellenwert.
 
-## Adaptations and deviations from the plan
+## Anpassungen und Abweichungen vom Plan
 
-Four targeted candidates were fitted fold by fold with `l1_ratio=0` or `1`, so
-warnings and iteration counts are attributable without rerunning the grid.
+Vier zielgerichtete Kandidaten wurden in Fold für Fold mit `l1_ratio=0` oder `1` eingesetzt, sodass Warnungen und Iterationszahlen ohne Wiederholung des Grids zugeschrieben werden können.
 
-## Rejected approaches
+## Abgelehnte Ansätze
 
-Rerunning the costly search, applying an arbitrary coefficient threshold,
-changing historical results, and causal coefficient claims were rejected.
+Rerunnen des teuren Suchens, Anwenden eines arithmetischen Koeffizienten-Schwellenwertes, Ändern historischer Ergebnisse und kausale Koeffizientenansprüche wurden abgelehnt.
 
-## Files changed
+## Geänderte Dateien
 
 - `src/logistic_coefficient_analysis.py`
 - `scripts/run_logistic_coefficient_analysis.py`
 - `tests/test_logistic_coefficient_analysis.py`
 
-## Code references
+## Code-Referenzen
 
-Target configurations, fold audit, exact sparsity, stability summaries, and
-figure factories in `src/logistic_coefficient_analysis.py`.
+Zielkonfigurationen, Folds-Audit, exakte Sparsität, Stabilitätssummarisierungen und Figuren-Factories in `src/logistic_coefficient_analysis.py`.
 
-## Figure and table references
+## Figuren- und Tabellenbezüge
 
 - `reports/tables/logistic_convergence_audit.csv`
 - `reports/tables/logistic_coefficients_by_fold.csv`
@@ -114,11 +82,10 @@ figure factories in `src/logistic_coefficient_analysis.py`.
 - `reports/figures/logistic_l1_sparsity.pdf`
 - `reports/figures/logistic_convergence_iterations.pdf`
 
-## Reproducibility notes
+## Reproduzierbarkeitshinweise
 
-Twenty isolated fits use the shared five folds, `random_state=42`, and
-`max_iter=2000`. The final test set remained closed and was never scored.
+Zwanzig isolierte Fits verwenden die gemeinsame fünf-Fold-Sammlung, `random_state=42`, und `max_iter=2000`. Die endgültige Testset blieb geschlossen und wurde nie abgeschossen.
 
-## Sources and tools used
+## Verwendete Quellen und Werkzeuge
 
-scikit-learn 1.8, pandas, NumPy, Matplotlib, pytest, and Python.
+scikit-learn 1,8, pandas, NumPy, Matplotlib, pytest und Python.

@@ -1,120 +1,97 @@
-# Logbook Entry
+# Logbucheintrag
 
-## Metadata
+## Metadaten
 
-- Date: 2026-08-01
-- Member: Yassine Elhari
+- Datum: 2026-08-01
+- Mitglied: Yassine Elhari
 - Sprint: Sprint 1
 - Ticket ID: ADA-ML-02
 - Branch: feature/data_processing
 - Pull Request: [#2 — feature/data_processing → main](https://github.com/roximox/santander-customer-transaction-prediction/pull/2)
-- Time spent: 2 hours
-- Related meeting: [2026-08-09 — Data Processing, Validation Strategy and Start of Individual Analysis](../../../meetings/2026-08-09_data-processing-validation-strategy-and-start-of-individual-analysis.md)
+- Zeitaufwand: 2 Stunden
+- Zugehörige Besprechung: [2026-08-09 — Data Processing, Validation Strategy and Start of Individual Analysis](../../../meetings/2026-08-09_data-processing-validation-strategy-and-start-of-individual-analysis.md)
 
-## Title
+## Titel
 
-DummyClassifier baselines
+DummyClassifier Baselines
 
-## Objective
+## Ziel
 
-Establish naive reference scores before fitting a model that learns from the
-features. Four `DummyClassifier` strategies were compared: `most_frequent`,
-`prior`, `stratified`, and `uniform`, registered respectively as
-`M01-DUMMY-001` through `M01-DUMMY-004`.
+Nahe Referenzwerte vor der Anpassung eines Modells festzulegen, das von den Features lernt. Vier `DummyClassifier` Strategien wurden verglichen: `most_frequent`, `prior`, `stratified` und `uniform`, die jeweils als `M01-DUMMY-001` bis `M01-DUMMY-004` registriert wurden.
 
-## Protocol
+## Protokoll
 
-The OpenML features were explicitly converted to `float32`, then the shared
-stratified split was recreated. Its train and reserved-test fingerprints matched
-the official values. Only the 160,000-row training partition entered the common
-five-fold stratified cross-validation. The reserved 40,000-row test partition
-was not evaluated. Random strategies used `random_state=42`, and repeated
-technical evaluations reproduced the same scores.
+Die OpenML-Funktionen wurden explizit in `float32` umgewandelt, dann wurde der gemeinsame stratifizierte Split neu erstellt. Seine Trainings- und Reservateilfingerabdrücke übersprangen die offiziellen Werte. Nur das 160.000-Satz-Trainingsetteil ging in den gemeinsamen fünf-fach stratifizierten Kreuzvalidierung ein. Das 40.000-Satz-Reserveteil wurde nicht bewertet. Die zufälligen Strategien verwendeten `random_state=42`, und die technischen Bewertungen reproduzierten dieselben Werte.
 
-Metrics were ROC-AUC, Average Precision, F1, precision, recall, accuracy, and
-balanced accuracy. The training target positive prevalence was 0.1005.
+Die Metriken waren ROC-AUC, Durchschnittsprecision, F1, Präzision, Erinnerung, Genauigkeit und ausgeglichenen Genauigkeit. Der Trainingszielpositivprävalenz war 0,1005.
 
-## Results
+## Ergebnisse
 
-| Strategy | ROC-AUC | Average Precision | F1 | Precision | Recall | Accuracy | Balanced accuracy |
+| Strategie | ROC-AUC | Durchschnittsprecision | F1 | Präzision | Erinnerung | Genauigkeit | Ausgeglichene Genauigkeit |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| most_frequent | 0.5000 | 0.1005 | 0.0000 | 0.0000 | 0.0000 | 0.8995 | 0.5000 |
-| prior | 0.5000 | 0.1005 | 0.0000 | 0.0000 | 0.0000 | 0.8995 | 0.5000 |
-| stratified | 0.4995 | 0.1004 | 0.0994 | 0.0996 | 0.0992 | 0.8194 | 0.4995 |
-| uniform | 0.5000 | 0.1005 | 0.1673 | 0.1005 | 0.5002 | 0.4997 | 0.4999 |
+| most_frequent | 0,5000 | 0,1005 | 0,0000 | 0,0000 | 0,0000 | 0,8995 | 0,5000 |
+| prior | 0,5000 | 0,1005 | 0,0000 | 0,0000 | 0,0000 | 0,8995 | 0,5000 |
+| stratified | 0,4995 | 0,1004 | 0,0994 | 0,0996 | 0,0992 | 0,8194 | 0,4995 |
+| uniform | 0,5000 | 0,1005 | 0,1673 | 0,1005 | 0,5002 | 0,4997 | 0,4999 |
 
 ## Interpretation
 
-`most_frequent` and `prior` predict the majority class. Their accuracy of
-0.8995 reflects target imbalance rather than positive-class detection: recall
-and F1 are zero, while balanced accuracy is 0.5000. Their ROC-AUC of 0.5000
-indicates chance discrimination. Average Precision of 0.1005 matches the
-positive prevalence and is therefore the naive reference level.
+`most_frequent` und `prior` vorherrschende Klasse vorhersehen. Ihre Genauigkeit von 0,8995 spiegelt das Zielunverhältnis wider, anstatt positive-Klasse-Detektion: Erinnerung und F1 sind Null, während ausgeglichene Genauigkeit 0,5000 beträgt. Die ROC-AUC von 0,5000 zeigt Zufallsdiskriminierung an. Durchschnittliche Präzision von 0,1005 passt sich der positiven Prävalenz an und ist daher die nahe Referenz-Ebene.
 
-The random strategies produce different threshold-dependent accuracy, recall,
-and F1 values, but their ROC-AUC and balanced accuracy remain approximately
-0.5. None of the Dummy strategies learns discriminative feature information.
+Die zufälligen Strategien ergeben unterschiedliche Schwellenabhängige Genauigkeit, Präzision und F1-Werte, aber ihre ROC-AUC und ausgeglichene Genauigkeit bleiben ungefähr 0,5. Keine der Dummy-Strategien lernt diskriminierende Featureinformation.
 
-## Outputs
+## Ausgänge
 
-- Fold results and summaries: `reports/experiments/M01-DUMMY-00*_*.csv/json`
-- Registry: `reports/experiments/experiment_registry.csv`
-- Comparison: `reports/tables/dummy_baseline_comparison.csv` and `.json`
-- Figure: `reports/figures/dummy_baseline_metrics.pdf`
+- Eintragungsberichte und Zusammenfassungen: `reports/experiments/M01-DUMMY-00*_*.csv/json`
+- Registrierung: `reports/experiments/experiment_registry.csv`
+- Vergleich: `reports/tables/dummy_baseline_comparison.csv` und `.json`
+- Abbildung: `reports/figures/dummy_baseline_metrics.pdf`
 
-## Limitations and next step
+## Einschränkungen und nächster Schritt
 
-Dummy classifiers establish metric floors only and cannot model relationships
-between customer features and the target. The next step is a separately
-identified Logistic Regression experiment using training-fold preprocessing.
-No Logistic Regression or final-test evaluation was performed in this ticket.
+Dummy-Klassifizierer stellen nur Metrik-Ebenen auf und können keine Beziehungen zwischen Kunden-Funktionen und Zielmodellieren. Der nächste Schritt ist eine getrennte identifizierte Logistik-Regression-Experiment mit Training-Fold-Preprocessing.
 
-## Decision
+## Entscheidung
 
-Retain all four registered strategies as metric floors and use the
-majority/prior AP of 0.1005 as the imbalance-aware naive reference.
+Alle vier registrierten Strategien als Metrik-Ebenen beibehalten und den Mehrheits-/Prior-AP von 0,1005 als Ungleichheitsbewusstsein-Nahe Referenz verwenden.
 
-## Difficulties
+## Schwierigkeiten
 
-High majority-class accuracy can appear strong despite zero positive recall, so
-the full common metric set was required.
+Hohe Mehrheitsklasse-Genauigkeit kann trotz Null positiver Erinnerung stark erscheinen, daher wurde der volle gemeinsame Metrikset verwendet.
 
-## Adaptations and deviations from the plan
+## Anpassungen und Abweichungen vom Plan
 
-Random baselines received the shared seed; existing experiment IDs are protected
-against reruns.
+Zufällige Basen erhielten den gemeinsamen Sitz; bestehende Experiment-IDs wurden vor Rennen geschützt.
 
-## Rejected approaches
+## Abgelehnte Ansätze
 
-Accuracy-only reporting and evaluation on the reserved test partition were
-rejected.
+Genauigkeits-Aberichterstattung und Bewertung auf der Reserveteil waren abgelehnt.
 
-## Files changed
+## Geänderte Dateien
 
 - `src/dummy_baselines.py`
 - `scripts/run_dummy_baselines.py`
 - `tests/test_dummy_baselines.py`
 
-## Code references
+## Code-Referenzen
 
-Baseline definitions and comparison builders in `src/dummy_baselines.py`.
+Baseldefinitionen und Vergleichsbauer in `src/dummy_baselines.py`.
 
-## Figure and table references
+## Abbildung und Tabelle-Bezüge
 
 - `reports/tables/dummy_baseline_comparison.csv`
 - `reports/tables/dummy_baseline_comparison.json`
 - `reports/figures/dummy_baseline_metrics.pdf`
-- `reports/experiments/M01-DUMMY-001_summary.json` through `M01-DUMMY-004_summary.json`
+- `reports/experiments/M01-DUMMY-001_summary.json` bis `M01-DUMMY-004_summary.json`
 
-## Reproducibility notes
+## Reproduzierbarkeitshinweise
 
-All results use the official training partition, five stratified folds, and
-`random_state=42`. The final test set remained closed.
+Alle Ergebnisse verwenden die offizielle Trainingspartition, fünf stratifizierte Fälle und `random_state=42`. Der letzte Testset blieb geschlossen.
 
-## Sources and tools used
+## Verwendete Quellen und Werkzeuge
 
-scikit-learn, pandas, Matplotlib, pytest, Python, and the shared experiment API.
+scikit-learn, pandas, Matplotlib, pytest, Python und das gemeinsame Experiment-API.
 
-## Next step
+## Nächster Schritt
 
-Fit the shared Logistic Regression baseline on training folds only.
+Ein gemeinsames Logistik-Regression-Baseline auf Training-Fold-Preprocessing anpassen.

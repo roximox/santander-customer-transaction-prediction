@@ -1,128 +1,89 @@
-# Logbook Entry
+# Logbucheintrag
 
-## Metadata
+## Metadaten
 
-- Date: 2026-08-01
-- Member: Yassine Elhari
+- Datum: 2026-08-01
+- Mitglied: Yassine Elhari
 - Sprint: Sprint 1
 - Ticket ID: ADA-ML-00
 - Branch: feature/data_processing
 - Pull Request: [#2 — feature/data_processing → main](https://github.com/roximox/santander-customer-transaction-prediction/pull/2)
-- Time spent: 4 hours
-- Related meeting: [2026-08-09 — Data Processing, Validation Strategy and Start of Individual Analysis](../../../meetings/2026-08-09_data-processing-validation-strategy-and-start-of-individual-analysis.md)
+- Zeitaufwand: 4 Stunden
+- Zugehörige Besprechung: [2026-08-09 — Data Processing, Validation Strategy und Start der individuellen Analyse](../../../meetings/2026-08-09_data-processing-validation-strategy-and-start-of-individual-analysis.md)
 
-## Title
+## Titel
 
-Common model-evaluation framework
+Gemeinsamer Modellbewertungsrahmen
 
-## Objective
+## Ziel
 
-Standardize training-only model evaluation so results produced by different
-members and model families remain scientifically comparable and reproducible.
+Ein Standard für die Bewertung nur des Trainingsmodells so festlegen, dass die Ergebnisse von verschiedenen Mitgliedern und Modelfamilien wissenschaftlich vergleichbar und wiederholbar sind.
 
-## Comparability risk
+## Vergleichsrisiko
 
-Independent fold generation, metrics, timing conventions, or preprocessing
-placement could produce apparently comparable scores from materially different
-protocols. The shared framework centralizes these decisions and exposes no final
-test-set argument, reducing both accidental protocol drift and leakage risk.
+Unabhängige Faltengeneration, Metriken, Zeitkonventionen oder Platzierung der Vorverarbeitung könnten scheinbar vergleichbare Scores aus Materialien unterschiedlicher Protokolle liefern. Der gemeinsame Rahmen zentriert diese Entscheidungen und enthält keinen letzten Testset-Argument, reduziert sowohl ungewollte Protokolldrift als auch das Risiko von Leaks.
 
-## Cross-validation design
+## Kreuzvalidierungsdesign
 
-The framework uses five-fold `StratifiedKFold` with shuffling and the shared
-`random_state=42`. Stratification preserves the imbalanced target distribution
-within each validation fold. Ordered train and validation indices receive
-deterministic SHA-256 fingerprints so members can verify that models used the
-same folds without persisting row-level data.
+Das Framework verwendet fünf-Fold-StratifiedKFold mit Schütteln und die gemeinsame `random_state=42`. Die Stratification bewahrt die imbalances Zielverteilung innerhalb jeder Validierungsfold. Bestimmte trainings- und Validierungsindizes erhalten deterministische SHA-256-Fingerabdrücke, sodass Mitglieder überprüfen können, dass Modelle denselben Folds ohne persistieren von Zeileniveau verwendet haben.
 
-## Metrics
+## Metriken
 
-ROC-AUC is the configured primary metric because it measures ranking over all
-classification thresholds. Average Precision is reported because it emphasizes
-positive-class retrieval under class imbalance. F1, precision, recall, accuracy,
-and balanced accuracy provide complementary threshold-based and class-balanced
-views. Safe binary scorers support both numeric labels and the Santander string
-labels and use zero-division handling where relevant.
+Die ROC-AUC ist die konfigurierte Hauptmetrik, da sie die Rangierung über alle Klassifizierungsstufen misst. Die durchschnittliche Genauigkeit wird berichtet, da sie den Fokus auf die positive-Klassen-Retriebe unter der Klasse-Unabhängigkeit legt. F1, Präzision, Recall, Genauigkeit und ausgeglichenes Genauigkeitsmaß bieten komplementäre Sichtweisen. Safe binary Scorer unterstützen sowohl numerische Etiketten als auch die Santander-String-Etiketten und verwenden die 0-Trennungshandhabung, wo relevant.
 
-## Result format and timing
+## Ergebnisformat und Zeit
 
-`evaluate_model_cv` returns one row per fold with train/validation metrics, fit
-time, score time, and fold sizes. Its serializable summary records aggregate
-means and population standard deviations, configuration, estimator class and
-parameters, target distribution, CV fingerprints, authorship metadata, and a
-completed status. No fitted estimator object is serialized in the summary.
+`evaluate_model_cv` gibt eine Zeile pro Falt mit Trainings- und Validierungsmetriken, Fitzeit, Score-Zeit und Faltgrößen zurück. Seine serialisierbare Zusammenfassung enthält aggregierte Mittelwerte und Bevölkerungsschwankungen, Konfiguration, Estimator-Klasse und Parameter, Zielverteilung, CV-Fingerabdrücke, Autorenschaftsdaten und einen abgeschlossenen Status. Kein gefittetes Estimator-Objekt wird in der Zusammenfassung serialisiert.
 
-The export helper writes a fold CSV and summary JSON without silent overwrite.
-The registry helper stores one traceability row per unique experiment ID and
-rejects duplicates. Neither helper records absolute local paths.
+Der Export-Helfer schreibt eine Falt CSV und eine Zusammenfassungs-JSON ohne stummes Überladen. Der Registrierungs-Helfer speichert eine Zeile pro einzigartiger Experiment-ID und lehnt Doppelte ab. Kein Helfer registriert absolute lokale Wege.
 
-## Leakage prevention
+## Leakschutz
 
-Only training data may be passed to cross-validation. Any learned scaling,
-imputation, PCA, or feature selection must be inside the estimator's
-scikit-learn `Pipeline`, ensuring it is fitted separately within each fold. The
-framework does not perform any transformation before `cross_validate`. The
-final test set remains closed and was not used in this work.
+Nur das Training-Daten kann an die Kreuzvalidierung weitergegeben werden. Jede gelernte Skalierung, Imputation, PCA oder Feature-Selektion muss innerhalb des scikit-learn `Pipeline` liegen und wird separat in jedem Falt gefittet. Das Framework führt keine Transformation vor `cross_validate`. Der letzte Testset bleibt geschlossen und wurde nicht in dieser Arbeit verwendet.
 
-## Synthetic verification
+## Synthetische Überprüfung
 
-Offline tests and the verification script use generated classification data and
-a minimal `DummyClassifier` strictly as a technical smoke test. No Santander
-model was trained or evaluated, no synthetic result was saved as a scientific
-experiment, and no experiment registry was created.
+Offline-Tests und der Überprüfungs-Script verwenden generierte Klassifizierungsdaten und einen minimalen `DummyClassifier` streng als technischer Rauchtest. Kein Santander-Modell wurde trainiert oder bewertet, keine synthetischen Ergebnisse wurden gespeichert als wissenschaftliche Experimente, und kein Experiment-Registrierung wurde erstellt.
 
-## Limits
+## Grenzen
 
-This infrastructure does not choose a decision threshold, tune parameters,
-compare scientific models, or evaluate the final test set. Execution time can
-vary with hardware and parallel scheduling even when folds and scores are
-reproducible.
+Diese Infrastruktur wählt keinen Entscheidungs-Schwellenwert, passt Parameter an, vergleicht wissenschaftliche Modelle oder bewertet den letzten Testset. Die Ausführungszeit kann mit der Hardware und dem parallelen Scheduling variieren, auch wenn die Fälle und Scores wiederholbar sind.
 
-## Next step
+## Nächster Schritt
 
-Implement the first scientific `DummyClassifier` baseline on the shared
-training split using a unique experiment ID and the common framework.
+Die erste wissenschaftliche `DummyClassifier`-Baselinen auf dem gemeinsamen Trainings-Split unter Verwendung eines einzigartigen Experiment-ID und des gemeinsamen Rahmens umzusetzen.
 
-## Decision
+## Entscheidung
 
-Use one five-fold stratified protocol and seven common metrics for every model,
-with all learned preprocessing inside each fold's Pipeline.
+Ein fünf-Fold-Stratified-KFOLD zu verwenden und sieben gemeinsame Metriken für jedes Modell, mit allen gelernten Vorverarbeitungen in jedem Pipelinen-Fold.
 
-## Difficulties
+## Schwierigkeiten
 
-Probability-based and label-based metrics require different estimator outputs,
-and summaries must remain JSON serializable across pandas and NumPy types.
+Die Wahrscheinlichkeitsbasierte und Etikettbasierten Metriken erfordern unterschiedliche Estimator-Ausgabewerte, und die Zusammenfassung muss immer JSON-serialisierbar bleiben über pandas und NumPy-Typen.
 
-## Adaptations and deviations from the plan
+## Anpassungen und Abweichungen vom Plan
 
-The smoke verification uses synthetic data only and writes no scientific result.
+Der Rauchtest verwendet nur synthetische Daten und schreibt keine wissenschaftlichen Ergebnisse ab.
 
-## Rejected approaches
+## Abgelehnte Ansätze
 
-Global preprocessing, accuracy-only comparison, implicit test-set evaluation,
-and registering smoke-test output as science were rejected.
+Globale Vorverarbeitung, Genauigkeits-Only-Vergleich, implizites Testset-Evaluation und das Registrieren des Rauchtests-Output als Wissenschaft waren abgelehnt.
 
-## Files changed
+## Geänderte Dateien
 
 - `src/evaluation.py`
 - `scripts/verify_evaluation_framework.py`
 - `tests/test_evaluation.py`
 - `configs/config.yaml`
 
-## Code references
+## Code-Referenzen
 
-`create_cv`, scoring construction, `evaluate_model_cv`, validation, and export
-helpers in `src/evaluation.py`.
+`create_cv`, Scoring-Konstruktion, `evaluate_model_cv`, Validierung und Export-Helfer in `src/evaluation.py`.
 
-## Figure and table references
+## Abbildung und Tabelle-Bezug
 
-None; the verification is synthetic and intentionally not persisted.
+Keine; der Überprüfung ist synthetisch und nicht persistiert.
 
-## Reproducibility notes
+## Reproduzierbarkeitshinweise
 
-Five-fold `StratifiedKFold` uses shuffling and `random_state=42`. The API accepts
-training data only; the final test set remained closed.
-
-## Sources and tools used
-
-scikit-learn, pandas, NumPy, pytest, JSON, and Python.
+Fünf-Fold-Stratified-KFOLD verwendet Schütteln und `random_state=42`. Die API akzeptiert nur Trainingsdaten; der letzte Testset blieb geschlossen.

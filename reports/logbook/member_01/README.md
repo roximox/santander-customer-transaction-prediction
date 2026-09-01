@@ -33,6 +33,7 @@ files are preserved unchanged.
 | 2026-08-24 | ADA-UI-01 | Interactive scientific-results dashboard | [2026-08-24_ADA-UI-01_interactive-dashboard.md](2026/2026-08-24_ADA-UI-01_interactive-dashboard.md) | Complete |
 | 2026-08-26 | ADA-ML-10 | Extra Trees baseline | [2026-08-26_ADA-ML-10_extra-trees-baseline.md](2026/2026-08-26_ADA-ML-10_extra-trees-baseline.md) | Complete |
 | 2026-08-26 | ADA-ML-11 | Final-model selection and lock | [2026-08-26_ADA-ML-11_final-model-lock.md](2026/2026-08-26_ADA-ML-11_final-model-lock.md) | Complete |
+| 2026-08-31 | ADA-DOC-01 | Individual e-Portfolio finalization | [2026-08-31_ADA-DOC-01_eportfolio-finalization.md](2026/2026-08-31_ADA-DOC-01_eportfolio-finalization.md) | Complete; current duration unavailable |
 
 Pull-request references and direct-commit exceptions follow the repository
 history; related meetings follow the documented planning and review chronology.

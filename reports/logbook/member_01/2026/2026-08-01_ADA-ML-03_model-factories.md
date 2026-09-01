@@ -1,104 +1,79 @@
-# Logbook Entry
+# Logbucheintrag
 
-## Metadata
+## Metadaten
 
-- Date: 2026-08-01
-- Member: Yassine Elhari
+- Datum: 2026-08-01
+- Mitglied: Yassine Elhari
 - Sprint: Sprint 1
 - Ticket ID: ADA-ML-03
 - Branch: feature/data_processing
 - Pull Request: [#2 — feature/data_processing → main](https://github.com/roximox/santander-customer-transaction-prediction/pull/2)
-- Time spent: 2.5 hours
-- Related meeting: [2026-08-09 — Data Processing, Validation Strategy and Start of Individual Analysis](../../../meetings/2026-08-09_data-processing-validation-strategy-and-start-of-individual-analysis.md)
+- Zeitaufwand: 2,5 Stunden
+- Zugehörige Besprechung: [2026-08-09 — Data Processing, Validation Strategy and Start of Individual Analysis](../../../meetings/2026-08-09_data-processing-validation-strategy-and-start-of-individual-analysis.md)
 
-## Title
+## Titel
 
-Shared model factories
+Gemeinsame Modellfabriken
 
-## Objective
+## Ziel
 
-Centralize reproducible estimator construction so all four members can use the
-same explicit starting configurations without duplicating setup code.
+Zentrale Wiederholung der reproduzierbaren Konstruktion von Estimatoren, sodass alle vier Mitglieder denselben expliziten Startkonfigurationen ohne Duplikation des Setup-Code verwenden können.
 
-## Work completed
+## Durchgeführte Arbeiten
 
-Construction is separated from training, cross-validation, experiment
-orchestration, and persistence. The factories return new, unfitted scikit-learn
-objects and accept no dataset or test-partition argument.
+Die Konstruktion wird von der Training, Kreuzvalidierung, Experimentorchestrierung und Speicherung getrennt. Die Fabriken kehren neue, unfittete scikit-learn-Objekte zurück und akzeptieren keine Daten- oder Testteilungsargument.
 
-The available factories cover DummyClassifier, Logistic Regression, a logistic
-Pipeline, Random Forest, Extra Trees, and Histogram Gradient Boosting. Shared
-`random_state=42` is read from configuration for estimators that support it.
-Defaults are documented starting points and are not presented as optimized.
+Die verfügbaren Fabriken decken DummyClassifier, Logistic Regression, eine logistische Pipeline, Random Forest, Extra Trees und Histogram Gradient Boosting ab. Das gemeinsame `random_state=42` wird aus der Konfiguration gelesen für Estimator, die es unterstützen.
+Die Standardwerte beginnen mit den Startpunkten und werden nicht als optimiert präsentiert.
 
-The logistic Pipeline contains `StandardScaler` followed by
-`LogisticRegression`, using stable step names `scaler` and `classifier`.
-Scaling therefore remains inside each cross-validation fold. No imputation was
-added because the completed audit found zero missing values, and no feature
-selection was added. Tree estimators receive no scaling Pipeline because it is
-not generally required for those models.
+Die logistische Pipeline enthält `StandardScaler` gefolgt von `LogisticRegression`, wobei stabile Schrittnamen `scaler` und `classifier` verwendet werden. Die Skalierung bleibt also in jedem Kreuzvalidierungsblatt. Keine Imputation wurde hinzugefügt, da die abgeschlossene Auditing keine fehlenden Werte gefunden hat, und keine Featureauswahl wurde hinzugefügt. Die Baumestimator erhalten keine Skalierung-Pipeline, weil sie nicht allgemein erforderlich sind.
 
-Clear validation was added for common errors including unsupported Dummy
-strategies, non-positive `C`, iterations and estimator counts, incompatible
-logistic penalty/solver combinations, invalid `l1_ratio`, invalid class weights,
-and invalid boosting parameters. `describe_estimator` returns configuration-only
-JSON-serializable facts without learned attributes or raw estimator objects.
+Klare Validierung wurde für häufige Fehler wie ununterstützte Dummystrategien, negative `C`, Iterationen und Estimatorzahlen, inkonsistente logistische Soll- / Lösungs-Kombinationen, ungültige `l1_ratio`, ungültige Klassenwägungen und ungültige Boosting-Parameter hinzugefügt. Die Funktion `describe_estimator` gibt konfigurationsbezogene JSON-seriellisierbare Fakten ohne gelernte Attribute oder raw Estimator-Objekte zurück.
 
-## Verification
+## Überprüfung
 
-Offline unit tests cover types, defaults, centralized random states, compatible
-and incompatible parameters, Pipeline ordering, fresh instances, absence of
-fitted attributes, and JSON serialization. The verification script constructs
-and describes every factory without data or fitting.
+Offline-Einheitstests decken Typen, Standardwerte, zentralisierte Zufallszustände, kompatible und inkonsistente Parameter, Pipeline-Reihenfolge, frische Instanzen, Fehlende festigungsbehaftete Attribute und JSON-Serialisierung ab. Der Überprüfungs-Script konstruiert und beschreibt jede Fabrik ohne Daten oder Festigkeit.
 
-No model was trained, no experiment was created, no model was saved, and the
-final test partition was not accessed. Existing Dummy baseline results were not
-rerun or modified.
+Kein Modell wurde trainiert, keine Experimentierung wurde erstellt, kein Modell wurde gespeichert, und die letzte Testteilung wurde nicht abgerufen. Bestehende Dummy-Baseline-Ergebnisse wurden nicht neu durchgelaufen oder verändert.
 
-## Next step
+## Nächster Schritt
 
-Use the shared logistic Pipeline in a separately identified Logistic Regression
-baseline experiment on training data only.
+Die gemeinsame logistische Pipeline in einer getrennt identifizierten Experimentierung mit Logistischer Regression auf Training-Daten nur verwenden.
 
-## Difficulties
+## Schwierigkeiten
 
-Solver/penalty compatibility and parameter validation differ between estimator
-families and must fail clearly before fitting.
+Kompatibilität von Lösung/Soll-Set und Parameterüberprüfung unterscheiden sich zwischen Estimator-Familien und müssen klar fehlschlagen, bevor man sich fit macht.
 
-## Decision
+## Entscheidung
 
-Use these factories as shared, unfitted starting configurations and keep every
-experiment's actual parameters explicit in its saved metadata.
+Diese Fabriken als gemeinsame, unfittete Startkonfigurationen verwenden und jedes Experimentuelle Parameter explizit in seinen gespeicherten Metadaten offen halten.
 
-## Adaptations and deviations from the plan
+## Anpassungen und Abweichungen vom Plan
 
-Tree estimators remain unscaled, while Logistic Regression receives scaling
-inside its Pipeline. No imputer was added because the audit found no gaps.
+Baumestimator bleiben ungeskaliert, während Logistische Regression eine Skalierung innerhalb ihrer Pipeline erhält. Keine Imputer wurde hinzugefügt, da die Auditing keine Lücken gefunden hat.
 
-## Rejected approaches
+## Abgelehnte Ansätze
 
-Fitting inside factories, hidden tuning, global scaling, and model serialization
-were rejected.
+Fitting innerhalb Fabriken, versteckte Tuning, globale Skalierung und Modell-Serialisierung wurden abgelehnt.
 
-## Files changed
+## Dateien geändert
 
 - `src/modeling.py`
 - `scripts/verify_model_factories.py`
 - `tests/test_modeling.py`
 
-## Code references
+## Code-Referenzen
 
-Estimator factories and `describe_estimator` in `src/modeling.py`.
+Estimator-Fabriken und die Funktion `describe_estimator` in `src/modeling.py`.
 
-## Figure and table references
+## Abbildungs- und Tabellenerwähnungen
 
-None; factories return unfitted estimators and create no scientific artifact.
+Keine; Fabriken kehren unfittete Estimator zurück und erzeugen keine wissenschaftliche Erzeugnis.
 
-## Reproducibility notes
+## Reproduzierbarkeitsnotizen
 
-Applicable factories read `random_state=42` from configuration. They accept no
-data or final-test object. The final test set was not used and remained closed.
+Applicabare Fabriken lesen `random_state=42` aus der Konfiguration. Sie akzeptieren keine Daten oder letzte Test-Objekt. Die letzte Testset wurde nicht verwendet und blieb geschlossen.
 
-## Sources and tools used
+## Verwendete Quellen und Werkzeuge
 
-scikit-learn, pytest, Python, and the central configuration.
+scikit-learn, pytest, Python und die zentrale Konfiguration.

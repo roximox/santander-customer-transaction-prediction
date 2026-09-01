@@ -1,117 +1,83 @@
-# Logbook Entry
+# Logbucheintrag
 
-## Metadata
+## Metadaten
 
-- Date: 2026-08-01
-- Member: Yassine Elhari
+- Datum: 2026-08-01
+- Mitglied: Yassine Elhari
 - Sprint: Sprint 1
 - Ticket ID: ADA-ML-06
 - Branch: feature/data_processing
 - Pull Request: [#2 — feature/data_processing → main](https://github.com/roximox/santander-customer-transaction-prediction/pull/2)
-- Time spent: 4 hours
-- Related meeting: [2026-08-16 — First Individual Analysis and Machine Learning Progress](../../../meetings/2026-08-16_first-individual-analysis-and-machine-learning-progress.md)
+- Zeitaufwand: 4 Stunden
+- Bezugnahme auf eine Besprechung: [2026-08-16 — Erster individueller Analyse- und Machine-Learning- Fortschritt](../../../meetings/2026-08-16_first-individual-analysis-and-machine-learning-progress.md)
 
-## Title
+## Titel
 
-Logistic Regression grid search
+Logistische Regressionsuche
 
-## Scientific question
+## Wissenschaftliche Frage
 
-Which combination of L1/L2 regularization, `C`, and class weighting gives the
-best cross-validated Logistic Regression behavior on the common training set?
+Welche Kombination aus L1/L2-Normalisierung, `C`, und Gewichtung der Klassen ergibt das beste überprüfbare Verhalten der Logistischen Regression auf dem gemeinsamen Ausbildungssetz?
 
-## Protocol and justification
+## Protokoll und Begründung
 
-`GridSearchCV` exhaustively evaluated the predeclared 2 × 5 × 2 space: penalties
-L1/L2, `C` in 0.01, 0.1, 1, 10, 100, and class weights `None`/`balanced`. The 20
-candidates produced 100 fits over the common five-fold stratified CV. Every fit
-used `StandardScaler` → `LogisticRegression(solver="saga", max_iter=2000,
-random_state=42)`. ROC-AUC was declared as the refit metric before execution.
+`GridSearchCV` untersuchte exhaustiv die vorher festgelegte 2 × 5 × 2-Raum: Penalien L1/L2, `C` in 0,01, 0,1, 1, 10, 100 und Klassen- Gewichtung `None`/`ausgewogen`. Die 20 Kandidaten produzierten 100 Fits über das gemeinsame fünffache stratifizierte CV. Jeder Fit verwendete `StandardScaler` → `Logistische Regression (Solver="saga", max_iter=2000, random_state=42)`. Der ROC-AUC-Wert wurde als Refit-Metrik verwendet.
 
-Only the 160,000-row float32 training partition was passed to the search. The
-reserved 40,000-row test fingerprint was verified, then its objects were
-deleted without calling `score`, `predict`, or `predict_proba`.
+Nur der 160.000-Spalten-Float32-Ausbildungssetz war an den Suchvorgang übergeben. Die reservierte 40.000-Spalten-Testspiegel wurde bestätigt, dann wurden seine Objekte ohne Aufruf von `score`, `predict` oder `predict_proba` gelöscht.
 
-## Computational cost and convergence
+## Rechenkosten und Konvergenz
 
-The complete search and refit took 974.66 seconds (16.24 minutes), averaging
-48.73 seconds per candidate and 9.75 seconds per fit with `n_jobs=-1`. Six
-`ConvergenceWarning` messages stated that `max_iter=2000` was reached. Warnings
-emitted by parallel workers cannot be mapped reliably to candidate IDs through
-`GridSearchCV`; no scores were hidden, changed, or silently rerun. A corrective
-study, if needed, must use a new Search ID.
+Der vollständige Suchvorgang und Refit dauerten 974,66 Sekunden (16,24 Minuten), mit einer Durchschnittsdauer von 48,73 Sekunden pro Kandidaten und 9,75 Sekunden pro Fit mit `n_jobs=-1`. Sechs `ConvergenceWarning`-Nachrichten sagten, dass `max_iter=2000` erreicht wurde. Warnungen, die von parallelen Arbeitern ausgestrahlt wurden, konnten nicht zuverlässig auf individuelle Kandidaten zugeordnet werden; keine Scores wurden versteckt, geändert oder leise neu durchgeführt. Eine korrigierende Studie, falls erforderlich, muss mit einem neuen Such-Id verwendet werden.
 
-## Results and metric-specific winners
+## Ergebnisse und Metrikenpezitivgewinner
 
-- ROC-AUC: `candidate_002`, L2, C=0.01, unweighted — 0.859201.
-- Average Precision: `candidate_005`, L1, C=0.1, unweighted — 0.507626.
-- F1: `candidate_004`, L2, C=0.01, balanced — 0.416119.
-- Balanced Accuracy: `candidate_004` — 0.778194.
+- ROC-AUC: `candidate_002`, L2, C=0,01, ungewichtete — 0,859201.
+- Durchschnittliche Präzision: `candidate_005`, L1, C=0,1, ungewichtete — 0,507626.
+- F1-Wert: `candidate_004`, L2, C=0,01, ausgewogen — 0,416119.
+- Ausgewogene Genauigkeit: `candidate_004` — 0,778194.
 
-`candidate_002` has precision 0.691427 and recall 0.267758. In contrast,
-`candidate_004` has precision 0.284599 and recall 0.773666. Thus class weighting
-changes default-threshold behavior substantially while ROC-AUC remains almost
-unchanged.
+`candidate_002` hat eine Präzision von 0,691427 und einen Ertragsgrad von 0,267758. Im Gegensatz dazu hat `candidate_004` eine Präzision von 0,284599 und einen Ertragsgrad von 0,773666. Die Klassen- Gewichtung ändert das Defaultverhalten der Schwellenwerte erheblich, während sich der ROC-AUC-Wert fast unverändert verhält.
 
-## Comparison and provisional decision
+## Vergleich und vorläufige Entscheidung
 
-The registered neutral baseline M01-LR-001 has ROC-AUC 0.859188 and AP 0.507566;
-the ROC-AUC winner improves these by only 0.000013 and 0.000027. M01-LR-002 has
-F1 0.416059 and balanced accuracy 0.778128; `candidate_004` improves these by
-only 0.000060 and 0.000066. These differences are small relative to fold
-variation. No single configuration is declared the final business choice:
-retain `candidate_002` as the ROC-AUC-selected candidate, `candidate_005` as the
-AP alternative, and `candidate_004` as the recall-oriented alternative.
+Das registrierte neutrale Basiskonfiguration M01-LR-001 hat einen ROC-AUC-Wert von 0,859188 und eine Durchschnittliche Präzision von 0,507566; der ROC-AUC-Sieger verbessert diese Werte um nur 0,000013 bzw. 0,000027. M01-LR-002 hat einen F1-Wert von 0,416059 und eine ausgewogene Genauigkeit von 0,778128; `candidate_004` verbessert diese Werte um nur 0,000060 bzw. 0,000066. Diese Differenzen sind relativ gering im Vergleich zur Faltveränderung. Kein einzelner Kandidaten ist die endgültige Geschäftsentscheidung ausgewählt: behalte `candidate_002` als den ROC-AUC-Selbstkandidaten, `candidate_005` als AP-Alternative und `candidate_004` als Alternative zur Ertragsgradorientierung.
 
-## Figures and artifacts
+## Abbildungen und Dokumente
 
-The ROC-AUC/C figure includes fold uncertainty, the trade-off figure contrasts
-threshold metrics, and the train/validation figure shows small generalization
-gaps without a strong overfitting signal. Full candidate results and summary are
-stored under `reports/searches/`; decision and top-ten tables are under
-`reports/tables/`.
+Die ROC-AUC/C-Figur enthält Faltunsicherheit, die Gegenüberstellung der Schwellenwert-Metriken und das Trainings-Validierungs- Bild zeigt kleine allgemeine Gaps ohne starkes Überfitting-Signal. Die vollständigen Kandidaten-Ergebnisse und Zusammenfassungen werden unter `reports/searches/`; die Entscheidung und die Topp-Tabelle unter `reports/tables/`.
 
-## Limits
+## Grenzen
 
-Cross-validation is model-selection evidence, not final test performance. No
-threshold optimization, calibration, definitive coefficient interpretation,
-or nonlinear-model comparison was performed. Explicit `penalty` is deprecated
-by scikit-learn 1.8, although required by and functional for this search.
+Die Kreuzvalidierung ist Modellauswahlbeweis, nicht endgültiges Testleistung. Keine Schwellenoptimierung, Kalibrierung, definitive Koeffizientenauslegung oder Nichtlineare-Modellvergleich wurde durchgeführt. Der explizite `Penalty` ist durch scikit-learn 1,8 deaktiviert, obwohl er für diesen Suchvorgang erforderlich ist.
 
-## Next step
+## Nächster Schritt
 
-Analyze coefficient stability for selected linear candidates, or define a
-separate corrective convergence search with a new Search ID.
+Analyse der Koeffizientenstabilität für ausgewählte lineare Kandidaten oder definieren Sie einen separaten korrigierenden Konvergenz-Suchvorgang mit einem neuen Such-Id.
 
-## Difficulties
+## Schwierigkeiten
 
-Six warnings emitted by parallel workers could not be attributed reliably to
-individual candidates. Finalization also required JSON-safe handling of missing
-candidate values; the completed search itself was not rerun or altered.
+Sechs Warnungen, die von parallelen Arbeitern ausgestrahlt wurden, konnten nicht zuverlässig auf individuelle Kandidaten zugeordnet werden. Die Abschlussarbeit erforderte JSON-sichere Verarbeitung von fehlenden Kandidatenwerten; der vollständige Suchvorgang wurde nicht neu durchgeführt oder geändert.
 
-## Adaptations and deviations from the plan
+## Anpassungen und Abweichungen vom Plan
 
-Existing complete candidate and summary outputs were finalized after correcting
-serialization, avoiding a second costly 100-fit search.
+Die vollständigen Kandidaten- und Zusammenfassungsdaten wurden nach der Korrektur der Serialisierung abgeschlossen, ohne einen zweiten teuren 100-Fit-Suchvorgang durchzuführen.
 
-## Rejected approaches
+## Abgelehnte Ansätze
 
-Mapping parallel warnings speculatively, selecting on the final test set,
-overwriting the Search ID, and hiding convergence warnings were rejected.
+Kartieren paralleler Warnungen spekulativ, Auswahl auf dem Endtestset, Überzeichnen des Such-Id und Verstecken von Konvergenz-Warnungen wurden abgelehnt.
 
-## Files changed
+## Geänderte Dateien
 
 - `src/search.py`
 - `scripts/run_logistic_grid_search.py`
 - `tests/test_search.py`
 - `notebooks/03_logistic_regression.ipynb`
 
-## Code references
+## Code-Referenzen
 
-Search-space, serialization, ranking, and figure helpers in `src/search.py`;
-protected execution and finalization in `scripts/run_logistic_grid_search.py`.
+Suchraum, Serialisierung, Rangierung und Figuren-Hilfen in `src/search.py`; geschützte Ausführung und Abschluss in `scripts/run_logistic_grid_search.py`.
 
-## Figure and table references
+## Figuren- und Tabellenbezug
 
 - `reports/searches/M01-LR-SEARCH-001_candidates.csv`
 - `reports/searches/M01-LR-SEARCH-001_summary.json`
@@ -121,12 +87,10 @@ protected execution and finalization in `scripts/run_logistic_grid_search.py`.
 - `reports/figures/logistic_grid_search_tradeoff.pdf`
 - `reports/figures/logistic_grid_search_train_validation.pdf`
 
-## Reproducibility notes
+## Reproduzierbarkeitshinweise
 
-The search used the 160,000-row training partition, five stratified folds,
-`random_state=42`, and 20 predeclared candidates. The final test set was
-fingerprint-verified only and remained closed.
+Der Suchvorgang verwendete das 160.000-Spalten-Ausbildungssetz, fünf stratifizierte Fälle, `random_state=42` und 20 vorher festgelegte Kandidaten. Der Endtest-Set wurde nur fingerprint-verifiziert und blieb geschlossen.
 
-## Sources and tools used
+## Quellen und Werkzeuge
 
-scikit-learn `GridSearchCV`, pandas, NumPy, Matplotlib, pytest, JSON, and Python.
+scikit-learn `GridSearchCV`, pandas, NumPy, Matplotlib, pytest, JSON und Python.

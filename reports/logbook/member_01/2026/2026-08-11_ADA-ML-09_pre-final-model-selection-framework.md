@@ -1,91 +1,65 @@
-# Logbook Entry
+# Logbucheintrag
 
-## Metadata
+## Metadaten
 
-- Date: 2026-08-11
-- Member: Yassine Elhari
+- Datum: 2026-08-11
+- Mitglied: Yassine Elhari
 - Sprint: Sprint 2
 - Ticket ID: ADA-ML-09
 - Branch: feature/data_processing
-- Pull Request: [#7 — develop → main](https://github.com/roximox/santander-customer-transaction-prediction/pull/7) (integrated into `develop` in `ff3c2f8`)
-- Time spent: 5 hours
-- Related meeting: [2026-08-23 — Model Progress, Optimization and Evaluation](../../../meetings/2026-08-23_model-progress-optimization-and-evaluation.md)
+- Pull Request: [#7 — develop → main](https://github.com/roximox/santander-customer-transaction-prediction/pull/7) (integriert in `develop` in `ff3c2f8`)
+- Zeitaufwand: 5 Stunden
+- Zugehörige Besprechung: [2026-08-23 — Modellfortschritt, Optimierung und Bewertung](../../../meetings/2026-08-23_model-progress-optimization-and-evaluation.md)
 
-## Title
+## Titel
 
-Pre-Final Model Selection Framework
+Framenummerungsframework für die vorletzte Phase
 
-## Objective
+## Ziel
 
-Build a common read-only framework that compares recorded training-CV results
-before the group locks one final pipeline. The framework must remain useful
-while some members' candidates are absent.
+Ein gemeinsames Leseband, das vergleichbare trainierten-CV-Ergebnisse vor dem Gruppenabschluss vergleicht. Das Framework muss während der Abwesenheit einiger Mitglieder noch nützlich bleiben.
 
-## Context
+## Kontext
 
-Different model families and result producers may expose compatible information
-under different JSON keys. A normalized comparison is necessary to make model
-coverage, protocol metadata, metric trade-offs, and missing evidence explicit.
+Unterschiedliche Modellfamilien und Ergebnisproduzenten können unter verschiedenen JSON-Schlüsseln kompatibles Information preisen. Eine normalisierte Vergleichung ist erforderlich, um Modelldeckung, Protokollmetadaten, Metrik-Abwägungen und fehlende Beweise explizit zu machen.
 
-## Work performed
+## Durchgeführte Arbeit
 
-Implemented deterministic summary discovery, robust normalization, eligibility
-and exclusion reporting, protocol comparability checks, metric-specific ranks,
-a CV-variability competitiveness heuristic, multi-criteria decisions, expected
-family coverage, portfolio exports, meeting notes, figures, and an offline test
-suite. The script reads six registered M01 experiments and the two retained
-Logistic candidates from the recorded grid search.
+Das Skript liest die sechs registrierten M01-Experimente und die beiden behaltenen Logistik-Kandidaten aus dem aufgezeichneten Grid-Suchvorgang. Implementiert wurde ein deterministischer Zusammenfassungsentdeckung, robuste Normalisierung, Eligibilitäts- und Exklusionsberichterstattung, Protokollvergleichsprüfung, -spezifische Ränge, eine CV-Variabilitäts-Kompetitivitäts-Funktion, multi-kritische Entscheidungen, erwartete Familiendeckung, Portfolio-Exporte, Besprechungsnotizen, Figuren und ein Offline-Testset. Das Skript liest die sechs registrierten M01-Experimente und die beiden behaltenen Logistik-Kandidaten aus dem aufgezeichneten Grid-Suchvorgang.
 
-## Methodology
+## Methodik
 
-ROC-AUC remains the predeclared primary metric. Average Precision, F1,
-precision, recall, accuracy, balanced accuracy, fold dispersion,
-train-validation gap, fit time, convergence, feature count, and provenance are
-kept separately. No weighted or averaged composite rank is computed.
-Comparability checks distinguish consistent, incompatible, and not-verifiable
-metadata. Missing candidates are reported rather than fabricated.
+ROC-AUC bleibt das vorher festgelegte Hauptmetrik. Durchschnittliche Genauigkeit, F1-Wert, Präzision, Erinnerung, ausgeglichenes Genauigkeitsmaß, Verbreitung in der Ladephase, Anpassungszeit, Konvergenz, Anzahl der Merkmale und Nachweis sind getrennt. Keine gewichtete oder kombinierte Rangliste wird berechnet. Die Vergleichsprüfung unterscheidet zwischen konsistenten, inkonsistenten und nicht überprüfbaren Metadaten. Fehlende Kandidaten werden stattdessen als solche gemeldet.
 
-## Results
+## Ergebnisse
 
-The generated report records four eligible Logistic candidates and excludes
-four Dummy baselines. Members 02–04 and their expected RF, Extra Trees, PCA,
-Feature Selection, and HGB candidates are missing. Consequently selection
-status is `waiting_for_additional_models`; no group winner is declared.
+Das generierte Bericht zeigt vier geeignete Logistik-Kandidaten auf und ausschließt vier Dummy-Baselines. Mitglieder 02-04 und ihre erwarteten RF, Extra Trees, PCA, Feature Selection und HGB-Kandidaten fehlen. Folglich ist die Auswahlstatus `waiting_for_additional_models`; keine Gruppen Sieger wird ausgesprochen.
 
 ## Interpretation
 
-Metric winners and competitive candidates are meeting inputs, not a final
-selection. The CV variability rule uses one standard deviation of the best
-recorded ROC-AUC and is explicitly a heuristic rather than a formal
-non-inferiority test.
+Die gewonnenen Metriken und die konkurrierenden Kandidaten sind Eingabewerte, nicht eine endgültige Auswahl. Die CV-Variabilitätsregel verwendet einen Standarddeviationswert des besten aufgezeichneten ROC-AUC und ist explizit ein heuristischer Ansatz und kein formeller nicht-unterlegenheits-Test.
 
-## Decision
+## Entscheidung
 
-Preserve a transparent multi-criteria review. Candidate status is distinct from
-final-model status. The final pipeline decision is deferred to the group after
-coverage and protocol comparability are complete.
+Ein transparenter multi-kritischer Überprüfungsprozess. Die Kandidatenstatus ist von der endgültigen Modellentscheidung getrennt. Die endgültige Pipelineentscheidung wird auf die Gruppe nach Abschluss der Deckung und Protokollvergleichs übergeben.
 
-## Difficulties
+## Schwierigkeiten
 
-Registered experiment summaries and grid-search summaries use different field
-names. Search candidates also lack some protocol metadata available in the
-registered experiment files, so comparability can be only partially verified.
+Die Registrierungsexperiment-Summarisierungen und die Grid-Suchsummarisierungen verwenden unterschiedliche Feldnamen. Die Suchkandidaten fehlen auch einige Protokollmetadaten, die in den registrierten Experimenten verfügbar sind, so dass die Vergleichbarkeit nur teilweise überprüft werden kann.
 
-## Adaptations and deviations from the plan
+## Anpassungen und Abweichungen vom Plan
 
-The two selected Logistic configurations are normalized directly from the
-existing candidate CSV with `source_type=grid_search_candidate`; neither the
-experiment registry nor historical scientific artifacts are modified.
+Die beiden ausgewählten Logistik-Konfigurationen werden direkt von der bestehenden Kandidatencsv mit `source_type=grid_search_candidate` normalisiert. Keine Änderung des Experimentenregistrierungsartikels oder historischer wissenschaftlicher Artefakte.
 
-## Rejected approaches
+## Abgelehnte Ansätze
 
-- Retraining candidates or loading OpenML data.
-- Reading or calculating final-test metrics.
-- Selecting by Accuracy alone.
-- An arbitrary weighted composite score or naive average rank.
-- Inventing missing Member 02–04 experiments or a group decision.
+- Wiederholte Kandidaten oder die Lade von OpenML-Daten.
+- Die Lesung oder Berechnung der endgültigen Testpunkte.
+- Die Auswahl nach Genauigkeit allein.
+- Eine arbitrarische gewichtete Rangliste oder eine nahezu durchschnittliche Rangliste.
+- Erfinden fehlender Mitglieder 02-04-Experimente oder eine Gruppenentscheidung.
 
-## Files changed
+## Geänderte Dateien
 
 - `src/model_selection.py`
 - `scripts/build_model_selection_report.py`
@@ -94,17 +68,14 @@ experiment registry nor historical scientific artifacts are modified.
 - `notebooks/08_final_evaluation.ipynb`
 - `README.md`
 - `CONTRIBUTING.md`
-- `reports/model_selection/` exports and meeting notes
-- four pre-final comparison figures
+- `reports/model_selection/` - Aus exports und Besprechungsnotizen
+- vier vorletzte Vergleichsfiguren
 
-## Code references
+## Code-Referenzen
 
-Summary discovery/loading/normalization, model-family inference, eligibility,
-comparability, rankings, competitiveness, decisions, coverage, portfolio, and
-figure functions in `src/model_selection.py`; report orchestration in
-`scripts/build_model_selection_report.py`.
+Zusammenfassung/Loading/Normalisierung, Modellfamilienabschätzung, Eligibilität, Vergleichbarkeit, Ränge, Wettbewerbsfähigkeit, Entscheidungen, Deckung, Portfolio, und Figuren in `src/model_selection.py`; Berichtsorchestrierung in `scripts/build_model_selection_report.py`.
 
-## Figure and table references
+## Figur- und Tabellennachweise
 
 - `reports/model_selection/model_comparison_all.csv`
 - `reports/model_selection/model_comparison_eligible.csv`
@@ -121,18 +92,14 @@ figure functions in `src/model_selection.py`; report orchestration in
 - `reports/figures/final_model_comparison_threshold_metrics.pdf`
 - `reports/figures/final_model_performance_vs_time.pdf`
 
-## Reproducibility notes
+## Reproduzierbarkeitshinweise
 
-Inputs are immutable recorded JSON/CSV artifacts. Discovery and tie-breaking
-are deterministic. Paths stored in outputs are project-relative. No dataset,
-estimator, model serialization, Internet service, or final test set is used.
+Eingangsdaten sind unveränderliche aufgezeichnete JSON/CSV-Artikel. Entdeckung und Rangierung sind deterministisch. Pfade in den Ausgabewerten sind Projektbezüglich. Keine Datenbank, Estimator, Modellisierung, Internetdienst oder endgültige Testset wird verwendet.
 
-## Next step
+## Nächster Schritt
 
-Group review and final model lock after Members 02–04 publish their retained,
-common-protocol candidates. The final test remains closed until that lock.
+Gruppenbesprechung und endgültige Modellentscheidung nach Veröffentlichung der von Mitgliedern 02-04 veröffentlichten, gemeinsamen Protokollkandidaten. Die endgültige Test bleibt geschlossen bis zu diesem Zeitpunkt.
 
-## Sources and tools used
+## Quellen und verwendete Werkzeuge
 
-Existing experiment/search reports, project evaluation conventions, Python,
-pandas, NumPy, Matplotlib, JSON, pytest, nbformat, and Git inspection commands.
+Bestehende Experiment-Summarisierungen und Projektbewertungskonventionen, Python, pandas, NumPy, Matplotlib, JSON, pytest, nbformat und Git-Inspektionsbefehle.

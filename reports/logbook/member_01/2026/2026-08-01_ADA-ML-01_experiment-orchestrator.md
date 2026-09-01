@@ -1,93 +1,78 @@
-# Logbook Entry
+# Logbucheintrag
 
-## Metadata
+## Metadaten
 
-- Date: 2026-08-01
-- Member: Yassine Elhari
+- Datum: 2026-08-01
+- Mitglied: Yassine Elhari
 - Sprint: Sprint 1
 - Ticket ID: ADA-ML-01
 - Branch: feature/data_processing
 - Pull Request: [#2 — feature/data_processing → main](https://github.com/roximox/santander-customer-transaction-prediction/pull/2)
-- Time spent: 3 hours
-- Related meeting: [2026-08-09 — Data Processing, Validation Strategy and Start of Individual Analysis](../../../meetings/2026-08-09_data-processing-validation-strategy-and-start-of-individual-analysis.md)
+- Zeitaufwand: 3 Stunden
+- Zugehörige Besprechung: [2026-08-09 — Data Processing, Validation Strategy and Start of Individual Analysis](../../../meetings/2026-08-09_data-processing-validation-strategy-and-start-of-individual-analysis.md)
 
-## Title
+## Titel
 
-Experiment orchestrator
+Experimentorchestrator
 
 ## Problem
 
-Running model comparisons independently from notebooks could duplicate
-evaluation, persistence, and registration workflow code.
+Das Ausführen von Modellvergleichen unabhängig von Notebooks könnte die Wiederholung der Bewertung, Speicherung und Registrierungscode-Durchführung dupizieren.
 
-## Work completed
+## Durchgeführte Arbeiten
 
-- Added a small orchestration module while keeping cross-validation, metrics,
-  fingerprints, persistence, and registry details in their existing modules.
-- Required explicit, path-safe experiment identifiers.
-- Kept saving optional and disabled by default.
-- Made registration optional but allowed it only after result files are saved.
-- Exposed project-relative result paths and refused paths outside the project.
-- Preserved the rule that development experiments receive training data only.
-- Added a pure helper that extracts verified facts for manual Logbook writing;
-  it creates no scientific interpretation and writes no file.
-- Added offline unit tests and a synthetic smoke test that uses a temporary
-  directory and does not modify the scientific registry.
+- Ein kleines Orchestrierungsmodul hinzugefügt, während die Kreuzvalidierung, Metriken, Fingerabdrucke, Speicherung und Registrierungsdaten in ihren bestehenden Modulen erhalten blieben.
+- Explicit, path-sichere Experimentidentifizierungen erforderlich.
+- Optional und deaktiviert als Standard gespeichert.
+- Registrierung optional, aber nur nachdem die Ergebnisdateien gespeichert sind.
+- Projektrelativen Ergebnispfade ausgewiesen und Wege außerhalb des Projekts abgelehnt.
+- Die Regel erhalten, dass Entwicklungsexperimente nur mit Trainingsdaten versorgt werden.
+- Ein reiner Hilfsprogramm hinzugefügt, das überprüfte Fakten für manuelle Logbuch-Eingabe extrahiert; es schafft keine wissenschaftliche Interpretation und schreibt kein Datei.
+- Offline-Einheitstests und ein synthetisches Rauchtest hinzugefügt, der einen temporären Ordner verwendet und nicht die wissenschaftliche Registrierung ändert.
 
-## Decisions
+## Entscheidungen
 
-`evaluation.py` remains responsible for evaluation and persistence primitives;
-`experiments.py` only coordinates them. Duplicate result files and duplicate
-registry identifiers are refused rather than overwritten. If registry writing
-fails after saving, the error reports that the result files remain present.
+`evaluation.py` verantwortlich für Bewertung und Speicherungsprimitiven; `experiments.py` nur sie koordiniert. Duplikate Ergebnisdateien und duplizierte Registrierungsidentifikatoren werden abgelehnt, anstatt überschrieben. Wenn die Registrierungsschreibung nach dem Speichern fehlschlägt, melden sich Fehlerberichte, dass die Ergebnisdateien vorhanden bleiben.
 
-## Scientific results
+## Wissenschaftliche Ergebnisse
 
-No Santander scientific experiment was run for this ticket. The smoke test is
-technical and synthetic only.
+Kein Santander wissenschaftliches Experiment wurde für diesen Ticket durchgeführt. Der Rauchtest ist technisch und synthetisch nur.
 
-## Reproducibility notes
+## Reproduzierbarkeitsnotizen
 
-Run `pytest`, then `python scripts/verify_experiment_orchestrator.py` from the
-project root. The smoke script creates and removes its temporary artifacts.
-The final test set was not used and remained closed.
+Führen Sie `pytest`, dann `python scripts/verify_experiment_orchestrator.py` aus dem Projekt-Root. Das Rauchskript erstellt und löscht seine temporären Artefakte. Die letzte Testset wurde nicht verwendet und blieb geschlossen.
 
-## Next step
+## Nächster Schritt
 
-Run the first real `DummyClassifier` baseline as a separately identified and
-documented scientific experiment.
+Führen Sie den ersten reellen `DummyClassifier` Baseline als separat identifizierten und dokumentierten wissenschaftlichen Experiment durch.
 
-## Difficulties
+## Schwierigkeiten
 
-Persistence must prevent silent ID overwrites and report partial writes if
-registry insertion fails.
+Die Speicherung muss vorbeugend vor leisen ID-Überprüfungen und Meldungen von teilweiser Schreibfehlern bei der Registrierungsinsertion schützen.
 
-## Adaptations and deviations from the plan
+## Anpassungen und Abweichungen vom Plan
 
-Saving is opt-in, and the smoke workflow uses a temporary directory removed at
-the end instead of the scientific registry.
+Das Speichern ist opt-in, und das Rauchworkflow verwendet einen temporären Ordner entfernt, nachdem er die wissenschaftliche Registrierung verwendet hat.
 
-## Rejected approaches
+## Abgelehnte Ansätze
 
-Automatic IDs, overwrites, automatic interpretation, and final-test arguments
-were rejected.
+Automatische IDs, Überschreibungen, automatische Interpretationen und Endtestargumente wurden abgelehnt.
 
-## Files changed
+## Geänderte Dateien
 
 - `src/experiments.py`
 - `scripts/verify_experiment_orchestrator.py`
 - `tests/test_experiments.py`
 - `CONTRIBUTING.md`
 
-## Code references
+## Code-Referenzen
 
-`run_experiment`, `run_and_save_experiment`, and registry validation in
-`src/experiments.py`.
+`run_experiment`, `run_and_save_experiment` und Registrierungsvalidierung in `src/experiments.py`.
 
-## Figure and table references
+## Abbildung und Tabelle-Bezüge
 
-None; no Santander scientific experiment was run for this infrastructure ticket.
+Keine; kein Santander wissenschaftliches Experiment wurde für diesen Infrastruktur-Ticket durchgeführt.
 
-## Sources and tools used
+## Verwendete Quellen und Werkzeuge
 
-Python, pandas, scikit-learn, pytest, CSV, JSON, and temporary directories.
+Python, pandas, scikit-learn, pytest, CSV, JSON und temporäre Ordner.

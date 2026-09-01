@@ -1,101 +1,86 @@
-# Logbook Entry
+# Logbucheintrag
 
-## Metadata
+## Metadaten
 
-- Date: 2026-08-01
-- Member: Yassine Elhari
+- Datum: 2026-08-01
+- Mitglied: Yassine Elhari
 - Sprint: Sprint 1
 - Ticket ID: ADA-DATA-03
 - Branch: feature/data_processing
 - Pull Request: [#2 — feature/data_processing → main](https://github.com/roximox/santander-customer-transaction-prediction/pull/2)
-- Time spent: 2.5 hours
-- Related meeting: [2026-08-09 — Data Processing, Validation Strategy and Start of Individual Analysis](../../../meetings/2026-08-09_data-processing-validation-strategy-and-start-of-individual-analysis.md)
+- Zeitaufwand: 2,5 Stunden
+- Zuordnung zu einer Besprechung: [2026-08-09 — Data Processing, Validation Strategy und Start der individuellen Analyse](../../../meetings/2026-08-09_data-processing-validation-strategy-and-start-of-individual-analysis.md)
 
-## Title
+## Titel
 
-Shared reproducible train/test split
+Gemeinsame wiederholbare Trainings-/Testteilung
 
-## Objective
+## Ziel
 
-Create the single reproducible train/test split that every team member must use,
-while reserving the test partition exclusively for final evaluation.
+Eine einzige gemeinsame wiederholbare Trainings-/Testteilung erstellen, die für jeden Teammitglied verwendet werden muss,
+während die Testpartition ausschließlich für die endgültige Bewertung reserviert wird.
 
-## Methodological decision
+## Entscheidungsgrundlage
 
-The target is imbalanced, with 89.951% `False` and 10.049% `True`. The split
-therefore uses target stratification so the 80% training and 20% test partitions
-retain this distribution as closely as integer sample counts permit. Parameters
-come from the shared configuration: `test_size=0.20`, `random_state=42`, and
-shuffling is enabled.
+Das Ziel ist ungleichmäßig mit 89,951% `False` und 10,049% `True`. Die Teilung verwendet daher eine Zielstratifikation,
+um die 80% Trainings- und 20% Testpartitionen so nahe wie möglich an die ursprüngliche Verteilung anzunähern. Die Parameter kommen aus der gemeinsamen Konfiguration: `test_size=0.20`, `random_state=42` und Schleifen werden aktiviert.
 
-No learned preprocessing, feature selection, scaling, imputation, or other
-data-dependent transformation occurs before index selection. The split operates
-on the explicitly optimized float32 feature frame. Tests confirm that the same
-target, row order, parameters, and random state produce identical indices for
-raw float64 and optimized float32 features.
+Keine gelernten Vorverarbeitung, Auswahl von Merkmalen, Skalierung, Füllung oder andere Datenabhängige Transformationen erfolgen vor dem Indexauswahl. Die Teilung operiert auf der explizit optimierten float32-Funktionsmatrix. Tests bestätigen, dass die gleiche Ziel, Zeilenordnung, Parameter und zufälliger Zahlen generator für raw float64 und optimierte float32-Funktionen identische Indizes ergeben.
 
-## Observed split
+## Beobachtete Teilung
 
-- training rows: 160,000;
-- test rows: 40,000;
-- original target proportions: `False=0.89951`, `True=0.10049`;
-- training proportions: `False=0.8995125`, `True=0.1004875`;
-- test proportions: `False=0.8995`, `True=0.1005`;
-- maximum difference from the original proportion: 1.00000000001e-05;
-- train/test index overlap: 0;
-- training total memory: 128.70 MiB;
-- test total memory: 32.17 MiB.
+- Trainingszeilen: 160.000;
+- Testzeilen: 40.000;
+- Ursprüngliche Zielproportionen: `False=0.89951`, `True=0.10049`;
+- Trainingsproportionen: `False=0.8995125`, `True=0.1004875`;
+- Testproportionen: `False=0,8995`, `True=0,1005`;
+- Maximaler Unterschied von der ursprünglichen Proportion: 1,00000000001e-05;
+- Trainings-/Testindex Überschneidung: 0;
+- Trainingsgescdtes Speichervolumen: 128,70 MiB;
+- Testgescdtes Speichervolumen: 32,17 MiB.
 
-## Reproducibility fingerprints
+## Reproduzierbarkeitssignaturen
 
-- Train indices SHA-256: `61c403ec521d15ab9d6316606eba5acdfc22381cb764b6da76a65041ec11f477`
-- Test indices SHA-256: `bf7d43e492967dad1358676e9bf8355a910823077b59118014db12af3e26f586`
+- Trainingsindizes SHA-256: `61c403ec521d15ab9d6316606eba5acdfc22381cb764b6da76a65041ec11f477`
+- Testindizes SHA-256: `bf7d43e492967dad1358676e9bf8355a910823077b59118014db12af3e26f586`
 
-Fingerprints are order-sensitive and encode only index values and their types;
-they include no local path or dataset content. Team members can compare these
-hashes to confirm identical partitions without exchanging row-level data.
+Die Signaturn sind ordnersensibel und enthalten nur Indexwerte und deren Typen;
+sie enthalten keine lokale Pfad oder Dateninhalte. Teammitglieder können diese Hashs vergleichen, um identische Partitionen ohne den Austausch von Zeileniveau-Daten zu bestätigen.
 
-## Validation
+## Validierung
 
-The validation checks partition sizes, complete index union, absence of overlap,
-X/y alignment, columns, dtypes, unchanged feature and target values, target
-proportions, recorded parameters, and deterministic replay with the same random
-state. Only metadata is exported; X_train, X_test, y_train, and y_test are not
-saved.
+Die Validierung überprüft die Teilungsgrößen, die vollständige Indexunion, Abwesenheit von Überschneidungen,
+X/Y-Aligment, Spalten, Datentypen, unveränderte Merkmals- und Zielwerte, Zielproportionen, aufgezeichnete Parameter und deterministische Wiederholung mit dem gleichen zufälligen Zahlen generator. Nur Metadaten werden exportiert; X_train, X_test, y_train und y_test werden nicht gespeichert.
 
-## Test-set policy
+## Testsetpolitik
 
-The test set is closed until final evaluation. It must not inform model choice,
-feature selection, preprocessing decisions, threshold selection, or
-hyperparameter tuning. All intermediate decisions must use the training data
-and training-only validation procedures.
+Das Testset ist bis zur endgültigen Bewertung geschlossen. Es darf keine Modellwahl,
+Merkmalsauswahl, Vorverarbeitungsentscheidungen, Schwellenwertbestimmung oder
+Hyperparameter-Tuning informieren. Alle mittleren Entscheidungen müssen die Trainingsdaten und Trainings-Only-Validierungsverfahren verwenden.
 
-## Next step
+## Nächster Schritt
 
-Build a training-only `DummyClassifier` baseline using the common split, without
-using test performance for iterative model selection.
+Ein Trainings-only `DummyClassifier` Baseline mit der gemeinsamen Teilung erstellen, ohne die Testleistung für iterativen Modellauswahl zu verwenden.
 
-## Decision
+## Entscheidung
 
-Adopt this one 80/20 stratified split and its fingerprints for all members;
-keep the 40,000-row test partition closed until final evaluation.
+Diese 80/20 stratifizierte Teilung und ihre Signaturn für alle Mitglieder übernehmen;
+die 40.000-Row-Testpartition bleibt bis zur endgültigen Bewertung geschlossen.
 
-## Difficulties
+## Schwierigkeiten
 
-The split needed to prove exact index reproducibility without persisting or
-exposing row-level data.
+Die Teilung musste genau wiederholbare Indizes ohne die Persistenz oder Exposition von Zeileniveau-Daten beweisen.
 
-## Adaptations and deviations from the plan
+## Anpassungen und Abweichungen vom Plan
 
-Only index fingerprints and aggregate metadata are exported; split objects are
-never serialized.
+Nur Indexsignaturn und aggregierte Metadaten werden exportiert; Split-Objekte werden nie serialisiert.
 
-## Rejected approaches
+## Abgelehnte Ansätze
 
-Unstratified splitting, member-specific splits, preprocessing before splitting,
-and using the test partition for development were rejected.
+Unstratifizierte Teilung, Mitgliedspezifische Teilungen, Vorverarbeitung vor der Teilung,
+und die Verwendung des Testpartitions für Entwicklung wurden abgelehnt.
 
-## Files changed
+## Geänderte Dateien
 
 - `src/data.py`
 - `src/validation.py`
@@ -103,20 +88,16 @@ and using the test partition for development were rejected.
 - `tests/test_data.py`
 - `tests/test_validation.py`
 
-## Code references
+## Code-Referenzen
 
-Split creation and fingerprint validation in `src/data.py` and
-`src/validation.py`; verification in `scripts/create_data_split.py`.
+Split-Erstellung und Signatur-Validierung in `src/data.py` und
+`src/validation.py`; Verifizierung in `scripts/create_data_split.py`.
 
-## Figure and table references
+## Figur und Tabelle-Bezugnahmen
 
 - `reports/tables/train_test_split_summary.json`
 
-## Reproducibility notes
+## Reproduzierbarkeitshinweise
 
-The split uses `test_size=0.20`, stratification, shuffling, and
-`random_state=42`. The final test set was fingerprinted only and remained closed.
-
-## Sources and tools used
-
-scikit-learn, pandas, NumPy, hashlib, pytest, and the central configuration.
+Die Teilung verwendet `test_size=0.20`, Stratifikation, Schleifen und
+`random_state=42`. Die endgültige Testset wurde nur gefingeriert und blieb geschlossen.

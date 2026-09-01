@@ -1,105 +1,90 @@
-# Logbook Entry
+# Logbucheintrag
 
-## Metadata
+## Metadaten
 
-- Date: 2026-07-25
-- Member: Yassine Elhari
+- Datum: 2026-07-25
+- Mitglied: Yassine Elhari
 - Sprint: Sprint 0
 - Ticket ID: ADA-SETUP-01
 - Branch: main
-- Pull Request: Not applicable — committed directly to `main` (`55c60d6`)
-- Time spent: 3 hours
-- Related meeting: [2026-07-26 — Initial Project Planning and Task Distribution](../../../meetings/2026-07-26_initial-project-planning-and-task-distribution.md)
+- Pull Request: Nicht anwendbar — direkt in `main` (`55c60d6`) eingefügt
+- Zeitaufwand: 3 Stunden
+- Zuordnung zu einem Treffen: [2026-07-26 — Initialisierung der Projektplanung und Aufteilung von Aufgaben](../../../meetings/2026-07-26_initial-project-planning-and-task-distribution.md)
 
-## Title
+## Titel
 
-Initialisation of the reproducible project structure
+Initialisierung des gemeinsamen, reproduzierbaren technischen Grundgerüsts
 
-## Objective
+## Ziel
 
-Create a shared, reproducible technical foundation that allows four group
-members to work independently while following the same conventions,
-configuration, and project structure.
+Ein gemeinsames, reproduzierbares technisches Fundament schaffen, das es vier Gruppenmitgliedern ermöglicht, unabhängig voneinander zu arbeiten, während sie dieselben Konventionen, Einstellungen und Projektstruktur befolgen.
 
-## Context
+## Kontext
 
-The project requires collaborative analysis of the Santander Customer
-Transaction Prediction dataset. Before downloading data or implementing EDA and
-models, the team needed a common repository structure to prevent incompatible
-data-loading procedures, inconsistent splits and metrics, and duplicated code.
+Das Projekt erfordert eine gemeinsame Analyse des Santander Customer Transaction Prediction-Datasets. Bevor man die Daten herunterlädt oder EDA- und Modellimplementierungen durchführt, benötigt das Team einen gemeinsamen Repository-Struktur, um unkompatiblen Datenlastprozesse, inkonsistente Splits und wiederholte Code zu vermeiden.
 
-## Work performed
+## Durchgeführte Arbeit
 
-- Created the project directory structure and the main `README.md`.
-- Added collaboration rules in `CONTRIBUTING.md` and exclusions in `.gitignore`.
-- Added `requirements.txt`, `environment.yml`, and `pyproject.toml`.
-- Added the central `configs/config.yaml`.
-- Created the reusable Python package under `src/`.
-- Added eight ordered notebook placeholders without generated results.
-- Added offline tests for project structure and configuration.
-- Added Agile meeting, experiment, and Logbook templates.
-- Initialised the local Git repository.
-- Executed `pytest`.
-- Loaded and printed the central configuration.
+- Erstellung des Projektverzeichnissesstrukturs und der Hauptdatei `README.md`.
+- Hinzufügung von Zusammenarbeitseingaben in `CONTRIBUTING.md` und Auslassungen in `.gitignore`.
+- Hinzufügung von Anforderungsdateien (`requirements.txt`, `environment.yml`, `pyproject.toml`).
+- Hinzufügung der zentralen Konfigurationsdatei (`configs/config.yaml`).
+- Erstellung des reusiblen Python-Pakets unter `src/`.
+- Hinzufügung von acht ordnenden Notizblöcken ohne generierte Ergebnisse.
+- Hinzufügung von Offline-Tests für Projektstruktur und Konfiguration.
+- Hinzufügung von Agile-Treffen, Experimenten und Logbuchmustern.
+- Initialisierung des lokalen Git-Repository.
+- Ausführung von `pytest`.
+- Lade und Ausgabe der zentralen Konfigurationsdatei.
 
-## Methodology
+## Methodik
 
-The setup followed reproducible research and collaborative software-engineering
-principles: one central configuration, relative paths, an isolated documented
-environment, no datasets in Git, modular source code, automated offline tests,
-shared branch conventions, and separation between stable and future integration
-branches.
+Die Einrichtung folgte den reproduzierbaren Forschungs- und Software-Engineeringprinzipien: eine zentrale Konfiguration, relative Wege, ein isoliertes dokumentiertes Umfeld, keine Daten in Git, modulares Quellcode, automatisierte Offline-Tests, gemeinsame Branchkonventionen und Trennung zwischen stabilen und zukünftigen Integrationsbrechen.
 
-## Results
+## Ergebnisse
 
-- Four tests passed during the initial validation.
-- `configs/config.yaml` loaded successfully.
-- OpenML ID was verified as `45566`.
-- `random_state` was verified as `42`.
-- `test_size` was verified as `0.20`.
-- `target_column` remained `null` pending verification against the real dataset.
-- The primary metric was verified as `roc_auc`.
-- The local Git repository was initialised successfully.
-- No dataset was created or committed.
+- Vier Tests lieferten sich während der initialen Validierung.
+- Die zentrale Konfigurationsdatei (`configs/config.yaml`) wurde erfolgreich geladen.
+- Der OpenML-ID wurde als `45566` bestätigt.
+- Das `random_state` wurde als `42` bestätigt.
+- Die `test_size` wurde als `0.20` bestätigt.
+- Das Zielkolonne blieb `null` und musste gegen das reale Dataset verifiziert werden.
+- Der primäre Metrikwert wurde als `roc_auc` bestätigt.
+- Das lokale Git-Repository wurde erfolgreich initialisiert.
+- Keine Daten wurden erstellt oder eingefügt.
 
 ## Interpretation
 
-The technical foundation is functional and ready for collaborative use. It
-still needs validation in the official Python 3.11 environment before
-scientific work begins.
+Das technische Fundament ist funktional und bereit für die Zusammenarbeit. Es benötigt jedoch noch eine Validierung in der offiziellen Python 3.11-Umgebung, bevor wissenschaftliche Arbeit beginnen kann.
 
-## Decision
+## Entscheidung
 
-- Keep this structure as the shared project foundation.
-- Maintain shared scientific defaults in the central configuration.
-- Prevent scientific decisions from using the final test set.
-- Do not version datasets.
-- Use individual feature branches after the repository is pushed.
-- Maintain separate Logbook directories for all four members.
+- Bewahren Sie diese Struktur als gemeinsames Projektgrundgerüst auf.
+- Erhalten Sie gemeinsame wissenschaftliche Standards in der zentralen Konfigurationsdatei.
+- Vermeiden Sie wissenschaftliche Entscheidungen mit dem Endtestset.
+- Lassen Sie keine Daten in Versionierung.
+- Verwenden Sie individuelle Featurezweige nachdem das Repository gepusht wurde.
+- Bewahren Sie separate Logbuchordner für alle vier Mitglieder auf.
 
-## Difficulties
+## Schwierigkeiten
 
-- `pytest` displayed a `pytest-nbgrader` warning because that plugin is installed
-  in the current Anaconda base environment.
-- Git was initially not initialised, so `git status` failed before `git init`.
-- Git selected `master` as the initial branch name by default.
+- `pytest` zeigte eine `pytest-nbgrader` Warnung, weil dieses Plugin in der aktuellen Anaconda Basisumgebung installiert ist.
+- Das Git-Repository war nicht initialisiert, sodass `git status` vor `git init` fehlte.
+- Das Git-System wählte `master` als Initialisierungsbranchname automatisch.
 
-## Adaptations and deviations from the plan
+## Anpassungen und Abweichungen vom Plan
 
-- The Git repository was initialised after validating the initial setup.
-- The initial branch needed to be renamed from `master` to `main` before the
-  first commit.
-- The official environment specifies Python 3.11, while initial validation used
-  the observed Python 3.13.9 base environment.
+- Das Git-Repository wurde nach der Validierung des ersten Setup eingefügt.
+- Die erste Branch musste von `master` in `main` umbenannt werden, bevor die erste Commit-Menge erstellt wurde.
+- Die offizielle Umgebung spezifiziert Python 3.11, während die initialen Tests mit dem beobachteten Python 3.13.9-Basisumfeld verwendet wurden.
 
-## Rejected approaches
+## Abgelehnte Ansätze
 
-- Committing the dataset directly to Git was rejected.
-- Starting EDA or machine learning before validating the shared structure was
-  rejected.
-- Hard-coding the target column before inspecting the real dataset was rejected.
+- Das direkte Einfügen der Daten in Git wurde abgelehnt.
+- Die Einführung von EDA oder Modellimplementierungen vor der Validierung des gemeinsamen Grundgerüsts wurde abgelehnt.
+- Die Festlegung eines Zielkolonnens vor dem Inspektion des realen Datensatzes wurde abgelehnt.
 
-## Files changed
+## Dateien geändert
 
 - `README.md`, `CONTRIBUTING.md`, `.gitignore`
 - `requirements.txt`, `environment.yml`, `pyproject.toml`
@@ -111,37 +96,25 @@ scientific work begins.
 - `models/`
 - `data/`
 
-## Code references
+## Code-Referenzen
 
 - `src/config.py`
 - `configs/config.yaml`
 - `tests/test_config.py`
 - `tests/test_project_structure.py`
 
-## Figure and table references
+## Abbildung und Tabelle-Bezug
 
-None. No scientific output was produced during project setup.
+Keine wissenschaftliche Produktion wurde während der Projekt-Einrichtung erzeugt.
 
-## Reproducibility notes
+## Reproduzierbarkeitshinweise
 
-The shared `random_state` is centralised, configured paths are relative,
-dependencies are documented, and the tests require no Internet access. Dataset
-download will be implemented later. The final test set was not used and remained
-closed for model selection.
+Die zentrale `random_state` ist zentralisiert, konfigurierte Wege sind relativ, Abhängigkeiten werden dokumentiert und die Tests benötigen keinen Internetzugriff. Die Endtestset wurde nicht verwendet und blieb geschlossen für Modellauswahl.
 
-## Next step
+## Nächster Schritt
 
-- Validate the project in the official Python 3.11 environment.
-- Confirm that the active Git branch is `main`.
-- Commit and push the reviewed setup.
-- Create or use the `develop` integration branch.
-- Start the separate dataset download and audit ticket.
-
-## Sources and tools used
-
-- Codex / generative AI support for project setup
-- Python
-- `pytest`
-- Git
-- PyYAML
-- Jupyter and `nbformat`
+- Validieren Sie das Projekt in der offiziellen Python 3.11-Umgebung.
+- Bestätigen Sie, dass die aktive Git-Branche `main` ist.
+- Commiten und pushen Sie den überprüften Setup.
+- Erstellen oder verwenden Sie die `develop`-Integrationsspalte.
+- Beginnen Sie mit der separaten Datenherausforderung und -prüfung.

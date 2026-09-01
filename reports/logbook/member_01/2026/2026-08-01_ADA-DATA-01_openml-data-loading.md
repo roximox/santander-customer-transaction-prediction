@@ -1,105 +1,84 @@
-# Logbook Entry
+# Logbucheintrag
 
-## Metadata
+## Metadaten
 
-- Date: 2026-08-01
-- Member: Yassine Elhari
+- Datum: 2026-08-01
+- Mitglied: Yassine Elhari
 - Sprint: Sprint 1
 - Ticket ID: ADA-DATA-01
 - Branch: feature/data_processing
 - Pull Request: [#2 — feature/data_processing → main](https://github.com/roximox/santander-customer-transaction-prediction/pull/2)
-- Time spent: 3 hours
-- Related meeting: [2026-08-02 — Project Structure and Common Data Foundation](../../../meetings/2026-08-02_project-structure-and-common-data-foundation.md)
+- Zeitaufwand: 3 Stunden
+- Zugehörige Besprechung: [2026-08-02 — Projektstruktur und gemeinsame Datenbasis](../../../meetings/2026-08-02_project-structure-and-common-data-foundation.md)
 
-## Title
+## Titel
 
-Implementation of the official OpenML dataset loader
+Implementierung der offiziellen OpenML-Datenlader
 
-## Objective
+## Ziel
 
-Create a centralized, validated, and reusable loader for OpenML dataset 45566.
+Eine zentrale, validierte und wiederholbare Ladefunktion für die OpenML-Daten 45566 erstellen.
 
-## Architecture and implementation
+## Architektur und Implementierung
 
-The shared API is located in `src/data.py`. `load_dataset` reads the OpenML ID
-from the central YAML configuration, calls scikit-learn's `fetch_openml`, and
-returns the unmodified features, target, and source metadata. The implementation
-uses the standard scikit-learn cache and requests pandas objects by default.
+Die gemeinsame API befindet sich in `src/data.py`. Die Funktion `load_dataset` liest die OpenML-ID aus der zentralen YAML-Konfiguration, ruft scikit-learns `fetch_openml` auf und gibt die unveränderten Features, Ziel und Quellenmetadaten zurück. Die Implementierung verwendet den Standard von scikit-learn als Cache und ruft pandas-Objekte standardmäßig.
 
-The real target is taken from the object returned by OpenML. Its Series name is
-preferred, with OpenML's default-target metadata used only as a fallback. No
-target name is hard-coded.
+Die reale Zielquelle wird aus dem zurückgegebenen Objekt genommen. Der Name der Reihe ist bevorzugt, mit OpenMLs Standardzielmetadaten verwendet nur als Ersatzfall. Kein Zielname wird festgelegt.
 
-`validate_dataset` checks non-empty features and target, aligned lengths and
-indexes, unique feature names, and a target that is not entirely missing. It
-does not reject or remove missing feature values or duplicate observations.
+Die Funktion `validate_dataset` überprüft nicht leere Features und Ziel, abgestimmte Längen und Indizes, einzigartige Featurenamen und ein Ziel, das nicht vollständig fehlt. Sie erkennt keine fehlenden Featurewerte oder Duplikate von Beobachtungen.
 
-`get_dataset_summary` reports dimensions, feature types, missingness, duplicate
-feature rows, target distribution, and deep pandas memory usage in MiB. It does
-not save results to disk.
+Die Funktion `get_dataset_summary` gibt die Dimensionen, Typen der Features, Fehlungsrate, Duplikate in den Features, Verteilung des Ziels und die tiefen pandas-Memory-Verwendung in MiB zurück. Sie speichert keine Ergebnisse auf Disk.
 
-## Tests and verification
+## Tests und Verifizierung
 
-Offline unit tests mock `fetch_openml`, verify that the configured ID is passed,
-check required metadata, cover validation failures, and test summary and memory
-calculations. Consequently, the ordinary test suite does not require Internet.
+Offline-Einheitstests mocken `fetch_openml`, überprüfen, dass die konfigurierte ID übergeben wird, prüfen erforderliche Metadaten, decken Überprüfungsfehler ab, testen Zusammenfassung und Memoryberechnungen. Folglich ist das gewöhnliche Test-Set nicht auf Internet angewiesen.
 
-## Decisions
+## Entscheidungen
 
-- Preserve all feature and target values and their loaded numeric types.
-- Keep acquisition behind one shared function instead of duplicating notebook code.
-- Wrap network failures with an OpenML-ID-specific message while retaining the
-  original exception as the cause.
-- Keep real network verification as an explicit manual command.
+- Alle Feature- und Zielwerte und ihre geladenen numerischen Typen erhalten.
+- Die Einnahme hinter einer gemeinsamen Funktion statt der Duplikation des Notizbuchcodes behalten.
+- Netzwerkfälschungen mit einem OpenML-ID spezifischen Nachrichtenwrapp umgeben, während die ursprüngliche Ausnahme als Ursache beibehalten wird.
+- Die reale Netzwerksicherheit als explizites manuelles Befehl.
 
-## Difficulties encountered
+## Schwierigkeiten
 
-The loader must remain compatible with scikit-learn versions from before the
-`parser` argument was introduced. The call therefore includes `parser="auto"`
-only when the installed function signature supports it.
+Die Lader muss kompatibel mit scikit-learn-Versionen vor der Einführung des `parser`-Args bleiben. Der Aufruf enthält daher nur `parser="auto"` wenn die installierte Funktionssignatur unterstützt.
 
-## Scope exclusions
+## Umfangsaußenseitige Exklusionen
 
-No columns were removed, no values or dtypes were transformed, and no split,
-preprocessing, visualization, feature selection, or model was introduced.
+Keine Spalten wurden entfernt, keine Werte oder Datentypen wurden transformiert und keine Spaltung, Vorbereitung, Visualisierung, Auswahl von Features oder Modell wurde eingeführt.
 
-## Next step
+## Nächster Schritt
 
-Run and document the real-data audit, then evaluate numeric dtype optimization
-without changing the source-loading contract.
+Das reale-Daten-Überprüfung laufen und dokumentieren, dann die Optimierung der numerischen Datentypen ohne Änderung des Quellladekontrats auswerten.
 
-## Adaptations and deviations from the plan
+## Anpassungen und Abweichungen vom Plan
 
-Target discovery was kept metadata-driven instead of hard-coded, and the
-`parser` argument is used only when supported by the installed scikit-learn.
+Die Zielentdeckung wurde stattdessen metadatagetrieben statt festgelegt, und der `parser`-Argument wird nur verwendet, wenn von der installierten scikit-learn unterstützt wird.
 
-## Rejected approaches
+## Abgelehnte Ansätze
 
-Hard-coding `target`, saving a local dataset copy, and transforming source
-dtypes in the default loader were rejected.
+Hard-codieren des Ziels, Speichern eines lokalen Datenkopies, und Transformation der Quell-Datentypen in der Standardlader wurden abgelehnt.
 
-## Files changed
+## Geänderte Dateien
 
 - `src/data.py`
 - `scripts/verify_dataset.py`
 - `tests/test_data.py`
 - `configs/config.yaml`
 
-## Code references
+## Code-Referenzen
 
-`load_dataset`, `validate_dataset`, and `get_dataset_summary` in `src/data.py`.
+`load_dataset`, `validate_dataset` und `get_dataset_summary` in `src/data.py`.
 
-## Figure and table references
+## Abbildungs- und Tabellennachweise
 
-None; this ticket introduced loading and structural verification only.
+Keine; dieses Ticket führte nur die Lade- und Strukturüberprüfung ein.
 
-## Reproducibility notes
+## Reproduzierbarkeitsnotizen
 
-The configured source is OpenML ID 45566. Offline tests mock network access;
-the loader does not persist data. The final test set did not yet exist and was
-therefore not used; it remained closed once created by the later split ticket.
+Die konfigurierte Quelle ist OpenML ID 45566. Offline-Tests mocken Netzwerkzugriff; der Lader speichert keine Daten. Das Endtestset bestand noch nicht und wurde daher erst durch den späteren Split-Ticket geschaffen.
 
-## Sources and tools used
+## Verwendete Quellen und Werkzeuge
 
-OpenML through scikit-learn, pandas, pytest, Python, and the project YAML
-configuration.
+OpenML über scikit-learn, pandas, pytest, Python und die Projekt-YAML-Konfiguration.

@@ -1,135 +1,99 @@
-# Logbook Entry
+# Logbucheintrag
 
-## Metadata
+## Metadaten
 
-- Date: 2026-08-01
-- Member: Yassine Elhari
+- Datum: 2026-08-01
+- Mitglied: Yassine Elhari
 - Sprint: Sprint 1
 - Ticket ID: ADA-DATA-02
 - Branch: feature/data_processing
 - Pull Request: [#2 — feature/data_processing → main](https://github.com/roximox/santander-customer-transaction-prediction/pull/2)
-- Time spent: 3 hours
-- Related meeting: [2026-08-02 — Project Structure and Common Data Foundation](../../../meetings/2026-08-02_project-structure-and-common-data-foundation.md)
+- Zeitaufwand: 3 Stunden
+- Zugehörige Besprechung: [2026-08-02 — Projektstruktur und gemeinsame Datenbasis](../../../meetings/2026-08-02_project-structure-and-common-data-foundation.md)
 
-## Title
+## Titel
 
-Scientific raw-data and numeric-memory audit
+Wissenschaftliche Raw-Daten- und numerische-Memory-Audit
 
-## Objective
+## Ziel
 
-Create a reproducible scientific audit of the raw features and rigorously
-measure the memory and precision effects of an explicit float64-to-float32
-conversion without altering the target or the default raw-loading behavior.
+Eine reproduzierbare wissenschaftliche Prüfung der Raw-Funktionen durchzuführen und die Auswirkungen einer expliziten Umwandlung von float64 in float32 ohne die Ziel- oder die Standardladeverhalten zu ändern.
 
-## Raw-data observations
+## Raw-Datenbeobachtungen
 
-OpenML ID 45566 returned 200,000 rows and 200 float64 features. Total deep
-memory for features and target was 305.37 MiB; the feature frame alone used
-305.18 MiB. The audit found no missing values, infinite values, duplicate rows,
-duplicate feature names, constant features, or quasi-constant features under
-the documented 99% dominant-value rule.
+Die OpenML-ID 45566 lief mit 200.000 Zeilen und 200 float64-Funktionen. Der Gesamtdatenspeicher für Funktionen und Ziel betrug 305,37 MiB; die Funktionen allein nutzten 305,18 MiB. Die Prüfung fand keine fehlenden Werte, unendliche Werte, wiederholte Zeilen, wiederholte Funktionennamen, konstante Funktionen oder quasi-constante Funktionen unter der dokumentierten 99%-Hochwertregel.
 
-The binary categorical target is imbalanced: `False` represents 179,902 rows
-(0.89951), while `True` represents 20,098 rows (0.10049). No target values or
-types were modified.
+Die binäre kategorische Ziel ist ungleichmäßig: `False` stellt 179.902 Zeilen (0,89951) dar, während `True` 20.098 Zeilen (0,10049) darstellt. Keine Zielwerte oder -typen wurden geändert.
 
-## Dataset naming
+## Datennamen
 
-The project concerns **Santander Customer Transaction Prediction**, while the
-name returned by OpenML is `SantanderCustomerSatisfaction`. Both facts are
-preserved independently as `project_dataset_name` and `openml_dataset_name`.
-The source name was not rewritten or concealed.
+Das Projekt befasst sich mit **Santander Customer Transaction Prediction**, während der Name durch OpenML als `SantanderCustomerSatisfaction` zurückgegeben wurde. Beide Fakten werden unabhängig voneinander als `project_dataset_name` und `openml_dataset_name` aufbewahrt. Der Quellennamen wurde nicht neu geschrieben oder versteckt.
 
-## Float64 / float32 comparison
+## float64 / float32-Vergleich
 
-The explicit conversion of a copy changed all 200 numeric feature dtypes to
-float32. Feature memory decreased from 305.1759 MiB to 152.5880 MiB, saving
-152.5879 MiB or 49.99998%.
+Die explizite Umwandlung einer Kopie änderte alle 200 numerischen Funktionen-Daten typen in float32. Die Speicherung der Funktionen verringerte sich von 305,1759 MiB auf 152,5880 MiB, was einem Speicherplatzverlust von 152,5879 MiB oder 49,99998% entspricht.
 
-Observed representation differences were:
+Beobachtete Darstellungsunterschiede waren:
 
-- maximum absolute error: 3.7963867214330094e-06;
-- mean absolute error: 1.9811511402243887e-07;
-- maximum relative error: 5.950797554674405e-08;
-- mean relative error: 2.130516379585579e-08;
-- exactly changed numeric values: 39,936,663 (99.8416575%).
+- Maximumer absolute Fehler: 3,7963867214330094e-06;
+- Durchschnittlicher absolute Fehler: 1,9811511402243887e-07;
+- Maximumer relative Fehler: 5,950797554674405e-08;
+- Durchschnittlicher relative Fehler: 2,130516379585579e-08;
+- Genauigkeitsänderungen bei numerischen Werten: 39.936.663 (99,8416575%).
 
-Relative error was calculated only for finite, non-zero original values as
-`abs(float32 - float64) / abs(float64)`. This avoids artificial infinite or NaN
-ratios at zero. Zero positions remain included in the exact-change count.
+Der relative Fehler wurde nur für nicht-null, endliche ursprüngliche Werte berechnet und umfasste die Positionen von Null. Diese Positionen blieben im Rahmen der genauen Änderungszahl aufgenommen.
 
-Shape, index, columns, missing-value positions, and infinity positions were all
-preserved, and no overflow was introduced.
+Die Form, Index, Spalten, fehlende Wertpositionen und unendliche Wertpositionen wurden alle erhalten, und keine Überlauf wurde eingeführt.
 
-## Decision
+## Entscheidung
 
-Float32 is provisionally accepted as the recommended optimized feature dtype
-because it halves feature memory while preserving structure and special values,
-with small measured representation errors. Raw OpenML loading remains float64
-by default. Downstream work must opt into conversion explicitly, and later model
-sensitivity checks should confirm that the precision reduction has no material
-effect on evaluation results.
+Float32 wird provisorisch als empfohlenes optimiertes Funktion-Typ-Setungsmaßnahme angenommen, da es den Speicherplatz halbiert, während die Struktur und besondere Werte erhalten werden, mit kleinen gemessenen Darstellungsfehlern. Die Raw-OpenML-Ladeverhalten bleibt float64 standardmäßig. Downstream-Arbeit muss explizit in die Umwandlung optieren, und spätere Modellempfindlichkeitsprüfungen sollten bestätigen, dass die Präzisionsreduktion keinen erheblichen Einfluss auf die Bewertungsergebnisse hat.
 
-## Implementation and tests
+## Implementierung und Tests
 
-The shared data module now provides per-feature auditing, explicit numeric
-conversion, precision/memory comparison, and conversion validation. The audit
-script exports strict JSON summaries and a 200-row feature table without saving
-the dataset. Offline tests cover missing values, infinities, constants, dtype
-authorization, memory reduction, precision errors, structure preservation,
-overflow rejection, explicit loader optimization, and separate dataset names.
+Das gemeinsame Datenmodul bietet nun pro-Funktion eine per-Funktionen-Prüfung, explizite numerische Umwandlung, Darstellungsfehler/Vergleich, und Umwandlungsvalidierung. Die Prüfungsskript exportiert strenge JSON-Summarisierungen und eine 200-reihige Funktionstabelle ohne die Datenbank zu speichern.
 
-## Limits
+## Grenzen
 
-This audit is descriptive rather than a complete EDA. It does not assess
-feature relationships, outliers, predictive value, leakage, or model-level
-sensitivity to float32. The quasi-constant classification depends on the
-explicit 99% threshold and should be interpreted as an audit flag, not a reason
-for automatic feature removal.
+Dieses Audit ist beschreibend und nicht umfassend. Es bewertet keine Funktionenbeziehungen, Ausreißer, Vorhersagewert, Leckagen oder Modellempfindlichkeit bei float32. Die quasi-constante Klassifizierung hängt von der expliziten 99%-Hochwertregel ab und sollte als Audit-Flag interpretiert werden, nicht als Grund für automatische Funktionenlöschung.
 
-## Next step
+## Nächster Schritt
 
-Create the common reproducible stratified train/test split while keeping the
-test partition isolated from all preprocessing and model-selection decisions.
+Erstellen Sie eine gemeinsame reproduzierbare getrennte Trainings-Test-Spalte während der Erhaltung der Testpartition von allen Vorbereitungs- und Modellauswahlentscheidungen.
 
-## Difficulties
+## Schwierigkeiten
 
-Float32 changes the exact binary representation of most values, so structural
-preservation and finite relative errors had to be separated from exact equality.
+Float32 ändert die genaue binäre Darstellung der meisten Werte, sodass die Strukturbeibehaltung und die finiten relativen Fehler von der exakten Gleichheit getrennt werden mussten.
 
-## Adaptations and deviations from the plan
+## Anpassungen und Abweichungen vom Plan
 
-Raw loading remains float64; memory optimization is an explicit downstream copy
-validated independently instead of an implicit loader mutation.
+Die Raw-Ladeverhalten bleibt float64; die Speicherplatzoptimierung ist ein explizites downstream-Kopie-Validiertes, das unabhängig von einem impliziten Loader-Mutation erfolgt.
 
-## Rejected approaches
+## Abgelehnte Ansätze
 
-Automatic feature deletion, treating float32 rounding as corruption, and using
-the audit as a complete EDA were rejected.
+Automatische Funktionenlöschung, das Runden der Float32-Werte als Korruption und die Verwendung des Audit als umfassendes EDA wurden abgelehnt.
 
-## Files changed
+## Geänderte Dateien
 
 - `src/data.py`
 - `scripts/run_data_audit.py`
 - `tests/test_data_audit.py`
 - `notebooks/01_data_audit.ipynb`
 
-## Code references
+## Code-Referenzen
 
-Numeric conversion, feature-audit, comparison, and validation functions in
-`src/data.py`; execution entry point in `scripts/run_data_audit.py`.
+Numerische Umwandlung, Funktionprüfung, Vergleich und Validierung-Funktionen in `src/data.py`; Ausführungs-Eingangs-Punkt in `scripts/run_data_audit.py`.
 
-## Figure and table references
+## Figuren- und Tabellen-Bezüge
 
 - `reports/tables/data_audit_summary.json`
 - `reports/tables/dtype_comparison.json`
 - `reports/tables/feature_audit.csv`
 
-## Reproducibility notes
+## Reproduzierbarkeitsnotizen
 
-The reports describe OpenML ID 45566 as loaded on 2026-08-01. No row-level
-dataset was saved; the final test set was not used and remained closed.
+Die Berichte beschreiben OpenML ID 45566 als geladen auf 2026-08-01. Keine Zeile-level-Datenbank wurde gespeichert; die endgültige Testset wurde nicht verwendet und blieb geschlossen.
 
-## Sources and tools used
+## Verwendete Quellen und Werkzeuge
 
-OpenML, scikit-learn, pandas, NumPy, pytest, nbformat, and Python.
+OpenML, scikit-learn, pandas, NumPy, pytest, nbformat, Python

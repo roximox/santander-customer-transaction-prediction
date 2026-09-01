@@ -8,7 +8,7 @@
 - Ticket ID: ADA-DOC-01
 - Branch: develop
 - Pull Request: Committed directly to develop as documentation
-- Time spent: Not recorded — to be completed by Aya Olali
+- Time spent: 6 hours (retrospective estimate)
 - Related meeting: [2026-08-28 — Final model comparison, project consolidation and presentation planning](../../../meetings/2026-08-28_final-model-comparison-project-consolidation-and-presentation-planning.md)
 
 ## Title

@@ -8,7 +8,7 @@
 - Ticket ID: ADA-DOC-02
 - Branch: develop
 - Pull Request: Committed directly to develop as documentation
-- Time spent: Not recorded — to be completed by Aya Olali
+- Time spent: 4 hours (retrospective estimate)
 - Related meeting: [2026-08-31 — Final submission and presentation review](../../../meetings/2026-08-31_final-submission-and-presentation-review.md)
 
 ## Title

@@ -8,7 +8,7 @@
 - Ticket ID: ADA-ML-TREE-01
 - Branch: feature/eda+tree_models
 - Pull Request: To be updated after Pull Request creation
-- Time spent: To be completed by Member 02
+- Time spent: 14 hours (retrospective estimate)
 - Related meeting: To be completed by Member 02
 
 ## Title

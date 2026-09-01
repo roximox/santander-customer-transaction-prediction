@@ -8,7 +8,7 @@
 - Ticket ID: ADA-GROUP-01
 - Branch: develop
 - Pull Request: Committed to develop through merge commit `b7c5bce`
-- Time spent: Not recorded — to be completed by Aya Olali
+- Time spent: 3 hours (retrospective estimate)
 - Related meeting: [2026-08-26 — Final model selection decision](../../../meetings/2026-08-26_final-model-selection-decision.md)
 
 ## Title

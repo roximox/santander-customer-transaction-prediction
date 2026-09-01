@@ -12,7 +12,7 @@ Die reservierte Final-Test-Partition blieb während meiner Modellentwicklung una
 - **Member-ID:** Member 04
 - **Branch:** `feature/model-optimization`
 - **Hauptverantwortung:** HistGradientBoosting-Modellentwicklung, Optimierung und Evaluation
-- **Dokumentierter Gesamtzeitaufwand:** 93 h
+
 
 Zu meinem Beitrag gehören die HGB-Baseline, die Hyperparametersuche, Learning Curve und OOF-Diagnostik, der Baseline-vs-Tuned-Vergleich, fünf HGB-spezifische Testdateien, die Registrierung von `M04-HGB-002`, das HGB-Notebook, die Vorbereitung der HGB-Ergebnisse für die gemeinsame Auswahl sowie meine Dokumentation und mein E-Portfolio.
 
